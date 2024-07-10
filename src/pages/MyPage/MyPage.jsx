@@ -1,10 +1,18 @@
-import React from 'react';
+import Header from '../../components/Header';
+import MiniPhotoCard from './Components/MiniPhotoCard';
 
 function MyPage() {
   return (
     <>
-      <button type="button">asd</button>
-      <button type="button">asdf</button>
+      <Header></Header>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
     </>
   );
 }

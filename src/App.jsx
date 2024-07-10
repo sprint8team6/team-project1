@@ -1,11 +1,6 @@
-import MyCredit from './pages/ListPage/MyCredit';
+import MyPage from './pages/MyPage/MyPage';
 
 function App() {
-  return (
-    <div>
-      <MyCredit />
-    </div>
-  );
+  return <MyPage>App</MyPage>;
 }
-
 export default App;
