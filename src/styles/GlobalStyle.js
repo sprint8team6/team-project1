@@ -7,10 +7,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  body, html { // html 태그 추가
     font-size: 62.5%;
     word-break: keep-all;
     font-family: Pretendard, sans-serif;
+		background-color: #000000; // 배경색 추가
   }
 
   button {
