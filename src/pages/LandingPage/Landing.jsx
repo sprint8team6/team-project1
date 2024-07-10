@@ -26,8 +26,10 @@ function Landing() {
           <Button>지금 시작하기</Button>
         </Main>
         <BottomContainer>
+          <LandingBackgroundImg1 />
+          <LandingBackgroundImg2 />
+          <LandingBackgroundImg3 />
           <LandingSection>
-            <LandingBackgroundImg />
             <LandingWrap>
               <span>후원하기</span>
               좋아하는 아이돌에게
@@ -121,10 +123,12 @@ const Button = styled.button`
 const BottomContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 3600px;
   background-color: var(--dark-black);
   position: relative;
+  z-index: 0;
 `;
 
 const Rectangle = styled.div`
@@ -135,6 +139,7 @@ const Rectangle = styled.div`
   top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1;
 `;
 
 const LandingSection = styled.div`
@@ -143,14 +148,13 @@ const LandingSection = styled.div`
   align-items: center;
   width: 100%;
   height: 1200px;
-  position: relative;
-  z-index: 1;
+  z-index: 2;
 `;
 
-const LandingBackgroundImg = styled.div`
+const LandingBackgroundImg1 = styled.div`
   width: 1200px;
   height: 1200px;
-  background-image: radial-gradient(
+  background: radial-gradient(
       circle,
       rgba(2, 0, 14, 0),
       rgba(2, 0, 14, 0.18),
@@ -162,6 +166,46 @@ const LandingBackgroundImg = styled.div`
   background-position: center;
   background-size: cover;
   position: absolute;
+  top: 0px;
+  z-index: 1;
+`;
+
+const LandingBackgroundImg2 = styled.div`
+  width: 1200px;
+  height: 1200px;
+  background: radial-gradient(
+      circle,
+      rgba(2, 0, 14, 0),
+      rgba(2, 0, 14, 0.18),
+      rgba(2, 0, 14, 0.5) 5%,
+      rgba(2, 0, 14, 1) 60%
+    ),
+    url(${landingBgImg2});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 1201px;
+  z-index: 1;
+`;
+
+const LandingBackgroundImg3 = styled.div`
+  width: 1200px;
+  height: 1200px;
+  background: radial-gradient(
+      circle,
+      rgba(2, 0, 14, 0),
+      rgba(2, 0, 14, 0.18),
+      rgba(2, 0, 14, 0.5) 5%,
+      rgba(2, 0, 14, 1) 60%
+    ),
+    url(${landingBgImg3});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 2401px;
+  z-index: 1;
 `;
 
 const LandingWrap = styled.div`
