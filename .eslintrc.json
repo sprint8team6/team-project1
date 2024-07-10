@@ -1,8 +1,0 @@
-{
-  "extends": ["airbnb"],
-  "rules": {
-    "no-unused-vars": "warn",
-    "no-console": "off",
-    "linebreak-style": 0
-  }
-}
