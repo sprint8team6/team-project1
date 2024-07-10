@@ -1,6 +1,11 @@
-import Header from './components/Header';
+import MyCredit from './pages/ListPage/MyCredit';
+
 function App() {
-  return <Header>App</Header>;
+  return (
+    <div>
+      <MyCredit />
+    </div>
+  );
 }
 
 export default App;
