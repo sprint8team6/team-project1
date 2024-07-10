@@ -1,3 +1,19 @@
+:root {
+  --dark-black: #02000e;
+  --light-black: #181d26;
+  --dark-gray: #67666e;
+  --medium-gray: #828282;
+  --light-gray: #a3a5a8;
+  --dark-white: #8c92ab;
+  --rectangle-blue: #051d31;
+  --white: #f7f7f8;
+  --yellow: #d2c030;
+
+  /* Brand color */
+  --brand-coral: #f96d69;
+  --brand-pink: #fe5493;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +23,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  border: none;
 }
