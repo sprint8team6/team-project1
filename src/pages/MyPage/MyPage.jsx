@@ -1,10 +1,18 @@
 import Header from '../../components/Header';
+import MiniPhotoCard from './Components/MiniPhotoCard';
 
 function MyPage() {
   return (
     <>
       <Header></Header>
-      <button type="button">asdf</button>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
+      <MiniPhotoCard></MiniPhotoCard>
     </>
   );
 }
