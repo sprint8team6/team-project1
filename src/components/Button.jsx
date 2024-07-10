@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-/** Button 컴포넌트
- *
- * @param {object} props
- * @param {React.ReactNode} props.children
+/**
+ * Button 컴포넌트
+ * @param {object} props - 프롭스
+ * @param {React.ReactNode} children - 태그 내부
+ * @param {boolean} rounded - 원형 버튼일지 결정하는 prop
  * @returns {JSX.Element}
  */
 export default function Button({ children, rounded = false, ...props }) {
@@ -22,7 +23,6 @@ const StyledButton = styled.button`
   padding: 8px 0px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
   flex-shrink: 0;
   border-radius: 3px;
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);

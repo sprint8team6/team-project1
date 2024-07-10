@@ -1,6 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`  
+  :root {
+    --dark-black: #02000e;
+    --light-black: #181d26;
+    --dark-gray: #67666e;
+    --medium-gray: #828282;
+    --light-gray: #a3a5a8;
+    --dark-white: #8c92ab;
+    --white: #f7f7f8;
+    --yellow: #d2c030;
+    --rectangle-blue: #051d31;
+
+    /* Brand color */
+    --brand-coral: #f96d69;
+    --brand-pink: #fe5493;
+  }
+
   * {
     margin: 0;
     padding: 0;
