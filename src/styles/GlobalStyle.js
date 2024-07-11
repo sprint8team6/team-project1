@@ -10,7 +10,9 @@ const GlobalStyle = createGlobalStyle`
     --dark-white: #8c92ab;
     --white: #f7f7f8;
     --yellow: #d2c030;
+  
     --rectangle-blue: #051d31;
+    --error-red: #ff3b3b;
 
     /* Brand color */
     --brand-coral: #f96d69;
@@ -28,9 +30,10 @@ const GlobalStyle = createGlobalStyle`
     word-break: keep-all;
     font-family: Pretendard, sans-serif;
 		background-color: #000000;
+    color: var(--white);
   }
 
-  button {
+  button, input {
   background: none;
   border: none;
   outline: none;

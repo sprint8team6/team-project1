@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ModalContainer, StyledContainer } from '@styles/CommonStyles';
+import { ModalContainer, BasedContainer } from '@styles/CommonStyles';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import Button from '@components/Button';
 // assets
@@ -23,6 +23,18 @@ export default function PopupModal() {
 }
 
 // styled-components
+
+const StyledContainer = styled(BasedContainer)`
+  gap: 24px;
+
+  label {
+    font-size: 16px;
+    font-style: normal;
+    color: var(--white);
+    line-height: 26px;
+  }
+`;
+
 const StyledPopupContainer = styled(ModalContainer)`
   width: 339px;
   height: 331px;

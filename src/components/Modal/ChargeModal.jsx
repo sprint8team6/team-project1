@@ -1,21 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ModalContainer, StyledContainer } from '@styles/CommonStyles';
+import {
+  ModalContainer,
+  BasedContainer,
+  StyledCreditIcon,
+  StyledCreditIconWhite,
+} from '@styles/CommonStyles';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
-// assets
-import CreditImg from '@assets/svg/ic_credit.svg';
-import CreditWhiteImg from '@assets/svg/ic_credit_white.svg';
 
 /** 크레딧 충전 모달
- * @param {React.ReactNode} children - 태그 내부
  * @param {boolean} selected - 선택 시, value CreditOptionButton의 value값과 같으면 selected 됨
  * @returns {React.Element} 크레딧 충전 모달
  */
 export default function ChargeModal({ selected = '0' }) {
   return (
-    <ModalCharge>
+    <ChargeModalContainer>
       <ModalTopBar>크레딧 충전하기</ModalTopBar>
       <StyledContainer>
         <StyledButtonWrapper>
@@ -25,11 +26,13 @@ export default function ChargeModal({ selected = '0' }) {
         </StyledButtonWrapper>
         <ChargeButton />
       </StyledContainer>
-    </ModalCharge>
+    </ChargeModalContainer>
   );
 }
 
-const ModalCharge = styled(ModalContainer)`
+// styled-components
+
+const ChargeModalContainer = styled(ModalContainer)`
   display: flex;
   gap: 24px;
   width: 327px;
@@ -39,29 +42,16 @@ const ModalCharge = styled(ModalContainer)`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
+const StyledContainer = styled(BasedContainer)`
+  gap: 24px;
+`;
+
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   gap: 8px;
-`;
-
-const BasedCreditIcon = styled.i`
-  width: 20px;
-  height: 20px;
-  background-image: url(${CreditImg});
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: center;
-`;
-
-const StyledCreditIcon = styled(BasedCreditIcon)`
-  background-image: url(${CreditImg});
-`;
-
-const StyledCreditIconWhite = styled(BasedCreditIcon)`
-  background-image: url(${CreditWhiteImg});
 `;
 
 const StyledCreditOptionButton = styled.button`
