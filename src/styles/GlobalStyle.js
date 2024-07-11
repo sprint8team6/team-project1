@@ -28,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
     word-break: keep-all;
     font-family: Pretendard, sans-serif;
 		background-color: #000000;
+    color: var(--white);
   }
 
   button {
