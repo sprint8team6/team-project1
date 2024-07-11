@@ -29,6 +29,7 @@ export default function IdolCard() {
 }
 
 const IdolCardWrap = styled.div`
+  width: 100%;
   max-width: 280px;
 `;
 

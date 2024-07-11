@@ -7,7 +7,7 @@ import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
 export default function TributeSupport() {
   return (
     <>
-      <MyCreditWrap>
+      <MyCreditWrap Mb80>
         <ListPageSubTitle>
           <h2>후원을 기다리는 조공</h2>
         </ListPageSubTitle>
@@ -35,7 +35,7 @@ const MyCreditWrap = styled.section`
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 50px;
-  margin-bottom: 50px;
+  margin-bottom: ${(props) => (props.Mb80 ? '80px' : '50px')};
   color: #ffffff;
 `;
 
