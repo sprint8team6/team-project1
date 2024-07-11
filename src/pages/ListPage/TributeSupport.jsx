@@ -7,23 +7,23 @@ import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
 export default function TributeSupport() {
   return (
     <>
-      <MyCreditWrap Mb80>
+      <MyCreditWrap Tribute>
         <ListPageSubTitle>
           <h2>후원을 기다리는 조공</h2>
         </ListPageSubTitle>
         <IdolTributeList>
-          <ArrowBtn left>
+          <button type="button">
             <img src={LeftArrow} alt="왼쪽 화살표 이미지" />
-          </ArrowBtn>
+          </button>
           <IdolCardBox>
             <IdolCard />
             <IdolCard />
             <IdolCard />
             <IdolCard />
           </IdolCardBox>
-          <ArrowBtn right>
+          <button type="button">
             <img src={RightArrow} alt="오른쪽 화살표 이미지" />
-          </ArrowBtn>
+          </button>
         </IdolTributeList>
       </MyCreditWrap>
     </>
@@ -32,10 +32,10 @@ export default function TributeSupport() {
 
 const MyCreditWrap = styled.section`
   width: 100%;
-  max-width: 1200px;
+  max-width: ${(props) => (props.Tribute ? '1360px' : '1200px')};
   margin: 0 auto;
   margin-top: 50px;
-  margin-bottom: ${(props) => (props.Mb80 ? '80px' : '50px')};
+  margin-bottom: ${(props) => (props.Tribute ? '80px' : '50px')};
   color: #ffffff;
 `;
 
@@ -45,6 +45,7 @@ const ListPageSubTitle = styled.div`
   & > h2 {
     font-size: 2.4rem;
     font-weight: 700;
+    padding: 0 80px;
     color: var(--white);
   }
 `;
@@ -56,20 +57,22 @@ const IdolCardBox = styled.div`
 `;
 
 const IdolTributeList = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 40px;
   width: 100%;
 
-  & > button {
+  /* & > button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-  }
+  } */
 `;
 
-const ArrowBtn = styled.button`
-  position: absolute;
-  top: 50%;
-  left: ${(props) => (props.left ? '-80px' : 'auto')};
-  right: ${(props) => (props.right ? '-80px' : 'auto')};
-`;
+// const ArrowBtn = styled.button`
+//   position: absolute;
+//   top: 50%;
+//   left: ${(props) => (props.left ? '-80px' : 'auto')};
+//   right: ${(props) => (props.right ? '-80px' : 'auto')};
+// `;
