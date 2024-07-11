@@ -9,6 +9,7 @@ import landingImg1 from '@assets/LandingPage/Home-1.png';
 import landingImg2 from '@assets/LandingPage/Home-2.png';
 import landingImg3 from '@assets/LandingPage/Home-3.png';
 import Button from '@components/Button';
+import { Link } from 'react-router-dom';
 
 function LandingPage() {
   return (
@@ -21,7 +22,9 @@ function LandingPage() {
               내가 좋아하는 아이돌을
               <br /> 가장 <span>쉽게 덕질</span> 하는 방법
             </div>
-            <img src={logo} alt="로고 이미지" />
+            <Link to="/list">
+              <img src={logo} alt="로고 이미지" />
+            </Link>
           </LogoWrap>
           <BackgroundImg src={backgroundImg} alt="배경 이미지" />
           <ButtonWrap>
