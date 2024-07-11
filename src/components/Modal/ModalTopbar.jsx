@@ -5,11 +5,11 @@ import { StyledDeleteButton } from '@styles/CommonStyles';
 /** 모달 상단의 제목/창 닫기 탑바
  * @param children - Modal 제목
  */
-export default function ModalTopBar({ children }) {
+export default function ModalTopBar({ children, onClose }) {
   return (
     <StyledModalTopBar>
       <label>{children}</label>
-      <StyledDeleteButton />
+      <StyledDeleteButton onClick={onClose} />
     </StyledModalTopBar>
   );
 }

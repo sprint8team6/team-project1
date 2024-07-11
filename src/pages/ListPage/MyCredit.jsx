@@ -1,9 +1,13 @@
+import React from 'react';
+import { useModalContext } from 'contexts/ModalContext';
 import CreditImg from '@assets/svg/ic_credit.svg';
 import Header from '@components/Header';
 import styled from 'styled-components';
 import TributeSupport from '@pages/ListPage/TributeSupport';
 
 export default function MyCredit() {
+  const { modals, openModal, closeModal } = useModalContext();
+
   return (
     <>
       <MyCreditWrap>
@@ -17,7 +21,9 @@ export default function MyCredit() {
           </MyCreditBoxInfo>
 
           <CreditChargeBtn>
-            <button type="butotn">충전하기</button>
+            <button type="button" onClick={() => openModal('chargeModal')}>
+              충전하기
+            </button>
           </CreditChargeBtn>
         </MyCreditBox>
       </MyCreditWrap>
