@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import logo from '../../assets/svg/logo.svg';
-import backgroundImg from '../../assets/LandingPage/image 14.png';
-import topDesign from '../../assets/svg/Img_top.svg';
-import landingBgImg1 from '../../assets/LandingPage/fandomK-img13.svg';
-import landingBgImg2 from '../../assets/LandingPage/fandomK-img10.svg';
-import landingBgImg3 from '../../assets/LandingPage/fandomK-img14.svg';
-import landingImg1 from '../../assets/LandingPage/Home-1.png';
-import landingImg2 from '../../assets/LandingPage/Home-2.png';
-import landingImg3 from '../../assets/LandingPage/Home-3.png';
+import logo from '@assets/svg/logo.svg';
+import backgroundImg from '@assets/LandingPage/image 14.png';
+import topDesign from '@assets/svg/Img_top.svg';
+import landingBgImg1 from '@assets/LandingPage/fandomK-img13.svg';
+import landingBgImg2 from '@assets/LandingPage/fandomK-img10.svg';
+import landingBgImg3 from '@assets/LandingPage/fandomK-img14.svg';
+import landingImg1 from '@assets/LandingPage/Home-1.png';
+import landingImg2 from '@assets/LandingPage/Home-2.png';
+import landingImg3 from '@assets/LandingPage/Home-3.png';
 
 function Landing() {
   return (

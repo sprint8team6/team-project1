@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import logoImg from '../assets/svg/logo_big.svg';
-import profileImg from '../assets/svg/profile.svg';
-import './reset.css';
+import logoImg from '@assets/svg/logo_big.svg';
+import profileImg from '@assets/svg/profile.svg';
 
 const Header = () => {
   return (
