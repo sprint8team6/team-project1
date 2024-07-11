@@ -1,17 +1,25 @@
 import styled from 'styled-components';
 import logoImg from '@assets/svg/logo_big.svg';
 import profileImg from '@assets/svg/profile.svg';
+import { Link } from '../../node_modules/react-router-dom/dist/index';
 
 const Header = () => {
+  // 로고 클릭시 페이지 새로고침
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <HeaderWrap>
       <HeaderBox>
         <HeaderProfile />
 
-        <HeaderLogo src={logoImg} alt="로고 이미지" />
+        <HeaderLogo onClick={handleReload} src={logoImg} alt="로고 이미지" />
 
         <HeaderProfile>
-          <img src={profileImg} alt="프로필 이미지" />
+          <Link to="/mypage">
+            <img src={profileImg} alt="프로필 이미지" />
+          </Link>
         </HeaderProfile>
       </HeaderBox>
     </HeaderWrap>
@@ -51,6 +59,7 @@ const HeaderProfile = styled.div`
 
 const HeaderLogo = styled.img`
   max-width: 167px;
+  cursor: pointer;
 
   @media screen and (max-width: 1023px) {
     max-width: 120px;
