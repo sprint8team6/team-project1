@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 // assets
 import CreditImg from '@assets/svg/ic_credit.svg';
+import CreditWhiteImg from '@assets/svg/ic_credit_white.svg';
 import DeleteButton from '@assets/svg/btn_delete_24px.svg';
 
 export const ModalContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   flex-shrink: 0;
@@ -26,18 +28,27 @@ export const StyledDeleteButton = styled.button`
   background-position: center;
 `;
 
-export const StyledContainer = styled.div`
+export const BasedContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 31px;
+`;
 
-  label {
-    font-size: 16px;
-    font-style: normal;
-    color: var(--white);
-    line-height: 26px;
-  }
+const BasedCreditIcon = styled.i`
+  width: 20px;
+  height: 20px;
+  background-image: url(${CreditImg});
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+`;
+
+export const StyledCreditIcon = styled(BasedCreditIcon)`
+  background-image: url(${CreditImg});
+`;
+
+export const StyledCreditIconWhite = styled(BasedCreditIcon)`
+  background-image: url(${CreditWhiteImg});
 `;
