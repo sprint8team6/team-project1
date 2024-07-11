@@ -1,7 +1,5 @@
 import CreditImg from '@assets/svg/ic_credit.svg';
-import Header from '@components/Header';
 import styled from 'styled-components';
-import TributeSupport from '@pages/ListPage/TributeSupport';
 
 export default function MyCredit() {
   return (
