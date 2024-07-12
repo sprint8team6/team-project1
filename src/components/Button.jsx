@@ -4,8 +4,8 @@ import styled from 'styled-components';
 /**
  * Button 컴포넌트
  * @param {object} props - 프롭스
- * @param {React.ReactNode} children - 태그 내부
- * @param {boolean} rounded - 원형 버튼일지 결정하는 prop
+ * @param {React.ReactNode} children - 버튼 value
+ * @param {boolean} rounded - 원형 버튼일지 결정하는 prop (기본=false)
  * @returns {JSX.Element}
  */
 export default function Button({ children, rounded = false, ...props }) {

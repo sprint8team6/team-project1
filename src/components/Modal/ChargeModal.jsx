@@ -1,36 +1,67 @@
 import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { ModalContainer, StyledContainer } from '@styles/CommonStyles';
+import {
+  ModalBackground,
+  ModalContainer,
+  BasedContainer,
+  StyledCreditIcon,
+  StyledCreditIconWhite,
+} from '@styles/CommonStyles';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
-// assets
-import CreditImg from '@assets/svg/ic_credit.svg';
-import CreditWhiteImg from '@assets/svg/ic_credit_white.svg';
 
 /** 크레딧 충전 모달
- * @param {React.ReactNode} children - 태그 내부
  * @param {boolean} selected - 선택 시, value CreditOptionButton의 value값과 같으면 selected 됨
  * @returns {React.Element} 크레딧 충전 모달
  */
-export default function ChargeModal({ selected = '0' }) {
+export default function ChargeModal({ isOpen, onClose }) {
+  // States
+  const [optionValue, setOptionValue] = useState('100');
+
+  if (!isOpen) return null;
+
+  const handleOption = (e) => {
+    setOptionValue(e.target.value);
+  };
+
   return (
-    <ModalCharge>
-      <ModalTopBar>크레딧 충전하기</ModalTopBar>
-      <StyledContainer>
-        <StyledButtonWrapper>
-          <CreditOptionButton value="100" selected={selected} />
-          <CreditOptionButton value="500" selected={selected} />
-          <CreditOptionButton value="1000" selected={selected} />
-        </StyledButtonWrapper>
-        <ChargeButton />
-      </StyledContainer>
-    </ModalCharge>
+    <ModalBackground>
+      <StyledChargeModalContainer>
+        <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
+        <StyledContainer>
+          <StyledButtonWrapper>
+            <CreditOptionButton
+              value="100"
+              optionValue={optionValue}
+              onClick={handleOption}
+            />
+            <CreditOptionButton
+              value="500"
+              optionValue={optionValue}
+              onClick={handleOption}
+            />
+            <CreditOptionButton
+              value="1000"
+              optionValue={optionValue}
+              onClick={handleOption}
+            />
+          </StyledButtonWrapper>
+          <ChargeButton onClose={onClose} />
+        </StyledContainer>
+      </StyledChargeModalContainer>
+    </ModalBackground>
   );
 }
 
-const ModalCharge = styled(ModalContainer)`
+// styled-components
+
+const StyledChargeModalContainer = styled(ModalContainer)`
   display: flex;
+  position: fixed;
+  z-index: 1000;
+
   gap: 24px;
   width: 327px;
   height: 372px;
@@ -39,29 +70,16 @@ const ModalCharge = styled(ModalContainer)`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
+const StyledContainer = styled(BasedContainer)`
+  gap: 24px;
+`;
+
 const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   gap: 8px;
-`;
-
-const BasedCreditIcon = styled.i`
-  width: 20px;
-  height: 20px;
-  background-image: url(${CreditImg});
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: center;
-`;
-
-const StyledCreditIcon = styled(BasedCreditIcon)`
-  background-image: url(${CreditImg});
-`;
-
-const StyledCreditIconWhite = styled(BasedCreditIcon)`
-  background-image: url(${CreditWhiteImg});
 `;
 
 const StyledCreditOptionButton = styled.button`
@@ -98,17 +116,28 @@ const ModalRadioButton = styled(RadioButton)`
   right: 20px;
 `;
 
-const CreditOptionButton = ({ value, selected }) => (
-  <StyledCreditOptionButton selected={selected === value}>
+const CreditOptionButton = ({ value, optionValue, onClick }) => (
+  <StyledCreditOptionButton
+    value={value}
+    onClick={onClick}
+    selected={optionValue === value}
+  >
     <StyledCreditIcon />
     {value}
-    <ModalRadioButton checked={selected === value} />
+    <ModalRadioButton checked={optionValue === value} />
   </StyledCreditOptionButton>
 );
 
-const ChargeButton = () => (
-  <Button>
-    <StyledCreditIconWhite />
-    충전하기
-  </Button>
-);
+function ChargeButton({ onClose }) {
+  const submitOption = () => {
+    /** @todo Credit 올라가는 로직 */
+    onClose();
+  };
+
+  return (
+    <Button onClick={submitOption}>
+      <StyledCreditIconWhite />
+      충전하기
+    </Button>
+  );
+}

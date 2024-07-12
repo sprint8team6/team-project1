@@ -2,14 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { StyledDeleteButton } from '@styles/CommonStyles';
 
-export default function ModalTopBar({ children }) {
+/** 모달 상단의 제목/창 닫기 탑바
+ * @param children - Modal 제목
+ */
+export default function ModalTopBar({ children, onClose }) {
   return (
     <StyledModalTopBar>
       <label>{children}</label>
-      <StyledDeleteButton />
+      <StyledDeleteButton onClick={onClose} />
     </StyledModalTopBar>
   );
 }
+
+// styled-components
 
 const StyledModalTopBar = styled.div`
   display: flex;

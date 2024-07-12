@@ -10,7 +10,9 @@ const GlobalStyle = createGlobalStyle`
     --dark-white: #8c92ab;
     --white: #f7f7f8;
     --yellow: #d2c030;
+  
     --rectangle-blue: #051d31;
+    --error-red: #ff3b3b;
 
     /* Brand color */
     --brand-coral: #f96d69;
@@ -31,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     color: var(--white);
   }
 
-  button {
+  button, input {
   background: none;
   border: none;
   outline: none;
