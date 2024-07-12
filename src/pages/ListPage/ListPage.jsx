@@ -5,6 +5,7 @@ import TributeSupport from './TributeSupport';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
+import MonthChart from './MonthChart';
 // import DonationModal from '@components/Modal/DonationModal';
 
 function ListPageContent() {
@@ -26,6 +27,7 @@ function ListPageContent() {
       <Header />
       <MyCredit />
       <TributeSupport />
+      <MonthChart />
     </>
   );
 }
