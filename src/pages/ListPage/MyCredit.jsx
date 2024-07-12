@@ -1,13 +1,16 @@
 import React from 'react';
 import { useModalContext } from 'contexts/ModalContext';
 import CreditImg from '@assets/svg/ic_credit.svg';
-import Header from '@components/Header';
+import { useState } from 'react';
 import styled from 'styled-components';
-import TributeSupport from '@pages/ListPage/TributeSupport';
 
 export default function MyCredit() {
+<<<<<<< HEAD
+  const [myCredit, setMyCredit] = useState(3600);
+=======
   const { modals, openModal, closeModal } = useModalContext();
 
+>>>>>>> 3eaa4e20e825b8ea0f9f1d7e0635019df4b2a352
   return (
     <>
       <MyCreditWrap>
@@ -16,14 +19,18 @@ export default function MyCredit() {
             <h2>내 크레딧</h2>
             <MyCreditNum>
               <img src={CreditImg} alt="크레딧 이미지" />
-              <span>36,000</span>
+              <span>{myCredit.toLocaleString()}</span>
             </MyCreditNum>
           </MyCreditBoxInfo>
 
           <CreditChargeBtn>
+<<<<<<< HEAD
+            <button type="button">충전하기</button>
+=======
             <button type="button" onClick={() => openModal('chargeModal')}>
               충전하기
             </button>
+>>>>>>> 3eaa4e20e825b8ea0f9f1d7e0635019df4b2a352
           </CreditChargeBtn>
         </MyCreditBox>
       </MyCreditWrap>
@@ -33,10 +40,15 @@ export default function MyCredit() {
 
 const MyCreditWrap = styled.section`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+  padding: 0 20px;
+
+  @media screen and (max-width: 744px) {
+    margin-top: 10px;
+  }
 `;
 
 const MyCreditBox = styled.div`
@@ -47,6 +59,14 @@ const MyCreditBox = styled.div`
   border-radius: 8px;
   border: 1px solid rgba(241, 238, 249, 0.8);
   color: #ffffff;
+
+  @media screen and (max-width: 744px) {
+    padding: 30px 65px;
+  }
+
+  @media screen and (max-width: 375px) {
+    padding: 20px;
+  }
 `;
 
 const MyCreditBoxInfo = styled.div`
@@ -55,6 +75,10 @@ const MyCreditBoxInfo = styled.div`
     font-weight: 400;
     margin-bottom: 14px;
     color: rgba(255, 255, 255, 0.6);
+
+    @media screen and (max-width: 375px) {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -70,6 +94,10 @@ const MyCreditNum = styled.div`
     font-size: 2.4rem;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.87);
+
+    @media screen and (max-width: 375px) {
+      font-size: 2rem;
+    }
   }
 `;
 

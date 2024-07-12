@@ -1,25 +1,37 @@
 import styled from 'styled-components';
 import Button from '@components/Button';
 import IdolImg from '@assets/fandomK-img/fandomK-img6.png';
+import defaultImg from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
+import { useState } from 'react';
 
 export default function IdolCard() {
+  const [idolStatus, setIdolStatus] = useState({
+    imgUrl: IdolImg,
+    tributeTxt: '강남역 광고',
+    tributeInfo: '뉴진스 민지 지하철 광고',
+    tributeCredit: 6000,
+    tributeDate: 5,
+  });
   return (
     <IdolCardWrap>
       <IdolCardImg>
-        <img src={IdolImg} alt="아이돌 이미지" />
+        <img
+          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImg}
+          alt="아이돌 이미지"
+        />
         <Button>후원하기</Button>
       </IdolCardImg>
       <IdolCardTxt>
-        <span>강남역 로고</span>
-        <p>뉴진스 민지 지하철 광고</p>
+        <span>{idolStatus.tributeTxt}</span>
+        <p>{idolStatus.tributeInfo}</p>
         <div>
           <IdolCardCredit>
             <div>
               <img src={CreditIcon} alt="크레딧 아이콘" />
-              <span>6,000</span>
+              <span>{idolStatus.tributeCredit.toLocaleString()}</span>
             </div>
-            <span>5일 남음</span>
+            <span>{idolStatus.tributeDate}일 남음</span>
           </IdolCardCredit>
           <IdolCardCreditGauge />
         </div>
@@ -31,6 +43,15 @@ export default function IdolCard() {
 const IdolCardWrap = styled.div`
   width: 100%;
   max-width: 280px;
+
+  @media screen and (max-width: 744px) {
+    min-width: 280px;
+  }
+
+  @media screen and (max-width: 375px) {
+    min-width: 160px;
+    max-width: 160px;
+  }
 `;
 
 const IdolCardImg = styled.div`
@@ -66,8 +87,13 @@ const IdolCardImg = styled.div`
     left: 50%;
     bottom: 20px;
     transform: translateX(-50%);
-    max-width: 255px;
+    width: 90%;
+    max-width: 235px;
     z-index: 2;
+
+    @media screen and (max-width: 375px) {
+      height: 30px;
+    }
   }
 `;
 
@@ -78,6 +104,10 @@ const IdolCardTxt = styled.div`
     font-weight: 400;
     margin-bottom: 8px;
     color: rgba(255, 255, 255, 0.6);
+
+    @media screen and (max-width: 375px) {
+      font-size: 1.2rem;
+    }
   }
 
   & > p {
@@ -85,6 +115,11 @@ const IdolCardTxt = styled.div`
     font-weight: 500;
     margin-bottom: 24px;
     color: var(--wthie);
+
+    @media screen and (max-width: 375px) {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
   }
 `;
 

@@ -30,7 +30,7 @@ const HeaderWrap = styled.header`
   width: 100%;
   background-color: black;
 
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 744px) {
     padding: 0 24px;
   }
 `;
@@ -44,7 +44,7 @@ const HeaderBox = styled.div`
   justify-content: space-between;
   height: 80px;
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 375px) {
     height: 44px;
   }
 `;
@@ -61,11 +61,11 @@ const HeaderLogo = styled.img`
   max-width: 167px;
   cursor: pointer;
 
-  @media screen and (max-width: 1023px) {
+  @media screen and (max-width: 744px) {
     max-width: 120px;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 375px) {
     max-width: 108px;
   }
 `;
