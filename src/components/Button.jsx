@@ -18,7 +18,6 @@ export default function Button({ children, rounded = false, ...props }) {
 
 const StyledButton = styled.button`
   display: flex;
-  width: 100%;
   height: 42px;
   padding: 8px 0px;
   justify-content: center;
