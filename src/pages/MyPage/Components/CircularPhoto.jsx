@@ -1,4 +1,4 @@
-import TestImage from '@assets/TestIdolImage/Winter.png';
+import TestImage from '@assets/TestIdolImage/NotFoundImage.png';
 import styled from 'styled-components';
 
 export default function CircularPhoto() {
