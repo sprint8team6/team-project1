@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import {
   ModalBackground,
-  ModalContainer,
+  ModalWindow,
   BasedContainer,
   StyledCreditIcon,
   StyledCreditIconWhite,
@@ -13,11 +13,13 @@ import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
 
 /** 크레딧 충전 모달
+ * @param {boolean} isOpen - 모달이 열려 있는지 여부
+ * @param {function} onClose - 모달을 닫기 위한 함수
  * @param {boolean} selected - 선택 시, value CreditOptionButton의 value값과 같으면 selected 됨
  * @returns {React.Element} 크레딧 충전 모달
  */
 export default function ChargeModal({ isOpen, onClose }) {
-  // States
+  // State
   const [optionValue, setOptionValue] = useState('100');
 
   if (!isOpen) return null;
@@ -28,7 +30,7 @@ export default function ChargeModal({ isOpen, onClose }) {
 
   return (
     <ModalBackground>
-      <StyledChargeModalContainer>
+      <StyledChargeModalWindow>
         <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
         <StyledContainer>
           <StyledButtonWrapper>
@@ -50,14 +52,14 @@ export default function ChargeModal({ isOpen, onClose }) {
           </StyledButtonWrapper>
           <ChargeButton onClose={onClose} />
         </StyledContainer>
-      </StyledChargeModalContainer>
+      </StyledChargeModalWindow>
     </ModalBackground>
   );
 }
 
 // styled-components
 
-const StyledChargeModalContainer = styled(ModalContainer)`
+const StyledChargeModalWindow = styled(ModalWindow)`
   display: flex;
   position: fixed;
   z-index: 1000;
@@ -128,7 +130,7 @@ const CreditOptionButton = ({ value, optionValue, onClick }) => (
   </StyledCreditOptionButton>
 );
 
-function ChargeButton({ onClose }) {
+const ChargeButton = ({ onClose }) => {
   const submitOption = () => {
     /** @todo Credit 올라가는 로직 */
     onClose();
@@ -140,4 +142,4 @@ function ChargeButton({ onClose }) {
       충전하기
     </Button>
   );
-}
+};

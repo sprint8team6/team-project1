@@ -1,16 +1,15 @@
 import React from 'react';
-import { useModalContext } from 'contexts/ModalContext';
+import { useModalContext } from '@contexts/ModalContext';
 import CreditImg from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function MyCredit() {
-<<<<<<< HEAD
+  // states
   const [myCredit, setMyCredit] = useState(3600);
-=======
-  const { modals, openModal, closeModal } = useModalContext();
 
->>>>>>> 3eaa4e20e825b8ea0f9f1d7e0635019df4b2a352
+  const { openModal } = useModalContext();
+
   return (
     <>
       <MyCreditWrap>
@@ -24,13 +23,9 @@ export default function MyCredit() {
           </MyCreditBoxInfo>
 
           <CreditChargeBtn>
-<<<<<<< HEAD
-            <button type="button">충전하기</button>
-=======
-            <button type="button" onClick={() => openModal('chargeModal')}>
+            <button type="button" onClick={() => openModal('ChargeModal')}>
               충전하기
             </button>
->>>>>>> 3eaa4e20e825b8ea0f9f1d7e0635019df4b2a352
           </CreditChargeBtn>
         </MyCreditBox>
       </MyCreditWrap>

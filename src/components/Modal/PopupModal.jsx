@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useModalContext } from '@contexts/ModalContext';
 import {
-  ModalContainer,
+  ModalWindow,
   BasedContainer,
   ModalBackground,
 } from '@styles/CommonStyles';
@@ -11,26 +12,27 @@ import Button from '@components/Button';
 import CreditImg from '@assets/svg/ic_credit.svg';
 
 /** 팝업 모달 컴포넌트
- * @param {boolean} isOpen
- * @param {function} onClose
- *
+ * @param {boolean} isOpen - 모달이 열려 있는지 여부
+ * @param {function} onClose - 모달을 닫기 위한 함수
+ * @return {JSX.Element} 팝업 모달 컴포넌트
  */
 export default function PopupModal({ isOpen, onClose }) {
+  // Context
+  const { modals } = useModalContext();
+
   if (!isOpen) return null;
 
   return (
     <>
       <ModalBackground>
-        <StyledPopupContainer>
-          <ModalTopBar onClick={onClose} />
+        <StyledPopupWindow>
+          <ModalTopBar onClose={onClose} />
           <StyledContainer>
             <StyledCreditDiv />
-            <label>
-              앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
-            </label>
+            <PopupLabel Description={modals?.PopupModal.data} />
             <Button onClick={onClose}>확인</Button>
           </StyledContainer>
-        </StyledPopupContainer>
+        </StyledPopupWindow>
       </ModalBackground>
     </>
   );
@@ -38,7 +40,7 @@ export default function PopupModal({ isOpen, onClose }) {
 
 // styled-components
 
-const StyledPopupContainer = styled(ModalContainer)`
+const StyledPopupWindow = styled(ModalWindow)`
   display: flex;
   position: fixed;
   z-index: 2000;
@@ -52,11 +54,6 @@ const StyledPopupContainer = styled(ModalContainer)`
   background-position: center top 12px;
 `;
 
-const StyledCreditDiv = styled.div`
-  width: 118px;
-  height: 118px;
-`;
-
 const StyledContainer = styled(BasedContainer)`
   gap: 24px;
 
@@ -67,3 +64,16 @@ const StyledContainer = styled(BasedContainer)`
     line-height: 26px;
   }
 `;
+
+const StyledCreditDiv = styled.div`
+  width: 118px;
+  height: 118px;
+`;
+
+const PopupLabel = ({ Description }) => {
+  return (
+    <label>
+      앗! {Description}하기 위한 <em>크레딧</em>이 부족해요!
+    </label>
+  );
+};
