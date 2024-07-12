@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import {
+  ModalBackground,
   ModalContainer,
   BasedContainer,
   StyledCreditIcon,
@@ -15,12 +16,15 @@ import TestImage from '@assets/fandomK-img/fandomK-img6.png';
 
 /** 후원 모달 컴포넌트
  * @todo 현재 완~전 테스트용이므로 수정 후 사용이 요구됨
+ * @todo submit 미완성,
  * @param {boolean} isError - 에러 상태 여부
  * @param {string} mainTitle - 메인 타이틀
  * @param {string} subTitle - 서브 타이틀
  * @param {string} PreviewImg - 미리보기 이미지 URL
  */
 export default function DonationModal({
+  isOpen,
+  onClose,
   isError = false,
   mainTitle = '민지 2023 첫 광고',
   subTitle = '강남역 광고',
@@ -28,6 +32,8 @@ export default function DonationModal({
 }) {
   // States
   const [inputValue, setInputValue] = useState(''); // type: number
+
+  if (!isOpen) return null;
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -59,44 +65,48 @@ export default function DonationModal({
   };
 
   return (
-    <StyledDonationContainer>
-      <ModalTopBar>후원하기</ModalTopBar>
-      <StyledContainer>
-        <InfoWrapper>
-          <StyledPreviewImage src={PreviewImg} onError={onErrorImg} />
-          <DescriptionWrapper>
-            <h2>{subTitle}</h2>
-            <h1>{mainTitle}</h1>
-          </DescriptionWrapper>
-        </InfoWrapper>
-        <InputForm>
-          <StyledCreditInput
-            value={inputValue}
-            onChange={handleChange}
-            onKeyDown={KeyPressed}
-            isError={isError}
-            placeholder="크레딧 입력"
-            type="number"
-            step="1"
-          />
-          {isError && <ErrorMessage />}
-          <CreditIcon />
-          <Button disabled={!inputValue} onClick={handleSubmit}>
-            후원하기
-          </Button>
-        </InputForm>
-      </StyledContainer>
-    </StyledDonationContainer>
+    <ModalBackground>
+      <StyledDonationModalContainer>
+        <ModalTopBar>후원하기</ModalTopBar>
+        <StyledContainer>
+          <InfoWrapper>
+            <StyledPreviewImage src={PreviewImg} onError={onErrorImg} />
+            <DescriptionWrapper>
+              <h2>{subTitle}</h2>
+              <h1>{mainTitle}</h1>
+            </DescriptionWrapper>
+          </InfoWrapper>
+          <InputForm>
+            <StyledCreditInput
+              value={inputValue}
+              onChange={handleChange}
+              onKeyDown={KeyPressed}
+              isError={isError}
+              placeholder="크레딧 입력"
+              type="number"
+              step="1"
+            />
+            {isError && <ErrorMessage />}
+            <CreditIcon />
+            <Button disabled={!inputValue} onClick={handleSubmit}>
+              후원하기
+            </Button>
+          </InputForm>
+        </StyledContainer>
+      </StyledDonationModalContainer>
+    </ModalBackground>
   );
 }
 
 // styled-components
 
-const StyledDonationContainer = styled(ModalContainer)`
+const StyledDonationModalContainer = styled(ModalContainer)`
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+
   width: 327px;
   height: 509px;
-
-  display: flex;
   gap: 24px;
 `;
 
