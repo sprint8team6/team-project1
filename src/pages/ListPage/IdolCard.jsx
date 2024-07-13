@@ -1,15 +1,15 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { useModalContext } from '@contexts/useModalContext';
 import Button from '@components/Button';
-import IdolImg from '@assets/fandomK-img/fandomK-img6.png';
+import IdolImage from '@assets/fandomK-img/fandomK-img6.png';
 import defaultImg from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
-import { useState } from 'react';
-import { useModalContext } from '@contexts/ModalContext';
 
 export default function IdolCard() {
   // State
   const [idolStatus, setIdolStatus] = useState({
-    imgUrl: IdolImg,
+    imageUrl: IdolImage,
     tributeTxt: '강남역 광고',
     tributeInfo: '뉴진스 민지 지하철 광고',
     tributeCredit: 6000,
@@ -27,7 +27,7 @@ export default function IdolCard() {
     <IdolCardWrap>
       <IdolCardImg>
         <img
-          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImg}
+          src={idolStatus.imageUrl ? idolStatus.imageUrl : defaultImg}
           alt="아이돌 이미지"
         />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>

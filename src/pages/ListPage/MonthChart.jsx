@@ -77,12 +77,15 @@ const ListPageSubTitle = styled.div`
     }
   }
 
-  & > button {
+  & button {
+    padding: 16px 0;
     width: 130px;
     height: 32px;
     font-size: 1.3rem;
 
     & > img {
+      width: 24px;
+      height: 24px;
       margin-right: 5px;
     }
   }

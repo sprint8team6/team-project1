@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import logoImg from '@assets/svg/logo_big.svg';
-import profileImg from '@assets/svg/profile.svg';
+import logoImage from '@assets/svg/logo_big.svg';
+import profileImage from '@assets/svg/profile.svg';
 import { Link } from '../../node_modules/react-router-dom/dist/index';
 
 const Header = () => {
@@ -14,11 +14,11 @@ const Header = () => {
       <HeaderBox>
         <HeaderProfile />
 
-        <HeaderLogo onClick={handleReload} src={logoImg} alt="로고 이미지" />
+        <HeaderLogo onClick={handleReload} src={logoImage} alt="로고 이미지" />
 
         <HeaderProfile>
           <Link to="/mypage">
-            <img src={profileImg} alt="프로필 이미지" />
+            <img src={profileImage} alt="프로필 이미지" />
           </Link>
         </HeaderProfile>
       </HeaderBox>

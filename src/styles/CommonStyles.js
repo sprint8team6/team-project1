@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 
 // assets
-import CreditImg from '@assets/svg/ic_credit.svg';
-import CreditWhiteImg from '@assets/svg/ic_credit_white.svg';
+import CreditImage from '@assets/svg/ic_credit.svg';
+import CreditWhiteImage from '@assets/svg/ic_credit_white.svg';
 import DeleteButton from '@assets/svg/btn_delete_24px.svg';
 
 const fadeInModal = keyframes`
@@ -25,7 +25,7 @@ export const ModalBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
   animation: ${fadeInModal} 0.8s ease-out;
 `;
@@ -65,16 +65,16 @@ export const BasedContainer = styled.div`
 const BasedCreditIcon = styled.i`
   width: 20px;
   height: 20px;
-  background-image: url(${CreditImg});
+  background-image: url(${CreditImage});
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
 `;
 
 export const StyledCreditIcon = styled(BasedCreditIcon)`
-  background-image: url(${CreditImg});
+  background-image: url(${CreditImage});
 `;
 
 export const StyledCreditIconWhite = styled(BasedCreditIcon)`
-  background-image: url(${CreditWhiteImg});
+  background-image: url(${CreditWhiteImage});
 `;

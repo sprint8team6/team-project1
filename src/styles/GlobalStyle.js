@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
   body, html {
     font-size: 62.5%;
     word-break: keep-all;
-    font-family: Pretendard, sans-serif;
+    font-family: 'Pretendard', sans-serif;
 		background-color: #000000;
     color: var(--white);
   }

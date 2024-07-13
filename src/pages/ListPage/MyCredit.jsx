@@ -1,5 +1,5 @@
 import React from 'react';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 import CreditImg from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -8,7 +8,7 @@ export default function MyCredit() {
   // State
   const [myCredit, setMyCredit] = useState(3600);
   const { modals, openModal, closeModal } = useModalContext();
-  
+
   return (
     <>
       <MyCreditWrap>
