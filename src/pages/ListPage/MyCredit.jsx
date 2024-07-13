@@ -5,11 +5,10 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 export default function MyCredit() {
-  // states
+  // State
   const [myCredit, setMyCredit] = useState(3600);
-
-  const { openModal } = useModalContext();
-
+  const { modals, openModal, closeModal } = useModalContext();
+  
   return (
     <>
       <MyCreditWrap>

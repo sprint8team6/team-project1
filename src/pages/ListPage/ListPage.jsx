@@ -7,6 +7,8 @@ import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
 import DonationModal from '@components/Modal/DonationModal';
 import VoteModal from '@components/Modal/VoteModal';
+import MonthChart from './MonthChart';
+// import DonationModal from '@components/Modal/DonationModal';
 
 function ListPageContent() {
   // Context
@@ -41,6 +43,7 @@ function ListPageContent() {
       <Header />
       <MyCredit />
       <TributeSupport />
+      <MonthChart />
     </>
   );
 }
