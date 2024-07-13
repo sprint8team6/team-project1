@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import MonthIdolImg from './MonthIdolImg';
+import MonthIdolImage from './MonthIdolImage.jsx';
 
 export default function MonthIdol() {
   return (
     <ChartIdolGrid>
-      <MonthIdolImg />
+      <MonthIdolImage />
       <ChartIdolRank>1</ChartIdolRank>
       <ChartIdolName>에스파 윈터</ChartIdolName>
       <ChartIdolVote>999,999 표</ChartIdolVote>

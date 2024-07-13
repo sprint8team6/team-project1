@@ -1,6 +1,6 @@
 import Button from '@components/Button';
 import styled from 'styled-components';
-import ChartImg from '@assets/svg/ic_chart.svg';
+import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
 
@@ -12,7 +12,7 @@ export default function MonthChart() {
           <ListPageSubTitle>
             <h2>이달의 차트</h2>
             <Button>
-              <img src={ChartImg} alt="차트 이미지" />
+              <img src={ChartImage} alt="차트 이미지" />
               차트 투표하기
             </Button>
           </ListPageSubTitle>
@@ -30,9 +30,9 @@ export default function MonthChart() {
           <MonthIdol />
           <MonthIdol />
         </MonthIdolList>
-        <ChartMoreBtn>
+        <ChartMoreButton>
           <button type="button">더보기</button>
-        </ChartMoreBtn>
+        </ChartMoreButton>
       </MyCreditWrap>
     </>
   );
@@ -95,7 +95,7 @@ const MonthIdolList = styled.div`
   margin-bottom: 50px;
 `;
 
-const ChartMoreBtn = styled.div`
+const ChartMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
