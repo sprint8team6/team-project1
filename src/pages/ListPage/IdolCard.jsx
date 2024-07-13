@@ -4,8 +4,10 @@ import IdolImg from '@assets/fandomK-img/fandomK-img6.png';
 import defaultImg from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
+import { useModalContext } from '@contexts/ModalContext';
 
 export default function IdolCard() {
+  // State
   const [idolStatus, setIdolStatus] = useState({
     imgUrl: IdolImg,
     tributeTxt: '강남역 광고',
@@ -13,6 +15,14 @@ export default function IdolCard() {
     tributeCredit: 6000,
     tributeDate: 5,
   });
+
+  // Context
+  const { openModal } = useModalContext();
+
+  const handleTributeButtonClick = () => {
+    openModal('DonationModal', idolStatus);
+  };
+
   return (
     <IdolCardWrap>
       <IdolCardImg>
@@ -20,18 +30,18 @@ export default function IdolCard() {
           src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImg}
           alt="아이돌 이미지"
         />
-        <Button>후원하기</Button>
+        <Button onClick={handleTributeButtonClick}>후원하기</Button>
       </IdolCardImg>
       <IdolCardTxt>
-        <span>{idolStatus.tributeTxt}</span>
-        <p>{idolStatus.tributeInfo}</p>
+        <span>{idolStatus?.tributeTxt ?? '임시 서브 타이틀'}</span>
+        <p>{idolStatus?.tributeInfo ?? '임시 메인 타이틀'}</p>
         <div>
           <IdolCardCredit>
             <div>
               <img src={CreditIcon} alt="크레딧 아이콘" />
-              <span>{idolStatus.tributeCredit.toLocaleString()}</span>
+              <span>{idolStatus?.tributeCredit.toLocaleString() ?? '0'}</span>
             </div>
-            <span>{idolStatus.tributeDate}일 남음</span>
+            <span>{idolStatus?.tributeDate ?? '??'}일 남음</span>
           </IdolCardCredit>
           <IdolCardCreditGauge />
         </div>

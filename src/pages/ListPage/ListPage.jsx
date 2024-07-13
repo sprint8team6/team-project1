@@ -1,29 +1,45 @@
-import { ModalProvider, useModalContext } from 'contexts/ModalContext';
+import { ModalProvider, useModalContext } from '@contexts/ModalContext';
 import Header from '@components/Header';
 import MyCredit from './MyCredit';
 import TributeSupport from './TributeSupport';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
+import DonationModal from '@components/Modal/DonationModal';
+import VoteModal from '@components/Modal/VoteModal';
 import MonthChart from './MonthChart';
 // import DonationModal from '@components/Modal/DonationModal';
 
 function ListPageContent() {
-  const { modals, openModals, closeModal } = useModalContext();
+  // Context
+  const { modals, openModal, closeModal } = useModalContext();
 
   return (
     <>
-      <PopupModal
-        isOpen={modals.popupModal}
-        onClose={() => closeModal('popupModal')}
-      />
-      <ChargeModal
-        isOpen={modals.chargeModal}
-        onClose={() => closeModal('chargeModal')}
-      />
-      {/* <DonationModal 
-          isOpen={modals.chargeModal}
-          onClose={() => closeModal('chargeModal')/> */}
+      {modals.ChargeModal.isOpen && (
+        <ChargeModal
+          isOpen={modals.ChargeModal}
+          onClose={() => closeModal('ChargeModal')}
+        />
+      )}
+      {modals.DonationModal.isOpen && (
+        <DonationModal
+          isOpen={modals.DonationModal}
+          onClose={() => closeModal('DonationModal')}
+        />
+      )}
+      {modals.VoteModal.isOpen && (
+        <VoteModal
+          isOpen={modals.VoteModal}
+          onClose={() => closeModal('VoteModal')}
+        />
+      )}
+      {modals.PopupModal.isOpen && (
+        <PopupModal
+          isOpen={modals.PopupModal}
+          onClose={() => closeModal('PopupModal')}
+        />
+      )}
       <Header />
       <MyCredit />
       <TributeSupport />

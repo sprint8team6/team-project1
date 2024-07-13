@@ -1,10 +1,20 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 // assets
 import CreditImg from '@assets/svg/ic_credit.svg';
 import CreditWhiteImg from '@assets/svg/ic_credit_white.svg';
 import DeleteButton from '@assets/svg/btn_delete_24px.svg';
+
+const fadeInModal = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const ModalBackground = styled.div`
   display: flex;
@@ -15,11 +25,12 @@ export const ModalBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 999;
+  animation: ${fadeInModal} 0.8s ease-out;
 `;
 
-export const ModalContainer = styled.div`
+export const ModalWindow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,6 +41,7 @@ export const ModalContainer = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 24px;
   z-index: 1000;
+  animation: ${fadeInModal} 0.8s ease-out;
 `;
 
 export const StyledDeleteButton = styled.button`

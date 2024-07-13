@@ -1,9 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useModalContext } from '@contexts/ModalContext';
 import {
   ModalBackground,
-  ModalContainer,
+  ModalWindow,
   BasedContainer,
   StyledCreditIcon,
 } from '@styles/CommonStyles';
@@ -11,27 +12,24 @@ import ModalTopBar from './ModalTopbar';
 import Button from '@components/Button';
 // assets
 import AltImage from '@assets/png/alt_image.png';
-// test assets
-import TestImage from '@assets/fandomK-img/fandomK-img6.png';
 
 /** 후원 모달 컴포넌트
  * @todo 현재 완~전 테스트용이므로 수정 후 사용이 요구됨
  * @todo submit 미완성,
  * @param {boolean} isError - 에러 상태 여부
- * @param {string} mainTitle - 메인 타이틀
- * @param {string} subTitle - 서브 타이틀
- * @param {string} PreviewImg - 미리보기 이미지 URL
  */
 export default function DonationModal({
   isOpen,
   onClose,
-  isError = false,
-  mainTitle = '민지 2023 첫 광고',
-  subTitle = '강남역 광고',
-  PreviewImg = TestImage,
+  isError = false, // 크레딧이 부족할 때
+  PreviewImg = AltImage,
 }) {
-  // States
-  const [inputValue, setInputValue] = useState(''); // type: number
+  // State
+  const [inputValue, setInputValue] = useState(''); // [type:number]
+
+  // Context
+  const { modals, openModal } = useModalContext();
+  const idolData = modals.DonationModal?.data;
 
   if (!isOpen) return null;
 
@@ -58,6 +56,10 @@ export default function DonationModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (Number(inputValue) > 100) {
+      // 크레딧으로 바꿔야 함, 100
+      openModal('PopupModal', '후원');
+    }
   };
 
   const onErrorImg = (e) => {
@@ -66,22 +68,25 @@ export default function DonationModal({
 
   return (
     <ModalBackground>
-      <StyledDonationModalContainer>
-        <ModalTopBar>후원하기</ModalTopBar>
+      <StyledDonationModalWindow>
+        <ModalTopBar onClose={onClose}>후원하기</ModalTopBar>
         <StyledContainer>
           <InfoWrapper>
-            <StyledPreviewImage src={PreviewImg} onError={onErrorImg} />
+            <StyledPreviewImage
+              src={idolData?.imgUrl || PreviewImg}
+              onError={onErrorImg}
+            />
             <DescriptionWrapper>
-              <h2>{subTitle}</h2>
-              <h1>{mainTitle}</h1>
+              <h2>{idolData?.tributeTxt || '서브 타이틀'}</h2>
+              <h1>{idolData?.tributeInfo || '메인 타이틀'}</h1>
             </DescriptionWrapper>
           </InfoWrapper>
-          <InputForm>
+          <InputForm onSubmit={handleSubmit}>
             <StyledCreditInput
               value={inputValue}
               onChange={handleChange}
               onKeyDown={KeyPressed}
-              isError={isError}
+              $isError={isError}
               placeholder="크레딧 입력"
               type="number"
               step="1"
@@ -93,14 +98,14 @@ export default function DonationModal({
             </Button>
           </InputForm>
         </StyledContainer>
-      </StyledDonationModalContainer>
+      </StyledDonationModalWindow>
     </ModalBackground>
   );
 }
 
 // styled-components
 
-const StyledDonationModalContainer = styled(ModalContainer)`
+const StyledDonationModalWindow = styled(ModalWindow)`
   display: flex;
   position: fixed;
   z-index: 1000;
@@ -142,7 +147,6 @@ const DescriptionWrapper = styled.div`
   h2 {
     color: var(--white);
     opacity: 0.4;
-    font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -187,7 +191,7 @@ const StyledCreditInput = styled.input`
   }
 
   &::-webkit-inner-spin-button {
-    /* type=number 증감 버튼 없애기 */
+    /* input[type=number] 증감 버튼 없애기 */
     appearance: none;
   }
 `;
