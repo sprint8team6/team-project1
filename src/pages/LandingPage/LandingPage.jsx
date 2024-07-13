@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import logo from '@assets/svg/logo.svg';
-import backgroundImg from '@assets/LandingPage/image 14.png';
+import backgroundImage from '@assets/LandingPage/image 14.png';
 import topDesign from '@assets/svg/Img_top.svg';
-import landingBgImg1 from '@assets/LandingPage/fandomK-img13.svg';
-import landingBgImg2 from '@assets/LandingPage/fandomK-img10.svg';
-import landingBgImg3 from '@assets/LandingPage/fandomK-img14.svg';
-import landingImg1 from '@assets/LandingPage/Home-1.png';
-import landingImg2 from '@assets/LandingPage/Home-2.png';
-import landingImg3 from '@assets/LandingPage/Home-3.png';
+import landingBackgroundImage1 from '@assets/LandingPage/fandomK-img13.svg';
+import landingBackgroundImage2 from '@assets/LandingPage/fandomK-img10.svg';
+import landingBackgroundImage3 from '@assets/LandingPage/fandomK-img14.svg';
+import landingImage1 from '@assets/LandingPage/Home-1.png';
+import landingImage2 from '@assets/LandingPage/Home-2.png';
+import landingImage3 from '@assets/LandingPage/Home-3.png';
 import Button from '@components/Button';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ function LandingPage() {
     <div>
       <>
         <Main>
-          <TopDesignImg src={topDesign} alt="디자인" />
+          <TopDesignImage src={topDesign} alt="디자인" />
           <LogoWrap>
             <div>
               내가 좋아하는 아이돌을
@@ -26,7 +26,7 @@ function LandingPage() {
               <img src={logo} alt="로고 이미지" />
             </Link>
           </LogoWrap>
-          <BackgroundImg src={backgroundImg} alt="배경 이미지" />
+          <BackgroundImage src={backgroundImage} alt="배경 이미지" />
           <ButtonWrap>
             <Button>지금 시작하기</Button>
           </ButtonWrap>
@@ -40,7 +40,7 @@ function LandingPage() {
                 <br />
                 쉽게 조공해 보세요
               </LandingTitleWrap>
-              <img src={landingImg1} alt="랜딩 이미지1" />
+              <img src={landingImage1} alt="랜딩 이미지1" />
             </LandingWrap>
           </LandingSection>
           <LandingSection>
@@ -51,7 +51,7 @@ function LandingPage() {
                 <br />
                 영예를 선물하세요
               </LandingTitleWrap>
-              <img src={landingImg2} alt="랜딩 이미지2" />
+              <img src={landingImage2} alt="랜딩 이미지2" />
             </LandingWrap>
           </LandingSection>
           <LandingSection>
@@ -62,12 +62,12 @@ function LandingPage() {
                 <br />
                 소식을 모아보세요
               </LandingTitleWrap>
-              <img src={landingImg3} alt="랜딩 이미지3" />
+              <img src={landingImage3} alt="랜딩 이미지3" />
             </LandingWrap>
           </LandingSection>
-          <LandingBackgroundImg1 />
-          <LandingBackgroundImg2 />
-          <LandingBackgroundImg3 />
+          <LandingBackgroundImage1 />
+          <LandingBackgroundImage2 />
+          <LandingBackgroundImage3 />
           <Rectangle />
         </BottomContainer>
       </>
@@ -99,7 +99,7 @@ const Main = styled.div`
   }
 `;
 
-const TopDesignImg = styled.img`
+const TopDesignImage = styled.img`
   display: block;
   position: absolute;
   top: 0;
@@ -115,8 +115,8 @@ const TopDesignImg = styled.img`
   }
 `;
 
-const BackgroundImg = styled.img`
-  width: 932px;
+const BackgroundImage = styled.img`
+  width: 100%;
   opacity: 0.7;
   position: absolute;
   left: 50%;
@@ -124,12 +124,11 @@ const BackgroundImg = styled.img`
   transform: translate(-50%, -50%);
 
   @media (max-width: 744px) {
-    width: 714px;
+    width: 100%;
     top: 50%;
   }
 
   @media (max-width: 375px) {
-    width: 394px;
     top: 52%;
   }
 `;
@@ -172,6 +171,10 @@ const LogoWrap = styled.div`
 
 const ButtonWrap = styled.div`
   width: 477px;
+
+  @media (max-width: 477px) {
+    width: 100%;
+  }
 
   @media (max-width: 375px) {
     width: 230px;
@@ -234,8 +237,8 @@ const LandingSection = styled.div`
   }
 `;
 
-const LandingBackgroundImg1 = styled.div`
-  width: 1200px;
+const LandingBackgroundImage1 = styled.div`
+  width: 100%;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -244,7 +247,7 @@ const LandingBackgroundImg1 = styled.div`
       rgba(2, 0, 14, 0.5) 5%,
       rgba(2, 0, 14, 1) 60%
     ),
-    url(${landingBgImg1});
+    url(${landingBackgroundImage1});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -253,7 +256,7 @@ const LandingBackgroundImg1 = styled.div`
   z-index: 1;
 
   @media (max-width: 744px) {
-    width: 744px;
+    width: 100%;
     height: 744px;
   }
 
@@ -262,8 +265,8 @@ const LandingBackgroundImg1 = styled.div`
   }
 `;
 
-const LandingBackgroundImg2 = styled.div`
-  width: 1200px;
+const LandingBackgroundImage2 = styled.div`
+  width: 100%;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -272,7 +275,7 @@ const LandingBackgroundImg2 = styled.div`
       rgba(2, 0, 14, 0.5) 5%,
       rgba(2, 0, 14, 1) 60%
     ),
-    url(${landingBgImg2});
+    url(${landingBackgroundImage2});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -281,7 +284,7 @@ const LandingBackgroundImg2 = styled.div`
   z-index: 1;
 
   @media (max-width: 744px) {
-    width: 744px;
+    width: 100%;
     height: 744px;
     top: 745px;
   }
@@ -291,8 +294,8 @@ const LandingBackgroundImg2 = styled.div`
   }
 `;
 
-const LandingBackgroundImg3 = styled.div`
-  width: 1200px;
+const LandingBackgroundImage3 = styled.div`
+  width: 100%;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -301,7 +304,7 @@ const LandingBackgroundImg3 = styled.div`
       rgba(2, 0, 14, 0.5) 5%,
       rgba(2, 0, 14, 1) 60%
     ),
-    url(${landingBgImg3});
+    url(${landingBackgroundImage3});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -310,7 +313,7 @@ const LandingBackgroundImg3 = styled.div`
   z-index: 1;
 
   @media (max-width: 744px) {
-    width: 744px;
+    width: 100%;
     height: 744px;
     top: 1489px;
   }
