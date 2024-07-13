@@ -45,6 +45,10 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     color: var(--brand-coral);
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyle;

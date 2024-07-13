@@ -28,7 +28,9 @@ function LandingPage() {
           </LogoWrap>
           <BackgroundImage src={backgroundImage} alt="배경 이미지" />
           <ButtonWrap>
-            <Button>지금 시작하기</Button>
+            <Link to="/list">
+              <Button>지금 시작하기</Button>
+            </Link>
           </ButtonWrap>
         </Main>
         <BottomContainer>
@@ -116,15 +118,18 @@ const TopDesignImage = styled.img`
 `;
 
 const BackgroundImage = styled.img`
-  width: 100%;
+  width: 932px;
   opacity: 0.7;
   position: absolute;
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
 
-  @media (max-width: 744px) {
+  @media (max-width: 932px) {
     width: 100%;
+  }
+
+  @media (max-width: 744px) {
     top: 50%;
   }
 
@@ -238,7 +243,7 @@ const LandingSection = styled.div`
 `;
 
 const LandingBackgroundImage1 = styled.div`
-  width: 100%;
+  width: 1200px;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -255,8 +260,11 @@ const LandingBackgroundImage1 = styled.div`
   top: 0px;
   z-index: 1;
 
-  @media (max-width: 744px) {
+  @media (max-width: 1200px) {
     width: 100%;
+  }
+
+  @media (max-width: 744px) {
     height: 744px;
   }
 
@@ -266,7 +274,7 @@ const LandingBackgroundImage1 = styled.div`
 `;
 
 const LandingBackgroundImage2 = styled.div`
-  width: 100%;
+  width: 1200px;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -283,6 +291,10 @@ const LandingBackgroundImage2 = styled.div`
   top: 1201px;
   z-index: 1;
 
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+
   @media (max-width: 744px) {
     width: 100%;
     height: 744px;
@@ -295,7 +307,7 @@ const LandingBackgroundImage2 = styled.div`
 `;
 
 const LandingBackgroundImage3 = styled.div`
-  width: 100%;
+  width: 1200px;
   height: 1200px;
   background: radial-gradient(
       circle,
@@ -312,6 +324,10 @@ const LandingBackgroundImage3 = styled.div`
   top: 2401px;
   z-index: 1;
 
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
+
   @media (max-width: 744px) {
     width: 100%;
     height: 744px;
@@ -324,6 +340,7 @@ const LandingBackgroundImage3 = styled.div`
 `;
 
 const LandingTitleWrap = styled.div`
+  padding: 0 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
