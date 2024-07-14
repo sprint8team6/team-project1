@@ -14,7 +14,7 @@ export default function MonthIdol() {
 
 const ChartIdolGrid = styled.div`
   display: grid;
-  grid-template-columns: 70px 0.5fr 7fr 2.5fr;
+  grid-template-columns: 70px 0.5fr 5.5fr 4fr;
   align-items: center;
   gap: 5px;
   width: 100%;
@@ -31,6 +31,10 @@ const ChartIdolRank = styled.div`
   font-weight: 400;
   text-align: center;
   color: var(--brand-coral);
+
+  @media screen and (max-width: 744px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const ChartIdolName = styled.div`
@@ -38,6 +42,10 @@ const ChartIdolName = styled.div`
   font-weight: 500;
   text-align: left;
   color: rgba(255, 255, 255, 0.87);
+
+  @media screen and (max-width: 744px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const ChartIdolVote = styled.div`
@@ -45,4 +53,8 @@ const ChartIdolVote = styled.div`
   font-weight: 400;
   text-align: right;
   color: rgba(255, 255, 255, 0.6);
+
+  @media screen and (max-width: 744px) {
+    font-size: 1.4rem;
+  }
 `;

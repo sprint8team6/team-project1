@@ -40,10 +40,10 @@ export default function MonthChart() {
 
 const MyCreditWrap = styled.section`
   width: 100%;
-  max-width: ${(props) => (props.Tribute ? '1400px' : '1200px')};
+  max-width: 1200px;
   margin: 0 auto;
   margin-top: 50px;
-  margin-bottom: ${(props) => (props.Tribute ? '80px' : '50px')};
+  margin-bottom: 50px;
   padding: 0 20px;
   color: #ffffff;
 `;
@@ -93,6 +93,14 @@ const MonthIdolList = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 24px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 744px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 33px;
+  }
 `;
 
 const ChartMoreButton = styled.div`

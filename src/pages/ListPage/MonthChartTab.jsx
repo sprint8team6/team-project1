@@ -16,6 +16,10 @@ const ChartTab = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const ChartTabButton = styled.button`

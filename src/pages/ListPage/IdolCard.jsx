@@ -95,7 +95,7 @@ const IdolCardImage = styled.div`
   & > button {
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    bottom: 30px;
     transform: translateX(-50%);
     width: 90%;
     max-width: 235px;

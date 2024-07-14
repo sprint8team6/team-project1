@@ -43,6 +43,10 @@ const MyCreditWrap = styled.section`
   @media screen and (max-width: 744px) {
     margin-top: 10px;
   }
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 40px;
+  }
 `;
 
 const MyCreditBox = styled.div`
@@ -55,7 +59,7 @@ const MyCreditBox = styled.div`
   color: #ffffff;
 
   @media screen and (max-width: 744px) {
-    padding: 30px 65px;
+    padding: 30px 40px;
   }
 
   @media screen and (max-width: 375px) {
