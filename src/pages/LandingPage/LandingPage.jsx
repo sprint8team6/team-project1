@@ -11,7 +11,7 @@ import landingImage3 from '@assets/LandingPage/Home-3.png';
 import Button from '@components/Button';
 import { Link } from 'react-router-dom';
 
-function LandingPage() {
+export default function LandingPage() {
   return (
     <div>
       <>
@@ -76,8 +76,6 @@ function LandingPage() {
     </div>
   );
 }
-
-export default LandingPage;
 
 const Main = styled.div`
   padding: 140px 0 120px;
