@@ -1,13 +1,13 @@
 import { ModalProvider, useModalContext } from '@contexts/ModalContext';
 import Header from '@components/Header';
-import MyCredit from './MyCredit';
-import TributeSupport from './TributeSupport';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
 import DonationModal from '@components/Modal/DonationModal';
 import VoteModal from '@components/Modal/VoteModal';
-import MonthChart from './MonthChart';
+import MyCredit from './components/MyCredit';
+import TributeSupport from './components/TributeSupport';
+import MonthChart from './components/MonthChart';
 // import DonationModal from '@components/Modal/DonationModal';
 
 function ListPageContent() {
