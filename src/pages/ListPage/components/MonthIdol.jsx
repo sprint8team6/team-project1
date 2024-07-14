@@ -1,13 +1,21 @@
 import styled from 'styled-components';
 import MonthIdolImage from './MonthIdolImage.jsx';
+import { useState } from 'react';
 
 export default function MonthIdol() {
+  const [monthIdolText, setMonthIdolText] = useState({
+    idolRank: 1,
+    idolName: '에스파 윈터',
+    idolVote: 999999,
+  });
   return (
     <ChartIdolGrid>
       <MonthIdolImage />
-      <ChartIdolRank>1</ChartIdolRank>
-      <ChartIdolName>에스파 윈터</ChartIdolName>
-      <ChartIdolVote>999,999 표</ChartIdolVote>
+      <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
+      <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
+      <ChartIdolVote>
+        {monthIdolText.idolVote.toLocaleString()} 표
+      </ChartIdolVote>
     </ChartIdolGrid>
   );
 }
