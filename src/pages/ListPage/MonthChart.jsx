@@ -1,17 +1,21 @@
-import Button from '@components/Button';
 import styled from 'styled-components';
+import { useModalContext } from '@contexts/useModalContext';
+import Button from '@components/Button';
 import ChartImg from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
 
 export default function MonthChart() {
+  // Context
+  const { openModal } = useModalContext();
+
   return (
     <>
       <MyCreditWrap>
         <div>
           <ListPageSubTitle>
             <h2>이달의 차트</h2>
-            <Button>
+            <Button onClick={() => openModal('VoteModal', null)}>
               <img src={ChartImg} alt="차트 이미지" />
               차트 투표하기
             </Button>
