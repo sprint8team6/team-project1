@@ -1,32 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import IdolCard from './IdolCard';
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
+import IdolCard from './IdolCard';
 
 export default function TributeSupport() {
   return (
-    <>
-      <MyCreditWrap>
-        <ListPageSubTitle>
-          <h2>후원을 기다리는 조공</h2>
-        </ListPageSubTitle>
-        <IdolTributeList>
-          <button type="button">
-            <img src={LeftArrow} alt="왼쪽 화살표 이미지" />
-          </button>
-          <IdolCardBox>
-            <IdolCard />
-            <IdolCard />
-            <IdolCard />
-            <IdolCard />
-          </IdolCardBox>
-          <button type="button">
-            <img src={RightArrow} alt="오른쪽 화살표 이미지" />
-          </button>
-        </IdolTributeList>
-      </MyCreditWrap>
-    </>
+    <MyCreditWrap>
+      <ListPageSubTitle>
+        <h2>후원을 기다리는 조공</h2>
+      </ListPageSubTitle>
+      <IdolTributeList>
+        <button type="button">
+          <img src={LeftArrow} alt="왼쪽 화살표 이미지" />
+        </button>
+        <IdolCardBox>
+          <IdolCard />
+          <IdolCard />
+          <IdolCard />
+          <IdolCard />
+        </IdolCardBox>
+        <button type="button">
+          <img src={RightArrow} alt="오른쪽 화살표 이미지" />
+        </button>
+      </IdolTributeList>
+    </MyCreditWrap>
   );
 }
 

@@ -4,13 +4,13 @@ import styled from 'styled-components';
 export default function MiniPhotoCard() {
   return (
     <PhotoCard>
-      <CircularPhoto></CircularPhoto>
+      <CircularPhoto />
       <IdolName>망곰이</IdolName>
       <TeamName>부앙단</TeamName>
     </PhotoCard>
   );
 }
-//추후 사이즈가 다르게 들어갈 수 있게 해주는 props 필요
+// 추후 사이즈가 다르게 들어갈 수 있게 해주는 props 필요
 const PhotoCard = styled.div`
   height: 100%;
   max-width: 12.8rem;

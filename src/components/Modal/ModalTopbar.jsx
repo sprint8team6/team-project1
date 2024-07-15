@@ -8,7 +8,7 @@ import { StyledDeleteButton } from '@styles/CommonStyles';
 export default function ModalTopBar({ children, onClose }) {
   return (
     <StyledModalTopBar>
-      <label>{children}</label>
+      <span>{children}</span>
       <StyledDeleteButton onClick={onClose} />
     </StyledModalTopBar>
   );
@@ -24,7 +24,7 @@ const StyledModalTopBar = styled.div`
   align-items: center;
   flex-shrink: 0;
 
-  label {
+  span {
     color: var(--white, #f7f7f8);
     font-size: 18px;
     font-style: normal;

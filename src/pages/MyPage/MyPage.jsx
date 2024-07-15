@@ -5,9 +5,9 @@ import FavoriteCandidates from './Components/FavoriteCandidates';
 export default function MyPage() {
   return (
     <>
-      <Header></Header>
-      <MyFavorites></MyFavorites>
-      <FavoriteCandidates></FavoriteCandidates>
+      <Header />
+      <MyFavorites />
+      <FavoriteCandidates />
     </>
   );
 }
