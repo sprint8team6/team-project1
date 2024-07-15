@@ -1,34 +1,33 @@
-import React from 'react';
 import { useModalContext } from '@contexts/ModalContext';
-import CreditImg from '@assets/svg/ic_credit.svg';
+import CreditImage from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
+import { useModalContext } from '@contexts/useModalContext';
+import CreditImage from '@assets/svg/ic_credit.svg';
 import styled from 'styled-components';
 
 export default function MyCredit() {
   // State
   const [myCredit, setMyCredit] = useState(3600);
   const { modals, openModal, closeModal } = useModalContext();
-  
-  return (
-    <>
-      <MyCreditWrap>
-        <MyCreditBox>
-          <MyCreditBoxInfo>
-            <h2>내 크레딧</h2>
-            <MyCreditNum>
-              <img src={CreditImg} alt="크레딧 이미지" />
-              <span>{myCredit.toLocaleString()}</span>
-            </MyCreditNum>
-          </MyCreditBoxInfo>
 
-          <CreditChargeBtn>
-            <button type="button" onClick={() => openModal('ChargeModal')}>
-              충전하기
-            </button>
-          </CreditChargeBtn>
-        </MyCreditBox>
-      </MyCreditWrap>
-    </>
+  return (
+    <MyCreditWrap>
+      <MyCreditBox>
+        <MyCreditBoxInfomation>
+          <h2>내 크레딧</h2>
+          <MyCreditNumber>
+            <img src={CreditImage} alt="크레딧 이미지" />
+            <span>{myCredit.toLocaleString()}</span>
+          </MyCreditNumber>
+        </MyCreditBoxInfomation>
+
+        <CreditChargeButton>
+          <button type="button" onClick={() => openModal('ChargeModal')}>
+            충전하기
+          </button>
+        </CreditChargeButton>
+      </MyCreditBox>
+    </MyCreditWrap>
   );
 }
 
@@ -43,6 +42,10 @@ const MyCreditWrap = styled.section`
   @media screen and (max-width: 744px) {
     margin-top: 10px;
   }
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 40px;
+  }
 `;
 
 const MyCreditBox = styled.div`
@@ -55,7 +58,7 @@ const MyCreditBox = styled.div`
   color: #ffffff;
 
   @media screen and (max-width: 744px) {
-    padding: 30px 65px;
+    padding: 30px 40px;
   }
 
   @media screen and (max-width: 375px) {
@@ -63,7 +66,7 @@ const MyCreditBox = styled.div`
   }
 `;
 
-const MyCreditBoxInfo = styled.div`
+const MyCreditBoxInfomation = styled.div`
   & > h2 {
     font-size: 1.6rem;
     font-weight: 400;
@@ -76,7 +79,7 @@ const MyCreditBoxInfo = styled.div`
   }
 `;
 
-const MyCreditNum = styled.div`
+const MyCreditNumber = styled.div`
   display: flex;
   align-items: center;
 
@@ -95,7 +98,7 @@ const MyCreditNum = styled.div`
   }
 `;
 
-const CreditChargeBtn = styled.div`
+const CreditChargeButton = styled.div`
   & > button {
     font-size: 1.6rem;
     font-weight: 700;

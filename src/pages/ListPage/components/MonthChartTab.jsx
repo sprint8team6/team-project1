@@ -3,10 +3,10 @@ import styled from 'styled-components';
 export default function MonthChartTab() {
   return (
     <ChartTab>
-      <ChartTabBtn on type="button">
+      <ChartTabButton on type="button">
         이달의 여자 아이돌
-      </ChartTabBtn>
-      <ChartTabBtn type="button">이달의 남자 아이돌</ChartTabBtn>
+      </ChartTabButton>
+      <ChartTabButton type="button">이달의 남자 아이돌</ChartTabButton>
     </ChartTab>
   );
 }
@@ -16,9 +16,13 @@ const ChartTab = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 16px;
+  }
 `;
 
-const ChartTabBtn = styled.button`
+const ChartTabButton = styled.button`
   width: 100%;
   height: 42px;
   border: none;

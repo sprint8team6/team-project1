@@ -14,65 +14,61 @@ import { Link } from 'react-router-dom';
 export default function LandingPage() {
   return (
     <div>
-      <>
-        <Main>
-          <TopDesignImage src={topDesign} alt="디자인" />
-          <LogoWrap>
-            <div>
-              내가 좋아하는 아이돌을
-              <br /> 가장 <span>쉽게 덕질</span> 하는 방법
-            </div>
-            <Link to="/list">
-              <img src={logo} alt="로고 이미지" />
-            </Link>
-          </LogoWrap>
-          <BackgroundImage src={backgroundImage} alt="배경 이미지" />
-          <ButtonWrap>
-            <Link to="/list">
-              <Button>지금 시작하기</Button>
-            </Link>
-          </ButtonWrap>
-        </Main>
-        <BottomContainer>
-          <LandingSection>
-            <LandingWrap>
-              <LandingTitleWrap>
-                <span>후원하기</span>
-                좋아하는 아이돌에게
-                <br />
-                쉽게 조공해 보세요
-              </LandingTitleWrap>
-              <img src={landingImage1} alt="랜딩 이미지1" />
-            </LandingWrap>
-          </LandingSection>
-          <LandingSection>
-            <LandingWrap>
-              <LandingTitleWrap alignRight>
-                <span>이달의 아티스트</span>
-                내 아티스트에게 1등의
-                <br />
-                영예를 선물하세요
-              </LandingTitleWrap>
-              <img src={landingImage2} alt="랜딩 이미지2" />
-            </LandingWrap>
-          </LandingSection>
-          <LandingSection>
-            <LandingWrap>
-              <LandingTitleWrap>
-                <span>나만의 아티스트</span>
-                좋아하는 아티스트들의
-                <br />
-                소식을 모아보세요
-              </LandingTitleWrap>
-              <img src={landingImage3} alt="랜딩 이미지3" />
-            </LandingWrap>
-          </LandingSection>
-          <LandingBackgroundImage1 />
-          <LandingBackgroundImage2 />
-          <LandingBackgroundImage3 />
-          <Rectangle />
-        </BottomContainer>
-      </>
+      <Main>
+        <TopDesignImg src={topDesign} alt="디자인" />
+        <LogoWrap>
+          <div>
+            내가 좋아하는 아이돌을
+            <br /> 가장 <span>쉽게 덕질</span> 하는 방법
+          </div>
+          <Link to="/list">
+            <img src={logo} alt="로고 이미지" />
+          </Link>
+        </LogoWrap>
+        <BackgroundImg src={backgroundImg} alt="배경 이미지" />
+        <ButtonWrap>
+          <Button>지금 시작하기</Button>
+        </ButtonWrap>
+      </Main>
+      <BottomContainer>
+        <LandingSection>
+          <LandingWrap>
+            <LandingTitleWrap>
+              <span>후원하기</span>
+              좋아하는 아이돌에게
+              <br />
+              쉽게 조공해 보세요
+            </LandingTitleWrap>
+            <img src={landingImg1} alt="랜딩 이미지1" />
+          </LandingWrap>
+        </LandingSection>
+        <LandingSection>
+          <LandingWrap>
+            <LandingTitleWrap alignRight>
+              <span>이달의 아티스트</span>
+              내 아티스트에게 1등의
+              <br />
+              영예를 선물하세요
+            </LandingTitleWrap>
+            <img src={landingImg2} alt="랜딩 이미지2" />
+          </LandingWrap>
+        </LandingSection>
+        <LandingSection>
+          <LandingWrap>
+            <LandingTitleWrap>
+              <span>나만의 아티스트</span>
+              좋아하는 아티스트들의
+              <br />
+              소식을 모아보세요
+            </LandingTitleWrap>
+            <img src={landingImg3} alt="랜딩 이미지3" />
+          </LandingWrap>
+        </LandingSection>
+        <LandingBackgroundImg1 />
+        <LandingBackgroundImg2 />
+        <LandingBackgroundImg3 />
+        <Rectangle />
+      </BottomContainer>
     </div>
   );
 }

@@ -1,49 +1,47 @@
 import Button from '@components/Button';
 import styled from 'styled-components';
-import ChartImg from '@assets/svg/ic_chart.svg';
+import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
 
 export default function MonthChart() {
   return (
-    <>
-      <MyCreditWrap>
-        <div>
-          <ListPageSubTitle>
-            <h2>이달의 차트</h2>
-            <Button>
-              <img src={ChartImg} alt="차트 이미지" />
-              차트 투표하기
-            </Button>
-          </ListPageSubTitle>
-        </div>
-        <MonthChartTab />
-        <MonthIdolList>
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-        </MonthIdolList>
-        <ChartMoreBtn>
-          <button type="button">더보기</button>
-        </ChartMoreBtn>
-      </MyCreditWrap>
-    </>
+    <MyCreditWrap>
+      <div>
+        <ListPageSubTitle>
+          <h2>이달의 차트</h2>
+          <Button onClick={() => openModal('VoteModal', null)}>
+            <img src={ChartImage} alt="차트 이미지" />
+            차트 투표하기
+          </Button>
+        </ListPageSubTitle>
+      </div>
+      <MonthChartTab />
+      <MonthIdolList>
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+      </MonthIdolList>
+      <ChartMoreButton>
+        <button type="button">더보기</button>
+      </ChartMoreButton>
+    </MyCreditWrap>
   );
 }
 
 const MyCreditWrap = styled.section`
   width: 100%;
-  max-width: ${(props) => (props.Tribute ? '1400px' : '1200px')};
+  max-width: 1200px;
   margin: 0 auto;
   margin-top: 50px;
-  margin-bottom: ${(props) => (props.Tribute ? '80px' : '50px')};
+  margin-bottom: 50px;
   padding: 0 20px;
   color: #ffffff;
 `;
@@ -93,9 +91,17 @@ const MonthIdolList = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 24px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 744px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media screen and (max-width: 375px) {
+    margin-bottom: 33px;
+  }
 `;
 
-const ChartMoreBtn = styled.div`
+const ChartMoreButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

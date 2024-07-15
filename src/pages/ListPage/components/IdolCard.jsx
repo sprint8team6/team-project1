@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import Button from '@components/Button';
-import IdolImg from '@assets/fandomK-img/fandomK-img6.png';
-import defaultImg from '@assets/png/alt_image.png';
+import IdolImage from '@assets/fandomK-img/fandomK-img6.png';
+import defaultImage from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 
 export default function IdolCard() {
   // State
   const [idolStatus, setIdolStatus] = useState({
-    imgUrl: IdolImg,
+    imgUrl: IdolImage,
     tributeTxt: '강남역 광고',
     tributeInfo: '뉴진스 민지 지하철 광고',
     tributeCredit: 6000,
@@ -25,14 +25,14 @@ export default function IdolCard() {
 
   return (
     <IdolCardWrap>
-      <IdolCardImg>
+      <IdolCardImage>
         <img
-          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImg}
+          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImage}
           alt="아이돌 이미지"
         />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
-      </IdolCardImg>
-      <IdolCardTxt>
+      </IdolCardImage>
+      <IdolCardText>
         <span>{idolStatus?.tributeTxt ?? '임시 서브 타이틀'}</span>
         <p>{idolStatus?.tributeInfo ?? '임시 메인 타이틀'}</p>
         <div>
@@ -45,7 +45,7 @@ export default function IdolCard() {
           </IdolCardCredit>
           <IdolCardCreditGauge />
         </div>
-      </IdolCardTxt>
+      </IdolCardText>
     </IdolCardWrap>
   );
 }
@@ -64,7 +64,7 @@ const IdolCardWrap = styled.div`
   }
 `;
 
-const IdolCardImg = styled.div`
+const IdolCardImage = styled.div`
   position: relative;
   width: 100%;
   max-height: 290px;
@@ -95,7 +95,7 @@ const IdolCardImg = styled.div`
   & > button {
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    bottom: 30px;
     transform: translateX(-50%);
     width: 90%;
     max-width: 235px;
@@ -107,7 +107,7 @@ const IdolCardImg = styled.div`
   }
 `;
 
-const IdolCardTxt = styled.div`
+const IdolCardText = styled.div`
   & > span {
     display: inline-block;
     font-size: 1.6rem;
