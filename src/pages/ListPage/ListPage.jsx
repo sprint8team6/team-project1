@@ -41,9 +41,9 @@ function ListPageContent() {
         />
       )}
       <Header />
-      <MyCredit />
+      <MyCredit openModal={openModal} />
       <TributeSupport />
-      <MonthChart />
+      <MonthChart openModal={openModal} />
     </>
   );
 }

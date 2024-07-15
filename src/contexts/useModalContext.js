@@ -30,6 +30,7 @@ export const ModalProvider = ({ children }) => {
   }, []);
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ModalContext.Provider value={{ modals, openModal, closeModal }}>
       {children}
     </ModalContext.Provider>

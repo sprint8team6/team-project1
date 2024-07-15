@@ -1,14 +1,11 @@
-import { useModalContext } from '@contexts/ModalContext';
-import CreditImage from '@assets/svg/ic_credit.svg';
-import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import CreditImage from '@assets/svg/ic_credit.svg';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function MyCredit() {
+export default function MyCredit({ openModal }) {
   // State
   const [myCredit, setMyCredit] = useState(3600);
-  const { modals, openModal, closeModal } = useModalContext();
 
   return (
     <MyCreditWrap>
