@@ -10,30 +10,30 @@ export default function FavoriteCandidates() {
     <AddFavoriteBox>
       <AddFavoriteTitle>관심있는 아이돌을 추가해보세요.</AddFavoriteTitle>
       <CandidatesBox>
-        <PageLeft></PageLeft>
+        <PageLeft />
         <IdolList>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
+          <MiniPhotoCard />
         </IdolList>
-        <PageRight></PageRight>
+        <PageRight />
       </CandidatesBox>
       <AddButtonBox>
         <StyledButton rounded>
-          <PlusIcon></PlusIcon>
+          <PlusIcon />
           <StyledButtonContext>추가하기</StyledButtonContext>
         </StyledButton>
       </AddButtonBox>

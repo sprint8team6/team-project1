@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import logoImg from '@assets/svg/logo_big.svg';
-import profileImg from '@assets/svg/profile.svg';
-import { Link } from '../../node_modules/react-router-dom/dist/index';
+import logoImage from '@assets/svg/logo_big.svg';
+import profileImage from '@assets/svg/profile.svg';
+import { Link } from 'react-router-dom';
 
-const Header = () => {
+export default function Header() {
   // 로고 클릭시 페이지 새로고침
   const handleReload = () => {
     window.location.reload();
@@ -14,17 +14,17 @@ const Header = () => {
       <HeaderBox>
         <HeaderProfile />
 
-        <HeaderLogo onClick={handleReload} src={logoImg} alt="로고 이미지" />
+        <HeaderLogo onClick={handleReload} src={logoImage} alt="로고 이미지" />
 
         <HeaderProfile>
           <Link to="/mypage">
-            <img src={profileImg} alt="프로필 이미지" />
+            <img src={profileImage} alt="프로필 이미지" />
           </Link>
         </HeaderProfile>
       </HeaderBox>
     </HeaderWrap>
   );
-};
+}
 
 const HeaderWrap = styled.header`
   width: 100%;
@@ -69,5 +69,3 @@ const HeaderLogo = styled.img`
     max-width: 108px;
   }
 `;
-
-export default Header;

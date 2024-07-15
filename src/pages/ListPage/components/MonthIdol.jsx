@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MonthIdolImage from './MonthIdolImage.jsx';
+import MonthIdolImage from './MonthIdolImage';
 import { useState } from 'react';
 
 export default function MonthIdol() {
