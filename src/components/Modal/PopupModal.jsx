@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 import {
   ModalWindow,
   BasedContainer,
@@ -9,7 +9,7 @@ import {
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import Button from '@components/Button';
 // assets
-import CreditImg from '@assets/svg/ic_credit.svg';
+import CreditImage from '@assets/svg/ic_credit.svg';
 
 /** 팝업 모달 컴포넌트
  * @param {boolean} isOpen - 모달이 열려 있는지 여부
@@ -46,7 +46,7 @@ const StyledPopupWindow = styled(ModalWindow)`
   width: 339px;
   height: 331px;
 
-  background-image: url(${CreditImg});
+  background-image: url(${CreditImage});
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center top 12px;

@@ -1,4 +1,4 @@
-import { ModalProvider, useModalContext } from '@contexts/ModalContext';
+import { ModalProvider, useModalContext } from '@contexts/useModalContext';
 import Header from '@components/Header';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';

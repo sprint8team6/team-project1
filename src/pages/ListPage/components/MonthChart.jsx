@@ -1,10 +1,14 @@
-import Button from '@components/Button';
 import styled from 'styled-components';
+import { useModalContext } from '@contexts/useModalContext';
+import Button from '@components/Button';
 import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
 
 export default function MonthChart() {
+  // Context
+  const { openModal } = useModalContext();
+
   return (
     <MyCreditWrap>
       <div>
@@ -75,12 +79,15 @@ const ListPageSubTitle = styled.div`
     }
   }
 
-  & > button {
+  & button {
+    padding: 16px 0;
     width: 130px;
     height: 32px;
     font-size: 1.3rem;
 
     & > img {
+      width: 24px;
+      height: 24px;
       margin-right: 5px;
     }
   }

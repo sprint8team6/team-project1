@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 import {
   ModalBackground,
   ModalWindow,
@@ -21,7 +21,6 @@ export default function DonationModal({
   isOpen,
   onClose,
   isError = false, // 크레딧이 부족할 때
-  PreviewImg = AltImage,
 }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
@@ -72,8 +71,8 @@ export default function DonationModal({
         <StyledContainer>
           <InfoWrapper>
             <StyledPreviewImage
-              src={idolData?.imgUrl || PreviewImg}
-              onError={onErrorImg}
+              src={idolData.imageUrl || AltImage}
+              onError={onErrorImage}
             />
             <DescriptionWrapper>
               <h2>{idolData?.tributeTxt || '서브 타이틀'}</h2>

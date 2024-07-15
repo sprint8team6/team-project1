@@ -28,6 +28,7 @@ const StyledButton = styled.button`
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);
+  font-family: inherit;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;

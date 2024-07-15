@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
 import {
   ModalBackground,
@@ -9,6 +9,7 @@ import {
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
+import CircularIdolImage from '@components/CircularIdolImage';
 
 export default function VoteModal({ isOpen, onClose }) {
   // State
@@ -21,7 +22,9 @@ export default function VoteModal({ isOpen, onClose }) {
     <ModalBackground>
       <StyledVoteModalWindow>
         <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
-        <StyledContainer>내용</StyledContainer>
+        <StyledContainer>
+          <CircularIdolImage />
+        </StyledContainer>
         <VoteButton
           onClose={onClose}
           openError={() => openModal('PopupModal', '투표')}

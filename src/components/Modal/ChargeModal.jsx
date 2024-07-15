@@ -14,7 +14,6 @@ import Button from '@components/Button';
 /** 크레딧 충전 모달
  * @param {boolean} isOpen - 모달이 열려 있는지 여부
  * @param {function} onClose - 모달을 닫기 위한 함수
- * @param {boolean} selected - 선택 시, value CreditOptionButton의 value값과 같으면 selected 됨
  * @returns {React.Element} 크레딧 충전 모달
  */
 export default function ChargeModal({ isOpen, onClose }) {

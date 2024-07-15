@@ -11,7 +11,7 @@ export default function MonthIdol() {
   });
   return (
     <ChartIdolGrid>
-      <MonthIdolImage />
+      <CircularIdolImg />
       <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
       <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
       <ChartIdolVote>
