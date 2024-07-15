@@ -55,7 +55,7 @@ const StyledPopupWindow = styled(ModalWindow)`
 const StyledContainer = styled(BasedContainer)`
   gap: 24px;
 
-  label {
+  span {
     font-size: 16px;
     font-style: normal;
     color: var(--white);
@@ -70,8 +70,8 @@ const StyledCreditDiv = styled.div`
 
 const PopupLabel = ({ Description }) => {
   return (
-    <label>
+    <span>
       앗! {Description}하기 위한 <em>크레딧</em>이 부족해요!
-    </label>
+    </span>
   );
 };

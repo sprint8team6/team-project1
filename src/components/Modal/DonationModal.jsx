@@ -36,6 +36,14 @@ export default function DonationModal({
     setInputValue(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Number(inputValue) > 100) {
+      // 크레딧으로 바꿔야 함, 100
+      openModal('PopupModal', '후원');
+    }
+  };
+
   const KeyPressed = (e) => {
     if (e.key === 'ArrowUp' && inputValue !== '0') {
       e.preventDefault();
@@ -53,15 +61,7 @@ export default function DonationModal({
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (Number(inputValue) > 100) {
-      // 크레딧으로 바꿔야 함, 100
-      openModal('PopupModal', '후원');
-    }
-  };
-
-  const onErrorImg = (e) => {
+  const onErrorImage = (e) => {
     e.target.src = AltImage;
   };
 
@@ -205,10 +205,6 @@ const CreditIcon = styled(StyledCreditIcon)`
   top: 13px;
 `;
 
-const ErrorMessage = () => {
-  return <ErrorSpan>갖고 있는 크레딧보다 더 많이 후원할 수 없어요!</ErrorSpan>;
-};
-
 const ErrorSpan = styled.span`
   position: absolute;
   top: 64px;
@@ -219,3 +215,7 @@ const ErrorSpan = styled.span`
   font-weight: 500;
   line-height: normal;
 `;
+
+const ErrorMessage = () => {
+  return <ErrorSpan>갖고 있는 크레딧보다 더 많이 후원할 수 없어요!</ErrorSpan>;
+};

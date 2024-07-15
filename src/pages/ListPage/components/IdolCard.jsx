@@ -4,7 +4,7 @@ import IdolImage from '@assets/fandomK-img/fandomK-img6.png';
 import defaultImage from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
-import { useModalContext } from '@contexts/ModalContext';
+import { useModalContext } from '@contexts/useModalContext';
 
 export default function IdolCard() {
   // State

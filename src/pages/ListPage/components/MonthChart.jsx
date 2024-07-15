@@ -10,7 +10,7 @@ export default function MonthChart() {
       <div>
         <ListPageSubTitle>
           <h2>이달의 차트</h2>
-          <Button>
+          <Button onClick={() => openModal('VoteModal', null)}>
             <img src={ChartImage} alt="차트 이미지" />
             차트 투표하기
           </Button>

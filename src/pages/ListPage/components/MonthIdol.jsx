@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import MonthIdolImage from './MonthIdolImage';
 import { useState } from 'react';
 import MonthIdolImage from './MonthIdolImage';
 
