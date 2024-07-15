@@ -1,14 +1,10 @@
 import styled from 'styled-components';
-import { useModalContext } from '@contexts/useModalContext';
 import Button from '@components/Button';
 import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
 
-export default function MonthChart() {
-  // Context
-  const { openModal } = useModalContext();
-
+export default function MonthChart({ openModal }) {
   return (
     <MyCreditWrap>
       <div>
