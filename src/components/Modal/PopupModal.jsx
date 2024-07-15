@@ -23,18 +23,16 @@ export default function PopupModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <>
-      <ModalBackground>
-        <StyledPopupWindow>
-          <ModalTopBar onClose={onClose} />
-          <StyledContainer>
-            <StyledCreditDiv />
-            <PopupLabel Description={modals?.PopupModal.data} />
-            <Button onClick={onClose}>확인</Button>
-          </StyledContainer>
-        </StyledPopupWindow>
-      </ModalBackground>
-    </>
+    <ModalBackground>
+      <StyledPopupWindow>
+        <ModalTopBar onClose={onClose} />
+        <StyledContainer>
+          <StyledCreditDiv />
+          <PopupLabel Description={modals?.PopupModal.data} />
+          <Button onClick={onClose}>확인</Button>
+        </StyledContainer>
+      </StyledPopupWindow>
+    </ModalBackground>
   );
 }
 
