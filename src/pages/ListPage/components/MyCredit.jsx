@@ -1,6 +1,7 @@
-import React from 'react';
-import { useModalContext } from '@contexts/useModalContext';
+import { useModalContext } from '@contexts/ModalContext';
+import CreditImage from '@assets/svg/ic_credit.svg';
 import { useState } from 'react';
+import { useModalContext } from '@contexts/useModalContext';
 import CreditImage from '@assets/svg/ic_credit.svg';
 import styled from 'styled-components';
 
@@ -10,25 +11,23 @@ export default function MyCredit() {
   const { modals, openModal, closeModal } = useModalContext();
 
   return (
-    <>
-      <MyCreditWrap>
-        <MyCreditBox>
-          <MyCreditBoxInfomation>
-            <h2>내 크레딧</h2>
-            <MyCreditNumber>
-              <img src={CreditImage} alt="크레딧 이미지" />
-              <span>{myCredit.toLocaleString()}</span>
-            </MyCreditNumber>
-          </MyCreditBoxInfomation>
+    <MyCreditWrap>
+      <MyCreditBox>
+        <MyCreditBoxInfomation>
+          <h2>내 크레딧</h2>
+          <MyCreditNumber>
+            <img src={CreditImage} alt="크레딧 이미지" />
+            <span>{myCredit.toLocaleString()}</span>
+          </MyCreditNumber>
+        </MyCreditBoxInfomation>
 
-          <CreditChargeButton>
-            <button type="button" onClick={() => openModal('ChargeModal')}>
-              충전하기
-            </button>
-          </CreditChargeButton>
-        </MyCreditBox>
-      </MyCreditWrap>
-    </>
+        <CreditChargeButton>
+          <button type="button" onClick={() => openModal('ChargeModal')}>
+            충전하기
+          </button>
+        </CreditChargeButton>
+      </MyCreditBox>
+    </MyCreditWrap>
   );
 }
 

@@ -3,17 +3,15 @@ import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
   return (
-    <>
-      <MyFavoriteListBox>
-        <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
-        <MyFavoriteList>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-          <MiniPhotoCard></MiniPhotoCard>
-        </MyFavoriteList>
-      </MyFavoriteListBox>
-    </>
+    <MyFavoriteListBox>
+      <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
+      <MyFavoriteList>
+        <MiniPhotoCard />
+        <MiniPhotoCard />
+        <MiniPhotoCard />
+        <MiniPhotoCard />
+      </MyFavoriteList>
+    </MyFavoriteListBox>
   );
 }
 

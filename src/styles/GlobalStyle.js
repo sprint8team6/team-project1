@@ -39,11 +39,16 @@ const GlobalStyle = createGlobalStyle`
   outline: none;
   box-shadow: none;
   cursor: pointer;
+	font-family: Pretendard, sans-serif;
   }
 
   em {
     font-style: normal;
     color: var(--brand-coral);
+  }
+
+  a {
+    text-decoration: none;
   }
 `;
 

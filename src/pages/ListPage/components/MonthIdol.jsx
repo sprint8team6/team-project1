@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import MonthIdolImage from './MonthIdolImage';
 import { useState } from 'react';
-import CircularIdolImg from '@components/CircularIdolImage';
+import MonthIdolImage from './MonthIdolImage';
 
 export default function MonthIdol() {
   const [monthIdolText, setMonthIdolText] = useState({
@@ -14,7 +15,7 @@ export default function MonthIdol() {
       <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
       <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
       <ChartIdolVote>
-        {monthIdolText.idolVote.toLocaleString()} 표
+        {monthIdolText.idolVote.toLocaleString()} 표 표입니다.
       </ChartIdolVote>
     </ChartIdolGrid>
   );
