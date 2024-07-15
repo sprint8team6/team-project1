@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import logo from '@assets/svg/logo.svg';
 import backgroundImage from '@assets/LandingPage/image 14.png';
-import topDesign from '@assets/svg/Img_top.svg';
+import topDesign from '@assets/svg/Image_top.svg';
 import landingBackgroundImage1 from '@assets/LandingPage/fandomK-img13.svg';
 import landingBackgroundImage2 from '@assets/LandingPage/fandomK-img10.svg';
 import landingBackgroundImage3 from '@assets/LandingPage/fandomK-img14.svg';
@@ -15,7 +15,7 @@ export default function LandingPage() {
   return (
     <div>
       <Main>
-        <TopDesignImg src={topDesign} alt="디자인" />
+        <TopDesignImage src={topDesign} alt="디자인" />
         <LogoWrap>
           <div>
             내가 좋아하는 아이돌을
@@ -25,7 +25,7 @@ export default function LandingPage() {
             <img src={logo} alt="로고 이미지" />
           </Link>
         </LogoWrap>
-        <BackgroundImg src={backgroundImg} alt="배경 이미지" />
+        <BackgroundImage src={backgroundImage} alt="배경 이미지" />
         <ButtonWrap>
           <Button>지금 시작하기</Button>
         </ButtonWrap>
@@ -39,7 +39,7 @@ export default function LandingPage() {
               <br />
               쉽게 조공해 보세요
             </LandingTitleWrap>
-            <img src={landingImg1} alt="랜딩 이미지1" />
+            <img src={landingImage1} alt="랜딩 이미지1" />
           </LandingWrap>
         </LandingSection>
         <LandingSection>
@@ -50,7 +50,7 @@ export default function LandingPage() {
               <br />
               영예를 선물하세요
             </LandingTitleWrap>
-            <img src={landingImg2} alt="랜딩 이미지2" />
+            <img src={landingImage2} alt="랜딩 이미지2" />
           </LandingWrap>
         </LandingSection>
         <LandingSection>
@@ -61,12 +61,12 @@ export default function LandingPage() {
               <br />
               소식을 모아보세요
             </LandingTitleWrap>
-            <img src={landingImg3} alt="랜딩 이미지3" />
+            <img src={landingImage3} alt="랜딩 이미지3" />
           </LandingWrap>
         </LandingSection>
-        <LandingBackgroundImg1 />
-        <LandingBackgroundImg2 />
-        <LandingBackgroundImg3 />
+        <LandingBackgroundImage1 />
+        <LandingBackgroundImage2 />
+        <LandingBackgroundImage3 />
         <Rectangle />
       </BottomContainer>
     </div>
