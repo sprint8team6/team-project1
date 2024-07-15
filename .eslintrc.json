@@ -1,6 +1,17 @@
 {
   "extends": ["airbnb", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021, // 최신 ECMAScript 2021 구문 지원
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // JSX 지원
+    }
+  },
   "rules": {
     // 필요에 따라 추가 규칙을 설정할 수 있습니다.
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
