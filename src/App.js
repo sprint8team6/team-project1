@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LandingPage from '@pages/LandingPage/LandingPage.jsx';
-import MyPage from '@pages/MyPage/MyPage.jsx';
-import ListPage from '@pages/ListPage/ListPage.jsx';
+import LandingPage from '@pages/LandingPage/LandingPage';
+import MyPage from '@pages/MyPage/MyPage';
+import ListPage from '@pages/ListPage/ListPage';
 
 function App() {
   return (

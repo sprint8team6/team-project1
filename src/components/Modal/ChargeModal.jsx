@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import useState from 'react';
 import styled from 'styled-components';
 import {
   ModalBackground,
@@ -118,7 +117,7 @@ const ModalRadioButton = styled(RadioButton)`
   right: 20px;
 `;
 
-const CreditOptionButton = ({ value, optionValue, onClick }) => (
+const CreditOptionButton = ({ value, optionValue, onClick }) => {
   <StyledCreditOptionButton
     value={value}
     onClick={onClick}
@@ -127,8 +126,8 @@ const CreditOptionButton = ({ value, optionValue, onClick }) => (
     <StyledCreditIcon />
     {value}
     <ModalRadioButton checked={optionValue === value} />
-  </StyledCreditOptionButton>
-);
+  </StyledCreditOptionButton>;
+};
 
 const ChargeButton = ({ onClose }) => {
   const submitOption = () => {

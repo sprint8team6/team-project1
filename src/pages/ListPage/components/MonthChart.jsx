@@ -6,35 +6,33 @@ import MonthIdol from './MonthIdol';
 
 export default function MonthChart() {
   return (
-    <>
-      <MyCreditWrap>
-        <div>
-          <ListPageSubTitle>
-            <h2>이달의 차트</h2>
-            <Button>
-              <img src={ChartImage} alt="차트 이미지" />
-              차트 투표하기
-            </Button>
-          </ListPageSubTitle>
-        </div>
-        <MonthChartTab />
-        <MonthIdolList>
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-          <MonthIdol />
-        </MonthIdolList>
-        <ChartMoreButton>
-          <button type="button">더보기</button>
-        </ChartMoreButton>
-      </MyCreditWrap>
-    </>
+    <MyCreditWrap>
+      <div>
+        <ListPageSubTitle>
+          <h2>이달의 차트</h2>
+          <Button onClick={() => openModal('VoteModal', null)}>
+            <img src={ChartImage} alt="차트 이미지" />
+            차트 투표하기
+          </Button>
+        </ListPageSubTitle>
+      </div>
+      <MonthChartTab />
+      <MonthIdolList>
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+        <MonthIdol />
+      </MonthIdolList>
+      <ChartMoreButton>
+        <button type="button">더보기</button>
+      </ChartMoreButton>
+    </MyCreditWrap>
   );
 }
 

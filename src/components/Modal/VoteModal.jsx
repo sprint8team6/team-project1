@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/ModalContext';
 import styled from 'styled-components';
