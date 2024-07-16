@@ -97,7 +97,7 @@ const IdolCardImage = styled.div`
     max-width: 235px;
     z-index: 2;
 
-    @media screen and (max-width: 3744px) {
+    @media screen and (max-width: 744px) {
       bottom: 20px;
     }
 
