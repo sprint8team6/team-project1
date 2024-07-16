@@ -3,17 +3,13 @@ import styled from 'styled-components';
 
 /**
  * Button 컴포넌트
- * @param {object} props - 프롭스
  * @param {React.ReactNode} children - 버튼 value
- * @param {boolean} rounded - 원형 버튼일지 결정하는 prop (기본=false)
+ * @param {boolean} [isRounded=false] - 원형 버튼일지 결정하는 prop (기본=false)
+ * @param {object} props - 프롭스
  * @returns {JSX.Element}
  */
-export default function Button({ children, rounded = false, ...props }) {
-  return rounded ? (
-    <StyledRoundedButton {...props}>{children}</StyledRoundedButton>
-  ) : (
-    <StyledButton {...props}>{children}</StyledButton>
-  );
+export default function Button({ children, isRounded = false, ...props }) {
+  return <StyledButton {...props}>{children}</StyledButton>;
 }
 
 const StyledButton = styled.button`
@@ -24,7 +20,7 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: 3px;
+  border-radius: ${(isRounded) => (isRounded ? '3px' : '24px')};
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);
@@ -39,8 +35,4 @@ const StyledButton = styled.button`
     background: var(--medium-gray);
     cursor: default;
   }
-`;
-
-const StyledRoundedButton = styled(StyledButton)`
-  border-radius: 24px;
 `;
