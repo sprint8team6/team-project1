@@ -54,12 +54,7 @@ const IdolCardWrap = styled.div`
   width: 100%;
   max-width: 280px;
 
-  @media screen and (max-width: 744px) {
-    min-width: 280px;
-  }
-
   @media screen and (max-width: 375px) {
-    min-width: 160px;
     max-width: 160px;
   }
 `;
@@ -70,6 +65,7 @@ const IdolCardImage = styled.div`
   max-height: 290px;
   overflow: hidden;
   margin-bottom: 10px;
+  border-radius: 8px;
 
   &::after {
     position: absolute;
@@ -101,8 +97,13 @@ const IdolCardImage = styled.div`
     max-width: 235px;
     z-index: 2;
 
+    @media screen and (max-width: 3744px) {
+      bottom: 20px;
+    }
+
     @media screen and (max-width: 375px) {
       height: 30px;
+      bottom: 10px;
     }
   }
 `;

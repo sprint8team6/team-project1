@@ -8,7 +8,6 @@ import VoteModal from '@components/Modal/VoteModal';
 import MyCredit from './components/MyCredit';
 import TributeSupport from './components/TributeSupport';
 import MonthChart from './components/MonthChart';
-// import DonationModal from '@components/Modal/DonationModal';
 
 function ListPageContent() {
   // Context
