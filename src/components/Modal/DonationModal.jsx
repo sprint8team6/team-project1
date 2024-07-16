@@ -2,15 +2,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
-import {
-  ModalBackground,
-  ModalWindow,
-  BasedContainer,
-  StyledCreditIcon,
-} from '@styles/CommonStyles';
+import Modal, { ModalWindow } from '@components/Modal/Modal';
+import ModalTopBar from '@components/Modal/ModalTopbar';
+import { BasedContainer, StyledCreditIcon } from '@styles/CommonStyles';
 import Button from '@components/Button';
+// assets
 import AltImage from '@assets/png/alt_image.png';
-import ModalTopBar from './ModalTopbar';
 
 /** 후원 모달 컴포넌트
  * @todo submit 미완성, 현재 크레딧 반영
@@ -27,8 +24,6 @@ export default function DonationModal({ isOpen, onClose }) {
   // Context
   const { modals, openModal } = useModalContext();
   const idolData = modals.DonationModal?.data;
-
-  if (!isOpen) return null;
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -73,7 +68,7 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   return (
-    <ModalBackground>
+    <Modal isOpen={isOpen}>
       <StyledDonationModalWindow>
         <ModalTopBar onClose={onClose}>후원하기</ModalTopBar>
         <StyledContainer>
@@ -105,7 +100,7 @@ export default function DonationModal({ isOpen, onClose }) {
           </InputForm>
         </StyledContainer>
       </StyledDonationModalWindow>
-    </ModalBackground>
+    </Modal>
   );
 }
 

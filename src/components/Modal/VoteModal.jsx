@@ -2,16 +2,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
-import {
-  ModalBackground,
-  ModalWindow,
-  BasedContainer,
-  StyledDivider,
-} from '@styles/CommonStyles';
+import { BasedContainer, StyledDivider } from '@styles/CommonStyles';
+import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
+import CircularIdolImage from '@components/CircularIdolImage';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
-import CircularIdolImage from '@components/CircularIdolImage';
 
 /** 투표 모달 컴포넌트
  * @param {boolean} isOpen - 모달이 열려 있는지 여부
@@ -57,24 +53,20 @@ export default function VoteModal({ isOpen = false, onClose }) {
   // Context
   const { openModal } = useModalContext();
 
-  if (!isOpen) return null;
-
   const handleOptionChange = (idolRank) => {
     const nextSelectedIdol = idolRank;
     setSelectedIdol(nextSelectedIdol);
   };
 
   return (
-    <ModalBackground>
+    <Modal isOpen={isOpen}>
       <StyledVoteModalWindow>
         <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
         <StyledVoteOptionList>
           {voteIdolData.map((idolData) => (
             <>
               <VoteOption
-                key={
-                  idolData.idolRank
-                } /** @todo 아이돌의 고유값으로 바꿔야 함 */
+                key={`idol-ranking-${idolData.idolRank}`} /** @todo 아이돌의 고유값으로 바꿔야 함 */
                 onClick={handleOptionChange}
                 selectedIdol={selectedIdol}
                 idolData={idolData}
@@ -103,7 +95,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
           </span>
         </StyledVoteNotify>
       </StyledVoteModalWindow>
-    </ModalBackground>
+    </Modal>
   );
 }
 
@@ -124,9 +116,7 @@ const StyledVoteModalWindow = styled(ModalWindow)`
 `;
 
 const StyledVoteOptionList = styled(BasedContainer)`
-  display: flex;
   width: 477px;
-  flex-direction: column;
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
@@ -208,6 +198,7 @@ VoteOption.propTypes = {
 
 const VoteButton = ({ onClose, openError, children }) => {
   const submitVote = () => {
+    // eslint-disable-next-line no-constant-condition
     if (999 < 1000) {
       openError();
     } else {

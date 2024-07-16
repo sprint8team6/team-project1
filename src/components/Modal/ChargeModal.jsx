@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import {
-  ModalBackground,
-  ModalWindow,
   BasedContainer,
   StyledCreditIcon,
   StyledCreditIconWhite,
 } from '@styles/CommonStyles';
+import Modal, { ModalWindow } from '@components/Modal/Modal';
+
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
@@ -21,14 +21,12 @@ export default function ChargeModal({ isOpen, onClose }) {
   // State
   const [optionValue, setOptionValue] = useState('100');
 
-  if (!isOpen) return null;
-
   const handleOption = (e) => {
     setOptionValue(e.target.value);
   };
 
   return (
-    <ModalBackground>
+    <Modal isOpen={isOpen}>
       <StyledChargeModalWindow>
         <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
         <StyledContainer>
@@ -52,7 +50,7 @@ export default function ChargeModal({ isOpen, onClose }) {
           <ChargeButton onClose={onClose} />
         </StyledContainer>
       </StyledChargeModalWindow>
-    </ModalBackground>
+    </Modal>
   );
 }
 

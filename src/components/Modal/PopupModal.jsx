@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useModalContext } from '@contexts/useModalContext';
-import {
-  ModalWindow,
-  BasedContainer,
-  ModalBackground,
-} from '@styles/CommonStyles';
+import { BasedContainer } from '@styles/CommonStyles';
+import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import Button from '@components/Button';
 // assets
@@ -20,10 +17,8 @@ export default function PopupModal({ isOpen = false, onClose }) {
   // Context
   const { modals } = useModalContext();
 
-  if (!isOpen) return null;
-
   return (
-    <ModalBackground>
+    <Modal isOpen={isOpen}>
       <StyledPopupWindow>
         <ModalTopBar onClose={onClose} />
         <StyledContainer>
@@ -32,7 +27,7 @@ export default function PopupModal({ isOpen = false, onClose }) {
           <Button onClick={onClose}>확인</Button>
         </StyledContainer>
       </StyledPopupWindow>
-    </ModalBackground>
+    </Modal>
   );
 }
 
