@@ -144,7 +144,7 @@ const StyledIdolNameAndVotes = styled.div`
 `;
 
 const StyledRank = styled.span`
-  color: var(--brand-orange_F96D69, #f96d69);
+  color: var(--brand-coral, #f96d69);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -152,7 +152,7 @@ const StyledRank = styled.span`
 `;
 
 const StyledName = styled.span`
-  color: var(--white-white_FFFFFF, #fff);
+  color: var(--white, #fff);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -207,7 +207,7 @@ const StyledVoteNotify = styled.div`
   bottom: 10px;
 
   span {
-    color: var(--white-white_FFFFFF, #fff);
+    color: var(--white, #fff);
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
