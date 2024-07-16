@@ -117,15 +117,17 @@ const ModalRadioButton = styled(RadioButton)`
 `;
 
 const CreditOptionButton = ({ value, optionValue, onClick }) => {
-  <StyledCreditOptionButton
-    value={value}
-    onClick={onClick}
-    selected={optionValue === value}
-  >
-    <StyledCreditIcon />
-    {value}
-    <ModalRadioButton checked={optionValue === value} />
-  </StyledCreditOptionButton>;
+  return (
+    <StyledCreditOptionButton
+      value={value}
+      onClick={onClick}
+      selected={optionValue === value}
+    >
+      <StyledCreditIcon />
+      {value}
+      <ModalRadioButton checked={optionValue === value} />
+    </StyledCreditOptionButton>
+  );
 };
 
 const ChargeButton = ({ onClose }) => {

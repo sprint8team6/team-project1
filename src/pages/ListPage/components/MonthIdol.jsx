@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import MonthIdolImage from './MonthIdolImage';
 import { useState } from 'react';
 import CircularIdolImage from '@components/CircularIdolImage';
 

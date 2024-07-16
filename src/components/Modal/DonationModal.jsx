@@ -13,8 +13,7 @@ import Button from '@components/Button';
 import AltImage from '@assets/png/alt_image.png';
 
 /** 후원 모달 컴포넌트
- * @todo 현재 완~전 테스트용이므로 수정 후 사용이 요구됨
- * @todo submit 미완성,
+ * @todo submit 미완성, 현재 크레딧 반영
  * @param {boolean} isError - 에러 상태 여부
  */
 export default function DonationModal({
@@ -37,9 +36,18 @@ export default function DonationModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // 크레딧으로 바꿔야 함, 100
     if (Number(inputValue) > 100) {
-      // 크레딧으로 바꿔야 함, 100
-      openModal('PopupModal', '후원');
+      openModal('PopupModal', {
+        message: (
+          <span>
+            앗! 후원하기 위한 <em>크레딧</em>이 부족해요!
+          </span>
+        ),
+      });
+    }
+    if (Number(inputValue) <= 100) {
+      // 후원 성공!
     }
   };
 
@@ -56,7 +64,7 @@ export default function DonationModal({
       setInputValue(nextInputValue);
     }
     if (e.key === 'Enter') {
-      handleSubmit();
+      handleSubmit(e);
     }
   };
 

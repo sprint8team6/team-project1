@@ -19,9 +19,6 @@
     "import/no-unresolved": "off", // 존재하지 않는 모듈 검사 (Webpack(alias path)를 사용중이므로 예외처리)
     "react/react-in-jsx-scope": "off", // React 17+ 에서는 알아서 import react from 'react' 를 해줍니다
     "no-unused-vars": "off", // 사용하지 않는 변수 작성에 대한 설정
-    "react/prop-types": "off", // 모든 props에 대한 prop-types 설정
-    "import/order": "off", // import 순서 규칙에 대한 설정
-    "react/self-closing-comp": "warn", // 내용이 없는 태그는 self-closing(< />)으로 작성
     "react/jsx-props-no-spreading": "off", // {...props} 프롭스에 대해 spreading 설정
     "react/function-component-definition": "off" // React 컴포넌트를 함수 선언 강제
   }
