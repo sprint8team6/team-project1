@@ -10,7 +10,7 @@ import 'swiper/css/navigation';
 
 export default function TributeSupport() {
   // swiper 반응형 지정
-  const SWIPERBREAKPOINTS = {
+  const SWIPER_BREAKPOINTS = {
     745: {
       // 745 이상 적용(pc버전)
       slidesPerView: 4,
@@ -29,13 +29,13 @@ export default function TributeSupport() {
   };
 
   // swiper 화살표 버튼 지정
-  const SWIPERNAVIGATION = {
+  const SWIPER_NAVIGATION = {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   };
 
   // swiper 자동 재생
-  const SWIPERAUTOPLAY = {
+  const SWIPER_AUTOPLAY = {
     delay: 4000, // 4초마다 자동 재생
     disableOnInteraction: false, // 사용자가 슬라이더를 변경해도 자동재생 유지
   };
@@ -50,10 +50,10 @@ export default function TributeSupport() {
           <img src={LeftArrow} alt="왼쪽 화살표 이미지" />
         </ArrowButton>
         <Swiper
-          breakpoints={SWIPERBREAKPOINTS}
-          autoplay={SWIPERAUTOPLAY}
+          breakpoints={SWIPER_BREAKPOINTS}
+          autoplay={SWIPER_AUTOPLAY}
           modules={[Navigation, Autoplay]}
-          navigation={SWIPERNAVIGATION}
+          navigation={SWIPER_NAVIGATION}
         >
           <SwiperSlide>
             <IdolCard />
