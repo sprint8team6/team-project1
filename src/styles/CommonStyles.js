@@ -78,3 +78,10 @@ export const StyledCreditIcon = styled(BasedCreditIcon)`
 export const StyledCreditIconWhite = styled(BasedCreditIcon)`
   background-image: url(${CreditWhiteImage});
 `;
+
+export const StyledDivider = styled.div`
+  width: 100%;
+  height: 1px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.1);
+`;

@@ -28,7 +28,7 @@ export default function PopupModal({ isOpen, onClose }) {
         <ModalTopBar onClose={onClose} />
         <StyledContainer>
           <StyledCreditDiv />
-          <PopupLabel Description={modals?.PopupModal.data} />
+          <PopupLabel Description={modals?.PopupModal.data.message} />
           <Button onClick={onClose}>확인</Button>
         </StyledContainer>
       </StyledPopupWindow>
@@ -69,9 +69,5 @@ const StyledCreditDiv = styled.div`
 `;
 
 const PopupLabel = ({ Description }) => {
-  return (
-    <span>
-      앗! {Description}하기 위한 <em>크레딧</em>이 부족해요!
-    </span>
-  );
+  return <span>{Description}</span>;
 };

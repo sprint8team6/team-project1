@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import logo from '@assets/svg/logo.svg';
 import backgroundImage from '@assets/LandingPage/image 14.png';
 import topDesign from '@assets/svg/Image_top.svg';
@@ -9,7 +10,6 @@ import landingImage1 from '@assets/LandingPage/Home-1.png';
 import landingImage2 from '@assets/LandingPage/Home-2.png';
 import landingImage3 from '@assets/LandingPage/Home-3.png';
 import Button from '@components/Button';
-import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
   return (

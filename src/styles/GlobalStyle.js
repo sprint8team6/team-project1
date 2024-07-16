@@ -34,12 +34,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button, input {
-  background: none;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  cursor: pointer;
-	font-family: Pretendard, sans-serif;
+    font-family: "Pretendard", sans-serif;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
   }
 
   em {
