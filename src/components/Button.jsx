@@ -1,14 +1,14 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Button 컴포넌트
  * @param {React.ReactNode} children - 버튼 value
- * @param {boolean} [isRounded=false] - 원형 버튼일지 결정하는 prop (기본=false)
+ * @param {boolean} [rounded=false] - 원형 버튼일지 결정하는 prop (기본=false)
  * @param {object} props - 프롭스
  * @returns {JSX.Element}
  */
-export default function Button({ children, isRounded = false, ...props }) {
+export default function Button({ children, rounded = false, ...props }) {
   return <StyledButton {...props}>{children}</StyledButton>;
 }
 
@@ -36,3 +36,8 @@ const StyledButton = styled.button`
     cursor: default;
   }
 `;
+
+Button.propTypes = {
+  children: PropTypes.node,
+  rounded: PropTypes.bool,
+};

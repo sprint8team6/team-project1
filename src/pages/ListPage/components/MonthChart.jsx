@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Button from '@components/Button';
+import styled from 'styled-components';
 import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
 import MonthIdol from './MonthIdol';
@@ -10,7 +11,7 @@ export default function MonthChart({ openModal }) {
       <div>
         <ListPageSubTitle>
           <h2>이달의 차트</h2>
-          <Button onClick={() => openModal('VoteModal', '데이터')}>
+          <Button onClick={() => openModal('VoteModal', null)}>
             <img src={ChartImage} alt="차트 이미지" />
             차트 투표하기
           </Button>
@@ -35,6 +36,10 @@ export default function MonthChart({ openModal }) {
     </MyCreditWrap>
   );
 }
+
+MonthChart.propTypes = {
+  openModal: PropTypes.func.isRequired,
+};
 
 const MyCreditWrap = styled.section`
   width: 100%;

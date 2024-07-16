@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
@@ -7,22 +8,21 @@ import {
   BasedContainer,
   StyledCreditIcon,
 } from '@styles/CommonStyles';
-import ModalTopBar from './ModalTopbar';
 import Button from '@components/Button';
-// assets
 import AltImage from '@assets/png/alt_image.png';
+import ModalTopBar from './ModalTopbar';
 
 /** 후원 모달 컴포넌트
  * @todo submit 미완성, 현재 크레딧 반영
  * @param {boolean} isError - 에러 상태 여부
+ * @param {boolean} isOpen - 모달이 열려 있는지 여부
+ * @param {function} onClose - 모달을 닫기 위한 함수
+ * @return {JSX.Element} 후원 모달 컴포넌트
  */
-export default function DonationModal({
-  isOpen,
-  onClose,
-  isError = false, // 크레딧이 부족할 때
-}) {
+export default function DonationModal({ isOpen, onClose }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
+  const [isError, setIsError] = useState(false); // 크레딧이 부족할 때
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -108,6 +108,11 @@ export default function DonationModal({
     </ModalBackground>
   );
 }
+
+DonationModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 // styled-components
 
