@@ -1,0 +1,22 @@
+    1. "prettier/prettier": ["error", { "endOfLine": "auto" }]
+        : ESLINT(airbnb)에서 prettier 플러그인에서 제공하는 규칙을 사용해 규칙 위반 시 에러로 처리하며,
+         CRLF <-> LF 간 발생하는 EOL오류를 방지하기위해, endOfLine에 auto를 적용
+        운영체제에 따라 자동으로 조절되는 옵션이지만, 본 프로젝트에서는 .gitattributes 설정과 prettier 기본 설정값을 
+        통해 LF로 변경되도록 처리해놓았으므로, LF로 변경. 다만, 본 설정을 auto로 해야만 상기 설정 내용이 적용
+    2. "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        : jsx 문법을 js와 jsx 파일에서 사용할 수 있도록 허용하는 규칙. 다만, 원활한 코드 동작과 추후 TypeScript
+        적용 가능성을 고려하여 이외 파일에서 사용 시, warning이 뜨는 1레벨로 설정.
+    3. "import/no-unresolved": "off"
+        : 본 프로젝트에서는 alias path를 사용중인데, 해당 문법 사용 시 airbnb 규칙 위반으로 에러발생하여 예외 처리.
+    4. "react/react-in-jsx-scope": "off"
+        : 본 프로젝트는 17+버전의 REACT를 사용하므로, REACT를 자동으로 IMPORT해주며, 파일의 확장자(jsx)만으로도
+        REACT 사용 여부를 판단할 수 있다고 생각하여 예외 처리.
+    5. "no-unused-vars": "off"
+        : 본 프로젝트는 REACT내 state를 사용하며, 이 경우 useState가 필요한데, 이 때마다 setState의 설정을 강요하여
+        불필요한 코드를 만들어야하고, 테스트 작업을 저해하여 예외 처리.
+    6. "react/jsx-props-no-spreading": "off"
+        : 버튼 등에 활용되는 스프레드 문법(ex)...props)에 대해 에러가 발생하지만, props를 스프레드로 주고받도록 
+        기설정된 모듈이 있어, 예외처리하였습니다.
+    7. "react/function-component-definition": "off"
+        : 본 프로젝트 팀의 컨벤션 정립 과정에서 component의 선언 부분은 선언식으로, 나머지 부분에 대해서는 표현식과
+        선언식을 자유롭게 사용하도록 의사결정하여 예외처리하였습니다.
