@@ -22,7 +22,7 @@ export default function TributeSupport() {
       spaceBetween: 16,
     },
     0: {
-      // 0 이상 적용(mo버전)
+      // 0 이상 적용(moblie버전)
       slidesPerView: 2.1,
       spaceBetween: 8,
     },
