@@ -10,13 +10,13 @@ export default function MyCredit({ openModal }) {
   return (
     <MyCreditWrap>
       <MyCreditBox>
-        <MyCreditBoxInfomation>
+        <MyCreditBoxInformation>
           <h2>내 크레딧</h2>
           <MyCreditNumber>
             <img src={CreditImage} alt="크레딧 이미지" />
             <span>{myCredit.toLocaleString()}</span>
           </MyCreditNumber>
-        </MyCreditBoxInfomation>
+        </MyCreditBoxInformation>
 
         <CreditChargeButton>
           <button type="button" onClick={() => openModal('ChargeModal')}>
@@ -63,7 +63,7 @@ const MyCreditBox = styled.div`
   }
 `;
 
-const MyCreditBoxInfomation = styled.div`
+const MyCreditBoxInformation = styled.div`
   & > h2 {
     font-size: 1.6rem;
     font-weight: 400;
