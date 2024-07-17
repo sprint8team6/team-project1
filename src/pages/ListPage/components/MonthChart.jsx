@@ -7,8 +7,10 @@ import GirlChartList from './GirlChartList';
 import BoyChartList from './BoyChartList';
 
 export default function MonthChart({ openModal }) {
-  const GENDER = 'girl';
-  const [idolGender, setIdolGender] = useState(GENDER);
+  const [tabOn, setTabOn] = useState({
+    girlTab: true,
+    boyTab: false,
+  });
 
   return (
     <MyCreditWrap>
@@ -21,8 +23,8 @@ export default function MonthChart({ openModal }) {
           </Button>
         </ListPageSubTitle>
       </div>
-      <MonthChartTab setIdolGender={setIdolGender} />
-      {idolGender === 'girl' ? <GirlChartList /> : <BoyChartList />}
+      <MonthChartTab tabOn={tabOn} setTabOn={setTabOn} />
+      {tabOn.girlTab ? <GirlChartList /> : <BoyChartList />}
       <ChartMoreButton>
         <button type="button">더보기</button>
       </ChartMoreButton>

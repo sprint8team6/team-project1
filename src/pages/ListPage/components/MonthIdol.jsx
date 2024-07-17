@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import CircularIdolImage from '@components/CircularIdolImage';
@@ -8,6 +9,7 @@ export default function MonthIdol({ idolImage }) {
     idolName: '에스파 윈터',
     idolVote: 999999,
   });
+
   return (
     <ChartIdolGrid>
       <CircularIdolImage idolImage={idolImage} />
@@ -19,6 +21,10 @@ export default function MonthIdol({ idolImage }) {
     </ChartIdolGrid>
   );
 }
+
+MonthIdol.propTypes = {
+  idolImage: PropTypes.string.isRequired,
+};
 
 const ChartIdolGrid = styled.div`
   display: grid;

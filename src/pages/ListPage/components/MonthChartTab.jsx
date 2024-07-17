@@ -1,28 +1,22 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function MonthChartTab({ setIdolGender }) {
+export default function MonthChartTab({ tabOn, setTabOn }) {
   const GENDER_GIRL = 'girl';
   const GENDER_BOY = 'boy';
 
-  const [tabOn, setTabOn] = useState({
-    girlTab: true,
-    boyTab: false,
-  });
-
   const handleClickTab = (gender) => {
     if (gender === GENDER_GIRL) {
-      setIdolGender(GENDER_GIRL);
       setTabOn({ girlTab: true, boyTab: false });
     } else if (gender === GENDER_BOY) {
-      setIdolGender(GENDER_BOY);
       setTabOn({ girlTab: false, boyTab: true });
     }
   };
+
   return (
     <ChartTab>
       <ChartTabButton
-        active={tabOn.girlTab}
+        className={tabOn.girlTab ? 'on' : ''}
         type="button"
         onClick={() => {
           handleClickTab(GENDER_GIRL);
@@ -31,7 +25,7 @@ export default function MonthChartTab({ setIdolGender }) {
         이달의 여자 아이돌
       </ChartTabButton>
       <ChartTabButton
-        active={tabOn.boyTab}
+        className={tabOn.boyTab ? 'on' : ''}
         type="button"
         onClick={() => {
           handleClickTab(GENDER_BOY);
@@ -42,6 +36,14 @@ export default function MonthChartTab({ setIdolGender }) {
     </ChartTab>
   );
 }
+
+MonthChartTab.propTypes = {
+  tabOn: PropTypes.shape({
+    girlTab: PropTypes.bool.isRequired,
+    boyTab: PropTypes.bool.isRequired,
+  }).isRequired,
+  setTabOn: PropTypes.func.isRequired,
+};
 
 const ChartTab = styled.div`
   display: flex;
@@ -58,8 +60,13 @@ const ChartTabButton = styled.button`
   width: 100%;
   height: 42px;
   border: none;
-  border-bottom: 1px solid ${(props) => (props.active ? '#ffffff' : '#000000')};
-  color: ${(props) => (props.active ? '#ffffff' : 'var(--medium-gray)')};
-  background-color: ${(props) =>
-    props.active ? 'var(--light-black)' : '#000000'};
+  border-bottom: 1px solid #000000;
+  color: var(--medium-gray);
+  background-color: #000000;
+
+  &.on {
+    border-bottom: 1px solid #ffffff;
+    color: #ffffff;
+    background-color: var(--light-black);
+  }
 `;
