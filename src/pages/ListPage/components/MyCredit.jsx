@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
@@ -27,6 +28,10 @@ export default function MyCredit({ openModal }) {
     </MyCreditWrap>
   );
 }
+
+MyCredit.propTypes = {
+  openModal: PropTypes.func.isRequired,
+};
 
 const MyCreditWrap = styled.section`
   width: 100%;

@@ -1,9 +1,10 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { StyledDeleteButton } from '@styles/CommonStyles';
 
 /** 모달 상단의 제목/창 닫기 탑바
  * @param children - Modal 제목
+ * @param onClose {function} - Modal을 닫는 함수
  */
 export default function ModalTopBar({ children, onClose }) {
   return (
@@ -13,6 +14,11 @@ export default function ModalTopBar({ children, onClose }) {
     </StyledModalTopBar>
   );
 }
+
+ModalTopBar.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 // styled-components
 

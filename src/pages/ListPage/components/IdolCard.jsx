@@ -9,7 +9,7 @@ import CreditIcon from '@assets/svg/ic_credit.svg';
 export default function IdolCard() {
   // State
   const [idolStatus, setIdolStatus] = useState({
-    imgUrl: IdolImage,
+    imageUrl: IdolImage,
     tributeTxt: '강남역 광고',
     tributeInfo: '뉴진스 민지 지하철 광고',
     tributeCredit: 6000,
@@ -27,7 +27,7 @@ export default function IdolCard() {
     <IdolCardWrap>
       <IdolCardImage>
         <img
-          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImage}
+          src={idolStatus.imageUrl ? idolStatus.imageUrl : defaultImage}
           alt="아이돌 이미지"
         />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>

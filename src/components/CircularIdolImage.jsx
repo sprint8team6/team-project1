@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import IdolImg from '@assets/TestIdolImage/Winter.png';
 import { ReactComponent as CheckIcon } from '@assets/svg/ic_check.svg';
@@ -23,6 +23,7 @@ export default function CircularIdolImage({
   size = 'small',
   onDelete = null,
   onCheckChange = null,
+  idolImage = IdolImg,
 }) {
   const handleImageClick = () => {
     if (isCheckable && onCheckChange) {
@@ -37,7 +38,7 @@ export default function CircularIdolImage({
       onClick={handleImageClick}
     >
       <StyledImageWrapper>
-        <StyledImage src={IdolImg} alt="아이돌 이미지" />
+        <StyledImage src={idolImage} alt="아이돌 이미지" />
         {isChecked && (
           <>
             <StyledOverlay />
@@ -51,6 +52,15 @@ export default function CircularIdolImage({
     </StyledCircularIdolImage>
   );
 }
+
+CircularIdolImage.propTypes = {
+  isChecked: PropTypes.bool,
+  isCheckable: PropTypes.bool,
+  isDeletable: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  onDelete: PropTypes.func,
+  onCheckChange: PropTypes.func,
+};
 
 // styled-components
 
