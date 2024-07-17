@@ -20,3 +20,7 @@
     7. "react/function-component-definition": "off"
         : 본 프로젝트 팀의 컨벤션 정립 과정에서 component의 선언 부분은 선언식으로, 나머지 부분에 대해서는 표현식과
         선언식을 자유롭게 사용하도록 의사결정하여 예외처리하였습니다.
+    8. "react/require-default-props": "off"
+        : propTypes를 사용하면 생기는 에러로서, isRequired 속성이 부여되지 않은 props에 대해서 기본값을 설정해줘야
+        하는 조건이 붙는데, 함수 선언에서 props의 기본값을 간편하게 설정할 수 있음에도 함수명.defaultProps로 따로
+        재선언 하는 것은 가독성 면에서도 별로라고 판단되어 예외처리 하였습니다.
