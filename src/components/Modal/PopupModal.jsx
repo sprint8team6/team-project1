@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 import { useModalContext } from '@contexts/useModalContext';
-import { BasedContainer } from '@styles/CommonStyles';
-import Modal, { ModalWindow } from '@components/Modal/Modal';
+import {
+  ModalWindow,
+  BasedContainer,
+  ModalBackground,
+} from '@styles/CommonStyles';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import Button from '@components/Button';
 // assets
@@ -13,12 +16,14 @@ import CreditImage from '@assets/svg/ic_credit.svg';
  * @param {function} onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 팝업 모달 컴포넌트
  */
-export default function PopupModal({ isOpen = false, onClose }) {
+export default function PopupModal({ isOpen, onClose }) {
   // Context
   const { modals } = useModalContext();
 
+  if (!isOpen) return null;
+
   return (
-    <Modal isOpen={isOpen}>
+    <ModalBackground>
       <StyledPopupWindow>
         <ModalTopBar onClose={onClose} />
         <StyledContainer>
@@ -27,14 +32,9 @@ export default function PopupModal({ isOpen = false, onClose }) {
           <Button onClick={onClose}>확인</Button>
         </StyledContainer>
       </StyledPopupWindow>
-    </Modal>
+    </ModalBackground>
   );
 }
-
-PopupModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 // styled-components
 
@@ -70,8 +70,4 @@ const StyledCreditDiv = styled.div`
 
 const PopupLabel = ({ Description }) => {
   return <span>{Description}</span>;
-};
-
-PopupLabel.propTypes = {
-  Description: PropTypes.node,
 };

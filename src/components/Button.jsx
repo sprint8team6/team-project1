@@ -1,15 +1,19 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
 
 /**
  * Button 컴포넌트
- * @param {React.ReactNode} children - 버튼 value
- * @param {boolean} [rounded=false] - 원형 버튼일지 결정하는 prop (기본=false)
  * @param {object} props - 프롭스
+ * @param {React.ReactNode} children - 버튼 value
+ * @param {boolean} rounded - 원형 버튼일지 결정하는 prop (기본=false)
  * @returns {JSX.Element}
  */
 export default function Button({ children, rounded = false, ...props }) {
-  return <StyledButton {...props}>{children}</StyledButton>;
+  return rounded ? (
+    <StyledRoundedButton {...props}>{children}</StyledRoundedButton>
+  ) : (
+    <StyledButton {...props}>{children}</StyledButton>
+  );
 }
 
 const StyledButton = styled.button`
@@ -20,7 +24,7 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: ${(isRounded) => (isRounded ? '3px' : '24px')};
+  border-radius: 3px;
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);
@@ -37,7 +41,6 @@ const StyledButton = styled.button`
   }
 `;
 
-Button.propTypes = {
-  children: PropTypes.node,
-  rounded: PropTypes.bool,
-};
+const StyledRoundedButton = styled(StyledButton)`
+  border-radius: 24px;
+`;

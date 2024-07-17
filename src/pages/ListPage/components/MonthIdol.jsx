@@ -1,30 +1,24 @@
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import CircularIdolImage from '@components/CircularIdolImage';
 
-export default function MonthIdol({ idolImage }) {
+export default function MonthIdol() {
   const [monthIdolText, setMonthIdolText] = useState({
     idolRank: 1,
     idolName: '에스파 윈터',
     idolVote: 999999,
   });
-
   return (
     <ChartIdolGrid>
-      <CircularIdolImage idolImage={idolImage} />
+      <CircularIdolImage />
       <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
       <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
       <ChartIdolVote>
-        {monthIdolText.idolVote.toLocaleString()} 표
+        {monthIdolText.idolVote.toLocaleString()} 표 표입니다.
       </ChartIdolVote>
     </ChartIdolGrid>
   );
 }
-
-MonthIdol.propTypes = {
-  idolImage: PropTypes.string.isRequired,
-};
 
 const ChartIdolGrid = styled.div`
   display: grid;

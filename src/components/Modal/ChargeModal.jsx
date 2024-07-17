@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useState } from 'react';
+import styled from 'styled-components';
 import {
+  ModalBackground,
+  ModalWindow,
   BasedContainer,
   StyledCreditIcon,
   StyledCreditIconWhite,
 } from '@styles/CommonStyles';
-import Modal, { ModalWindow } from '@components/Modal/Modal';
-
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
@@ -21,12 +20,14 @@ export default function ChargeModal({ isOpen, onClose }) {
   // State
   const [optionValue, setOptionValue] = useState('100');
 
+  if (!isOpen) return null;
+
   const handleOption = (e) => {
     setOptionValue(e.target.value);
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <ModalBackground>
       <StyledChargeModalWindow>
         <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
         <StyledContainer>
@@ -50,14 +51,9 @@ export default function ChargeModal({ isOpen, onClose }) {
           <ChargeButton onClose={onClose} />
         </StyledContainer>
       </StyledChargeModalWindow>
-    </Modal>
+    </ModalBackground>
   );
 }
-
-ChargeModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 // styled-components
 
@@ -134,12 +130,6 @@ const CreditOptionButton = ({ value, optionValue, onClick }) => {
   );
 };
 
-CreditOptionButton.propTypes = {
-  value: PropTypes.number,
-  optionValue: PropTypes.number,
-  onClick: PropTypes.func,
-};
-
 const ChargeButton = ({ onClose }) => {
   const submitOption = () => {
     /** @todo Credit 올라가는 로직 */
@@ -152,8 +142,4 @@ const ChargeButton = ({ onClose }) => {
       충전하기
     </Button>
   );
-};
-
-ChargeButton.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
