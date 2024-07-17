@@ -14,7 +14,7 @@ export default function MonthIdol({ idolImage }) {
       <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
       <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
       <ChartIdolVote>
-        {monthIdolText.idolVote.toLocaleString()} 표 표입니다.
+        {monthIdolText.idolVote.toLocaleString()} 표
       </ChartIdolVote>
     </ChartIdolGrid>
   );
