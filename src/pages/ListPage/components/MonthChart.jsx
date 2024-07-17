@@ -1,34 +1,31 @@
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 import Button from '@components/Button';
+import styled from 'styled-components';
 import ChartImage from '@assets/svg/ic_chart.svg';
 import MonthChartTab from './MonthChartTab';
-import MonthIdol from './MonthIdol';
+import GirlChartList from './GirlChartList';
+import BoyChartList from './BoyChartList';
 
 export default function MonthChart({ openModal }) {
+  const [tabOn, setTabOn] = useState({
+    girlTab: true,
+    boyTab: false,
+  });
+
   return (
     <MyCreditWrap>
       <div>
         <ListPageSubTitle>
           <h2>이달의 차트</h2>
-          <Button onClick={() => openModal('VoteModal', '데이터')}>
+          <Button onClick={() => openModal('VoteModal', null)}>
             <img src={ChartImage} alt="차트 이미지" />
             차트 투표하기
           </Button>
         </ListPageSubTitle>
       </div>
-      <MonthChartTab />
-      <MonthIdolList>
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-        <MonthIdol />
-      </MonthIdolList>
+      <MonthChartTab tabOn={tabOn} setTabOn={setTabOn} />
+      {tabOn.girlTab ? <GirlChartList /> : <BoyChartList />}
       <ChartMoreButton>
         <button type="button">더보기</button>
       </ChartMoreButton>
@@ -36,9 +33,13 @@ export default function MonthChart({ openModal }) {
   );
 }
 
+MonthChart.propTypes = {
+  openModal: PropTypes.func.isRequired,
+};
+
 const MyCreditWrap = styled.section`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -86,21 +87,6 @@ const ListPageSubTitle = styled.div`
       height: 24px;
       margin-right: 5px;
     }
-  }
-`;
-
-const MonthIdolList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 24px;
-  margin-bottom: 50px;
-
-  @media screen and (max-width: 744px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  @media screen and (max-width: 375px) {
-    margin-bottom: 33px;
   }
 `;
 
