@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import CircularIdolImage from '@components/CircularIdolImage';
 
-export default function MonthIdol() {
+export default function MonthIdol({ idolImage }) {
   const [monthIdolText, setMonthIdolText] = useState({
     idolRank: 1,
     idolName: '에스파 윈터',
@@ -10,7 +10,7 @@ export default function MonthIdol() {
   });
   return (
     <ChartIdolGrid>
-      <CircularIdolImage />
+      <CircularIdolImage idolImage={idolImage} />
       <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
       <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
       <ChartIdolVote>

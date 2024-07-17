@@ -23,6 +23,7 @@ export default function CircularIdolImage({
   size = 'small',
   onDelete = null,
   onCheckChange = null,
+  idolImage = IdolImg,
 }) {
   const handleImageClick = () => {
     if (isCheckable && onCheckChange) {
@@ -37,7 +38,7 @@ export default function CircularIdolImage({
       onClick={handleImageClick}
     >
       <StyledImageWrapper>
-        <StyledImage src={IdolImg} alt="아이돌 이미지" />
+        <StyledImage src={idolImage} alt="아이돌 이미지" />
         {isChecked && (
           <>
             <StyledOverlay />
