@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import IdolImg from '@assets/TestIdolImage/Winter.png';
+import IdolImage from '@assets/TestIdolImage/Winter.png';
 import { ReactComponent as CheckIcon } from '@assets/svg/ic_check.svg';
 import { ReactComponent as DeleteButton } from '@assets/svg/btn_delete.svg';
 
@@ -23,7 +23,7 @@ export default function CircularIdolImage({
   size = 'small',
   onDelete = null,
   onCheckChange = null,
-  idolImage = IdolImg,
+  idolImage = IdolImage,
 }) {
   const handleImageClick = () => {
     if (isCheckable && onCheckChange) {
@@ -60,6 +60,7 @@ CircularIdolImage.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   onDelete: PropTypes.func,
   onCheckChange: PropTypes.func,
+  idolImage: PropTypes.string.isRequired,
 };
 
 // styled-components
