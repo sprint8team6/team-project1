@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { StyledDeleteButton } from '@styles/CommonStyles';
 
 /** 모달 상단의 제목/창 닫기 탑바
- * @param children - Modal 제목
- * @param onClose {function} - Modal을 닫는 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param props.onClose {function} - Modal을 닫는 함수
+ * @param props.children - Modal 제목
  */
 export default function ModalTopBar({ children, onClose }) {
   return (

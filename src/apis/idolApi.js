@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 /** 공통 HTTP 요청 함수
- * @param {string} url - 리스폰스 URL
+ * @param {Object} props - function props
+ * @param {string} props.url - 리스폰스 URL
  */
 async function fetchData(url) {
   const response = await axios.get(url);
@@ -25,9 +26,10 @@ fetchData.propTypes = {
 
 /** 아이돌 정보를 가져오는 API 함수
  *
- * @param {number} pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
- * @param {number} cursor - 커서 (옵션)
- * @param {string} keyword - 검색 키워드 (옵션)
+ * @param {Object} props - API props
+ * @param {number} props.pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
+ * @param {number} props.cursor - 커서 (옵션)
+ * @param {string} props.keyword - 검색 키워드 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
  */
 export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
@@ -44,9 +46,10 @@ getIdols.propTypes = {
 
 /** 후원 목록을 가져오는 API 함수
  *
- * @param {number} pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
- * @param {number} cursor - 커서 (옵션)
- * @param {array[number]} priorityIdolIds - 우선순위 아이돌 ID 리스트, 최대 5개 (옵션)
+ * @param {Object} props - API props
+ * @param {number} props.pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
+ * @param {number} props.cursor - 커서 (옵션)
+ * @param {array[number]} props.priorityIdolIds - 우선순위 아이돌 ID 리스트, 최대 5개 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
  */
 export async function getDonations({
@@ -71,14 +74,16 @@ getDonations.propTypes = {
 
 /** 차트 정보를 가져오는 API 함수
  *
- * @param {'female' | 'male'} gender - 성별 (필수)
- * @param {number} pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
- * @param {number} cursor - 커서 (옵션)
+ * @param {Object} props - API props
+ * @param {'female' | 'male'} props.gender - 성별 (필수)
+ * @param {number} props.pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
+ * @param {number} props.cursor - 커서 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
  */
-export async function getCharts({ gender, pageSize = 10, cursor } = {}) {
+export async function getCharts({ gender, pageSize = 10, cursor = 0 } = {}) {
   const query = new URLSearchParams({ gender, pageSize, cursor }).toString();
   const url = `${BASE_URL}/charts/{gender}?${query}`;
+
   return fetchData(url);
 }
 

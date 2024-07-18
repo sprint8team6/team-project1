@@ -9,8 +9,9 @@ import Button from '@components/Button';
 import CreditImage from '@assets/svg/ic_credit.svg';
 
 /** 팝업 모달 컴포넌트
- * @param {boolean} isOpen - 모달이 열려 있는지 여부
- * @param {function} onClose - 모달을 닫기 위한 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 팝업 모달 컴포넌트
  */
 export default function PopupModal({ isOpen = false, onClose }) {

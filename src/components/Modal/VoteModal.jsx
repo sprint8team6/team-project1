@@ -1,58 +1,35 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
+// Components
 import { BasedContainer, StyledDivider } from '@styles/CommonStyles';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import CircularIdolImage from '@components/CircularIdolImage';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
+// APIs
+import { getCharts } from '@apis/idolApi';
+import LoadingSpinner from '@components/LoadingSpinner';
 
 /** 투표 모달 컴포넌트
- * @param {boolean} isOpen - 모달이 열려 있는지 여부
- * @param {function} onClose - 모달을 닫기 위한 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 투표 모달 컴포넌트
  */
 export default function VoteModal({ isOpen = false, onClose }) {
   // State
   const [selectedIdol, setSelectedIdol] = useState('0');
-  const [voteIdolData, setVoteIdolData] = useState([
-    {
-      idolRank: 1,
-      idolName: '에스파 윈터',
-      idolVote: 666000,
-    },
-    {
-      idolRank: 2,
-      idolName: '두번째 아이돌',
-      idolVote: 555000,
-    },
-    {
-      idolRank: 3,
-      idolName: '세번째 아이돌',
-      idolVote: 444000,
-    },
-    {
-      idolRank: 4,
-      idolName: '네번째 아이돌',
-      idolVote: 333000,
-    },
-    {
-      idolRank: 5,
-      idolName: '다섯번째 아이돌',
-      idolVote: 222000,
-    },
-    {
-      idolRank: 6,
-      idolName: '여섯번째 아이돌',
-      idolVote: 111000,
-    },
-  ]);
+  const [voteIdolData, setVoteIdolData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Context
-  const { openModal } = useModalContext();
+  const { modals, openModal } = useModalContext();
+  const selectedTab =
+    modals.VoteModal.data.girlTab === true ? 'female' : 'male';
   const { myCredit, setMyCredit } = useCreditContext();
 
   const handleOptionChange = (idolRank) => {
@@ -60,15 +37,33 @@ export default function VoteModal({ isOpen = false, onClose }) {
     setSelectedIdol(nextSelectedIdol);
   };
 
+  // 마운트될 때,
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getCharts({ gender: selectedTab, pageSize: 6 });
+        setVoteIdolData(data.idols);
+      } catch (error) {
+        console.error('Failed to fetch charts:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Modal isOpen={isOpen}>
       <StyledVoteModalWindow>
         <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
+        <LoadingSpinner isLoading={isLoading} />
         <StyledVoteOptionList>
           {voteIdolData.map((idolData) => (
             <>
               <VoteOption
-                key={`idol-ranking-${idolData.idolRank}`} /** @todo 아이돌의 고유값으로 바꿔야 함 */
+                key={`idol-id-${idolData.id}`}
                 onClick={handleOptionChange}
                 selectedIdol={selectedIdol}
                 idolData={idolData}
@@ -175,16 +170,19 @@ const StyledVotes = styled.span`
 
 const VoteOption = ({ onClick, selectedIdol, idolData }) => {
   return (
-    <StyledVoteOption onClick={() => onClick(idolData.idolRank)}>
+    <StyledVoteOption onClick={() => onClick(idolData?.id)}>
       <StyledIdolInfo>
-        <CircularIdolImage isChecked={selectedIdol === idolData.idolRank} />
-        <StyledRank>{idolData.idolRank}</StyledRank>
+        <CircularIdolImage
+          idolImage={idolData?.profilePicture}
+          isChecked={selectedIdol === idolData?.id}
+        />
+        <StyledRank>{idolData?.rank}</StyledRank>
         <StyledIdolNameAndVotes>
-          <StyledName>{idolData.idolName}</StyledName>
-          <StyledVotes>{idolData.idolVote.toLocaleString()} 표</StyledVotes>
+          <StyledName>{idolData?.name}</StyledName>
+          <StyledVotes>{idolData?.totalVotes?.toLocaleString()} 표</StyledVotes>
         </StyledIdolNameAndVotes>
       </StyledIdolInfo>
-      <RadioButton checked={selectedIdol === idolData.idolRank} />
+      <RadioButton checked={selectedIdol === idolData.id} />
     </StyledVoteOption>
   );
 };
@@ -194,9 +192,11 @@ VoteOption.propTypes = {
   /** @todo 추후에 State로 Key 변경할 경우 selectedIdol PropTypes 변동 가능성 있음 */
   selectedIdol: PropTypes.number.isRequired,
   idolData: PropTypes.shape({
-    idolRank: PropTypes.number.isRequired,
-    idolName: PropTypes.string.isRequired,
-    idolVote: PropTypes.number.isRequired,
+    profilePicture: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    rank: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    totalVotes: PropTypes.number.isRequired,
   }).isRequired,
 };
 
