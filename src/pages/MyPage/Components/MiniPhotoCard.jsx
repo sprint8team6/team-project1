@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CircularIdolImage from '@components/CircularIdolImage';
+import PropTypes from 'prop-type';
 
 export default function MiniPhotoCard({
   isCheckable = true,
@@ -22,6 +23,15 @@ export default function MiniPhotoCard({
     </PhotoCard>
   );
 }
+
+MiniPhotoCard.propTypes = {
+  isCheckable: PropTypes.bool,
+  isChecked: PropTypes.bool,
+  onCheckChange: PropTypes.func,
+  size: PropTypes.string,
+  isDeletable: PropTypes.bool,
+};
+
 const PhotoCard = styled.div`
   height: 100%;
   max-width: 12.8rem;

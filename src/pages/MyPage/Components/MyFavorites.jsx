@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import MiniPhotoCard from './MiniPhotoCard';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
+import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
   return (
