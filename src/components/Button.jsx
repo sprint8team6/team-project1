@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 /**
  * Button 컴포넌트
- * @param {React.ReactNode} children - 버튼 value
- * @param {boolean} [rounded=false] - 원형 버튼일지 결정하는 prop (기본=false)
- * @param {object} props - 프롭스
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.rounded - 원형 버튼일지 결정하는 prop (기본=false)
+ * @param {React.ReactNode} props.children - 버튼 value
  * @returns {JSX.Element}
  */
-export default function Button({ children, rounded = false, ...props }) {
+export default function Button({ rounded = false, children, ...props }) {
   return <StyledButton {...props}>{children}</StyledButton>;
 }
 

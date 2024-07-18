@@ -13,8 +13,9 @@ import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
 
 /** 크레딧 충전 모달
- * @param {boolean} isOpen - 모달이 열려 있는지 여부
- * @param {function} onClose - 모달을 닫기 위한 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @returns {React.Element} 크레딧 충전 모달
  */
 export default function ChargeModal({ isOpen, onClose }) {

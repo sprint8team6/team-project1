@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
@@ -11,21 +11,29 @@ import Button from '@components/Button';
 import AltImage from '@assets/png/alt_image.png';
 
 /** 후원 모달 컴포넌트
- * @todo submit 미완성, 현재 크레딧 반영
- * @param {boolean} isError - 에러 상태 여부
- * @param {boolean} isOpen - 모달이 열려 있는지 여부
- * @param {function} onClose - 모달을 닫기 위한 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 후원 모달 컴포넌트
  */
 export default function DonationModal({ isOpen, onClose }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
-  const [isError, setIsError] = useState(false); // 크레딧이 부족할 때
+  const [isError, setIsError] = useState(true); // 크레딧이 부족할 때
 
   // Context
-  const { modals, openModal, closeModal } = useModalContext();
+  const { modals, openModal } = useModalContext();
   const idolData = modals.DonationModal?.data;
   const { myCredit, setMyCredit } = useCreditContext();
+
+  // inputValue의 값이 크레딧보다 높으면 Error
+  useEffect(() => {
+    if (Number(inputValue) > myCredit) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [inputValue]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -90,7 +98,7 @@ export default function DonationModal({ isOpen, onClose }) {
               value={inputValue}
               onChange={handleChange}
               onKeyDown={KeyPressed}
-              $isError={isError}
+              isError={isError}
               placeholder="크레딧 입력"
               type="number"
               step="1"
@@ -120,7 +128,7 @@ const StyledDonationModalWindow = styled(ModalWindow)`
   z-index: 1000;
 
   width: 327px;
-  height: 509px;
+  height: 517px;
   gap: 24px;
 `;
 
@@ -175,7 +183,7 @@ const InputForm = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 36px;
 `;
 
 const StyledCreditInput = styled.input`
@@ -188,7 +196,7 @@ const StyledCreditInput = styled.input`
   padding-right: 48px; /* 아이콘 공간 확보 */
   border-radius: 8px;
   border: 1px solid
-    var(${({ isError }) => (isError === true ? '--error-red' : '--white')});
+    ${({ isError }) => (isError === true ? 'var(--error-red)' : 'var(--white)')};
 
   font-size: 20px;
   font-style: normal;
@@ -217,7 +225,7 @@ const CreditIcon = styled(StyledCreditIcon)`
 
 const ErrorSpan = styled.span`
   position: absolute;
-  top: 64px;
+  top: 68px;
 
   color: var(--error-red);
   font-size: 12px;
