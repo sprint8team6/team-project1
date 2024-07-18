@@ -3,11 +3,6 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const CreditContext = createContext();
 
-/**
- * Modal을 Context로 설정하는 Provider
- *
- * @param children - 태그 내부 (자식 컴포넌트들)
- */
 export const CreditProvider = ({ children }) => {
   const [myCredit, setMyCredit] = useState(() => {
     const initialCredit = localStorage.getItem('myCredit');
@@ -27,9 +22,7 @@ export const CreditProvider = ({ children }) => {
   );
 };
 
-CreditContext.propTypes = {
-  myCredit: PropTypes.number.isRequired,
-  setMyCredit: PropTypes.func.isRequired,
+CreditProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
