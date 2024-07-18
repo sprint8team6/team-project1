@@ -8,12 +8,13 @@ import { ReactComponent as DeleteButton } from '@assets/svg/btn_delete.svg';
  *
  * 체크 가능 여부와 삭제 가능 여부를 설정할 수 있습니다.
  *
- * @param {boolean} isChecked - 체크 상태
- * @param {boolean} isCheckable - 체크 가능 여부
- * @param {boolean} isDeletable - 삭제 버튼 활성 여부
- * @param {'small' | 'medium' | 'large'} size - 컴포넌트의 크기
- * @param {function} onDelete - 삭제 버튼 클릭 시 실행되는 함수
- * @param {function} onCheckChange - 체크 상태 변경 시 실행되는 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isChecked - 체크 상태
+ * @param {boolean} props.isCheckable - 체크 가능 여부
+ * @param {boolean} props.isDeletable - 삭제 버튼 활성 여부
+ * @param {'small' | 'medium' | 'large'} props.size - 컴포넌트의 크기
+ * @param {function} props.onDelete - 삭제 버튼 클릭 시 실행되는 함수
+ * @param {function} props.onCheckChange - 체크 상태 변경 시 실행되는 함수
  * @returns {JSX.Element} 원형 아이돌 이미지 컴포넌트
  */
 export default function CircularIdolImage({

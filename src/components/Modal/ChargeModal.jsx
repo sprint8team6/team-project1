@@ -6,8 +6,8 @@ import {
   StyledCreditIcon,
   StyledCreditIconWhite,
 } from '@styles/CommonStyles';
+import { useCreditContext } from '@contexts/useCreditContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
-
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
@@ -20,6 +20,9 @@ import Button from '@components/Button';
 export default function ChargeModal({ isOpen, onClose }) {
   // State
   const [optionValue, setOptionValue] = useState('100');
+
+  // Context
+  const { myCredit, setMyCredit } = useCreditContext();
 
   const handleOption = (e) => {
     setOptionValue(e.target.value);
@@ -47,7 +50,12 @@ export default function ChargeModal({ isOpen, onClose }) {
               onClick={handleOption}
             />
           </StyledButtonWrapper>
-          <ChargeButton onClose={onClose} />
+          <ChargeButton
+            onClose={onClose}
+            optionValue={optionValue}
+            myCredit={myCredit}
+            setMyCredit={setMyCredit}
+          />
         </StyledContainer>
       </StyledChargeModalWindow>
     </Modal>
@@ -140,9 +148,9 @@ CreditOptionButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-const ChargeButton = ({ onClose }) => {
+const ChargeButton = ({ onClose, optionValue, myCredit, setMyCredit }) => {
   const submitOption = () => {
-    /** @todo Credit 올라가는 로직 */
+    setMyCredit(Number(myCredit) + Number(optionValue));
     onClose();
   };
 
@@ -156,4 +164,7 @@ const ChargeButton = ({ onClose }) => {
 
 ChargeButton.propTypes = {
   onClose: PropTypes.func.isRequired,
+  optionValue: PropTypes.string.isRequired,
+  myCredit: PropTypes.number.isRequired,
+  setMyCredit: PropTypes.func.isRequired,
 };

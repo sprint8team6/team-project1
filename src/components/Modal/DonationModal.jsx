@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
+import { useCreditContext } from '@contexts/useCreditContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import { BasedContainer, StyledCreditIcon } from '@styles/CommonStyles';
@@ -22,8 +23,9 @@ export default function DonationModal({ isOpen, onClose }) {
   const [isError, setIsError] = useState(false); // 크레딧이 부족할 때
 
   // Context
-  const { modals, openModal } = useModalContext();
+  const { modals, openModal, closeModal } = useModalContext();
   const idolData = modals.DonationModal?.data;
+  const { myCredit, setMyCredit } = useCreditContext();
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -31,8 +33,7 @@ export default function DonationModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 크레딧으로 바꿔야 함, 100
-    if (Number(inputValue) > 100) {
+    if (Number(inputValue) > myCredit) {
       openModal('PopupModal', {
         message: (
           <span>
@@ -41,8 +42,10 @@ export default function DonationModal({ isOpen, onClose }) {
         ),
       });
     }
-    if (Number(inputValue) <= 100) {
-      // 후원 성공!
+    if (Number(inputValue) <= myCredit) {
+      /** @todo 후원 API 연동 */
+      setMyCredit(myCredit - Number(inputValue));
+      onClose();
     }
   };
 

@@ -1,14 +1,15 @@
 import { ModalProvider, useModalContext } from '@contexts/useModalContext';
-import Header from '@components/Header';
+import { CreditProvider } from '@contexts/useCreditContext';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
 import DonationModal from '@components/Modal/DonationModal';
 import VoteModal from '@components/Modal/VoteModal';
+// Components
+import Header from '@components/Header';
 import MyCredit from './components/MyCredit';
 import TributeSupport from './components/TributeSupport';
 import MonthChart from './components/MonthChart';
-import { CreditProvider } from '@contexts/useCreditContext';
 
 function ListPageContent() {
   // Context
