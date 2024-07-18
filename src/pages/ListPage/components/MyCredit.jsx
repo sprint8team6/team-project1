@@ -1,11 +1,10 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
-import { useModalContext } from '@contexts/useModalContext';
 import CreditImage from '@assets/svg/ic_credit.svg';
+import { useCreditContext } from '@contexts/useCreditContext';
 
 export default function MyCredit({ openModal }) {
-  // State
-  const [myCredit, setMyCredit] = useState(3600);
+  const { myCredit, setMyCredit } = useCreditContext();
 
   return (
     <MyCreditWrap>
@@ -27,6 +26,10 @@ export default function MyCredit({ openModal }) {
     </MyCreditWrap>
   );
 }
+
+MyCredit.propTypes = {
+  openModal: PropTypes.func.isRequired,
+};
 
 const MyCreditWrap = styled.section`
   width: 100%;

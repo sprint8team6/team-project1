@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
 import {
-  ModalBackground,
-  ModalWindow,
   BasedContainer,
   StyledCreditIcon,
   StyledCreditIconWhite,
 } from '@styles/CommonStyles';
+import { useCreditContext } from '@contexts/useCreditContext';
+import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
@@ -20,14 +21,15 @@ export default function ChargeModal({ isOpen, onClose }) {
   // State
   const [optionValue, setOptionValue] = useState('100');
 
-  if (!isOpen) return null;
+  // Context
+  const { myCredit, setMyCredit } = useCreditContext();
 
   const handleOption = (e) => {
     setOptionValue(e.target.value);
   };
 
   return (
-    <ModalBackground>
+    <Modal isOpen={isOpen}>
       <StyledChargeModalWindow>
         <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
         <StyledContainer>
@@ -48,12 +50,22 @@ export default function ChargeModal({ isOpen, onClose }) {
               onClick={handleOption}
             />
           </StyledButtonWrapper>
-          <ChargeButton onClose={onClose} />
+          <ChargeButton
+            onClose={onClose}
+            optionValue={optionValue}
+            myCredit={myCredit}
+            setMyCredit={setMyCredit}
+          />
         </StyledContainer>
       </StyledChargeModalWindow>
-    </ModalBackground>
+    </Modal>
   );
 }
+
+ChargeModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 // styled-components
 
@@ -130,9 +142,15 @@ const CreditOptionButton = ({ value, optionValue, onClick }) => {
   );
 };
 
-const ChargeButton = ({ onClose }) => {
+CreditOptionButton.propTypes = {
+  value: PropTypes.number,
+  optionValue: PropTypes.number,
+  onClick: PropTypes.func,
+};
+
+const ChargeButton = ({ onClose, optionValue, myCredit, setMyCredit }) => {
   const submitOption = () => {
-    /** @todo Credit 올라가는 로직 */
+    setMyCredit(Number(myCredit) + Number(optionValue));
     onClose();
   };
 
@@ -142,4 +160,11 @@ const ChargeButton = ({ onClose }) => {
       충전하기
     </Button>
   );
+};
+
+ChargeButton.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  optionValue: PropTypes.string.isRequired,
+  myCredit: PropTypes.number.isRequired,
+  setMyCredit: PropTypes.func.isRequired,
 };

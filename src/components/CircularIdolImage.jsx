@@ -1,6 +1,6 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import IdolImg from '@assets/TestIdolImage/Winter.png';
+import IdolImage from '@assets/TestIdolImage/Winter.png';
 import { ReactComponent as CheckIcon } from '@assets/svg/ic_check.svg';
 import { ReactComponent as DeleteButton } from '@assets/svg/btn_delete.svg';
 
@@ -8,12 +8,13 @@ import { ReactComponent as DeleteButton } from '@assets/svg/btn_delete.svg';
  *
  * 체크 가능 여부와 삭제 가능 여부를 설정할 수 있습니다.
  *
- * @param {boolean} isChecked - 체크 상태
- * @param {boolean} isCheckable - 체크 가능 여부
- * @param {boolean} isDeletable - 삭제 버튼 활성 여부
- * @param {'small' | 'medium' | 'large'} size - 컴포넌트의 크기
- * @param {function} onDelete - 삭제 버튼 클릭 시 실행되는 함수
- * @param {function} onCheckChange - 체크 상태 변경 시 실행되는 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isChecked - 체크 상태
+ * @param {boolean} props.isCheckable - 체크 가능 여부
+ * @param {boolean} props.isDeletable - 삭제 버튼 활성 여부
+ * @param {'small' | 'medium' | 'large'} props.size - 컴포넌트의 크기
+ * @param {function} props.onDelete - 삭제 버튼 클릭 시 실행되는 함수
+ * @param {function} props.onCheckChange - 체크 상태 변경 시 실행되는 함수
  * @returns {JSX.Element} 원형 아이돌 이미지 컴포넌트
  */
 export default function CircularIdolImage({
@@ -23,6 +24,7 @@ export default function CircularIdolImage({
   size = 'small',
   onDelete = null,
   onCheckChange = null,
+  idolImage = IdolImage,
 }) {
   const handleImageClick = () => {
     if (isCheckable && onCheckChange) {
@@ -37,7 +39,7 @@ export default function CircularIdolImage({
       onClick={handleImageClick}
     >
       <StyledImageWrapper>
-        <StyledImage src={IdolImg} alt="아이돌 이미지" />
+        <StyledImage src={idolImage} alt="아이돌 이미지" />
         {isChecked && (
           <>
             <StyledOverlay />
@@ -51,6 +53,16 @@ export default function CircularIdolImage({
     </StyledCircularIdolImage>
   );
 }
+
+CircularIdolImage.propTypes = {
+  isChecked: PropTypes.bool,
+  isCheckable: PropTypes.bool,
+  isDeletable: PropTypes.bool,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  onDelete: PropTypes.func,
+  onCheckChange: PropTypes.func,
+  idolImage: PropTypes.string.isRequired,
+};
 
 // styled-components
 

@@ -9,7 +9,7 @@ import CreditIcon from '@assets/svg/ic_credit.svg';
 export default function IdolCard() {
   // State
   const [idolStatus, setIdolStatus] = useState({
-    imgUrl: IdolImage,
+    imageUrl: IdolImage,
     tributeTxt: '강남역 광고',
     tributeInfo: '뉴진스 민지 지하철 광고',
     tributeCredit: 6000,
@@ -27,7 +27,7 @@ export default function IdolCard() {
     <IdolCardWrap>
       <IdolCardImage>
         <img
-          src={idolStatus.imgUrl ? idolStatus.imgUrl : defaultImage}
+          src={idolStatus.imageUrl ? idolStatus.imageUrl : defaultImage}
           alt="아이돌 이미지"
         />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
@@ -54,12 +54,7 @@ const IdolCardWrap = styled.div`
   width: 100%;
   max-width: 280px;
 
-  @media screen and (max-width: 744px) {
-    min-width: 280px;
-  }
-
   @media screen and (max-width: 375px) {
-    min-width: 160px;
     max-width: 160px;
   }
 `;
@@ -70,6 +65,7 @@ const IdolCardImage = styled.div`
   max-height: 290px;
   overflow: hidden;
   margin-bottom: 10px;
+  border-radius: 8px;
 
   &::after {
     position: absolute;
@@ -101,8 +97,13 @@ const IdolCardImage = styled.div`
     max-width: 235px;
     z-index: 2;
 
+    @media screen and (max-width: 744px) {
+      bottom: 20px;
+    }
+
     @media screen and (max-width: 375px) {
       height: 30px;
+      bottom: 10px;
     }
   }
 `;

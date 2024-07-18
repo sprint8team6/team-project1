@@ -1,4 +1,11 @@
-import React, { createContext, useState, useCallback, useContext } from 'react';
+import {
+  createContext,
+  useState,
+  useCallback,
+  useContext,
+  useMemo,
+} from 'react';
+import PropTypes from 'prop-types';
 
 const ModalContext = createContext();
 
@@ -29,12 +36,20 @@ export const ModalProvider = ({ children }) => {
     }));
   }, []);
 
+  const contextValue = useMemo(
+    () => ({ modals, openModal, closeModal }),
+    [modals]
+  );
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <ModalContext.Provider value={{ modals, openModal, closeModal }}>
+    <ModalContext.Provider value={contextValue}>
       {children}
     </ModalContext.Provider>
   );
+};
+
+ModalProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 /**

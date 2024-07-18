@@ -1,28 +1,88 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
 import styled from 'styled-components';
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
 import IdolCard from './IdolCard';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 export default function TributeSupport() {
+  // swiper 반응형 지정
+  const SWIPER_BREAKPOINTS = {
+    745: {
+      // 745 이상 적용(pc버전)
+      slidesPerView: 4,
+      spaceBetween: 24,
+    },
+    376: {
+      // 376 이상 적용(tablet버전)
+      slidesPerView: 2.4,
+      spaceBetween: 16,
+    },
+    0: {
+      // 0 이상 적용(moblie버전)
+      slidesPerView: 2.1,
+      spaceBetween: 8,
+    },
+  };
+
+  // swiper 화살표 버튼 지정
+  const SWIPER_NAVIGATION = {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  };
+
+  // swiper 자동 재생
+  const SWIPER_AUTOPLAY = {
+    delay: 4000, // 4초마다 자동 재생
+    disableOnInteraction: false, // 사용자가 슬라이더를 변경해도 자동재생 유지
+  };
+
   return (
     <MyCreditWrap>
       <ListPageSubTitle>
         <h2>후원을 기다리는 조공</h2>
       </ListPageSubTitle>
       <IdolTributeList>
-        <button type="button">
+        <ArrowButton className="swiper-button-prev" type="button">
           <img src={LeftArrow} alt="왼쪽 화살표 이미지" />
-        </button>
-        <IdolCardBox>
-          <IdolCard />
-          <IdolCard />
-          <IdolCard />
-          <IdolCard />
-        </IdolCardBox>
-        <button type="button">
+        </ArrowButton>
+        <Swiper
+          breakpoints={SWIPER_BREAKPOINTS}
+          autoplay={SWIPER_AUTOPLAY}
+          modules={[Navigation, Autoplay]}
+          navigation={SWIPER_NAVIGATION}
+        >
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+          <SwiperSlide>
+            <IdolCard />
+          </SwiperSlide>
+        </Swiper>
+        <ArrowButton className="swiper-button-next" type="button">
           <img src={RightArrow} alt="오른쪽 화살표 이미지" />
-        </button>
+        </ArrowButton>
       </IdolTributeList>
     </MyCreditWrap>
   );
@@ -70,22 +130,31 @@ const ListPageSubTitle = styled.div`
 `;
 
 const IdolTributeList = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 40px;
   width: 100%;
-  max-width: 1360px;
+  max-width: 1340px;
   margin: 0 auto;
 
-  @media screen and (max-width: 744px) {
-    overflow-x: scroll;
-    padding-bottom: 10px;
+  & > .swiper {
+    max-width: 1200px;
+  }
+`;
+
+const ArrowButton = styled.button`
+  opacity: 0.7;
+  &.swiper-button-disabled {
+    display: none;
   }
 
-  & > button {
-    @media screen and (max-width: 744px) {
-      display: none;
-    }
+  @media screen and (max-width: 744px) {
+    display: none;
+  }
+
+  &::after {
+    display: none;
   }
 `;
 
