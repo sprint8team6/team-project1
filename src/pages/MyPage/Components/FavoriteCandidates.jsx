@@ -94,6 +94,7 @@ const AddFavoriteTitle = styled.div`
 
   @media screen and (max-width: ${MOBILE_LIMIT}px) {
     font-size: 1.6rem;
+    padding-left: 2.4rem;
   }
 `;
 
@@ -101,15 +102,12 @@ const CandidatesBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 584px;
   gap: 1rem;
+  padding: 0 2.4rem;
   & > svg {
     height: 100%;
     @media screen and (max-width: ${MOBILE_LIMIT}px) {
       display: none;
-      position: absolute;
-      visibility: hidden;
     }
   }
 `;
