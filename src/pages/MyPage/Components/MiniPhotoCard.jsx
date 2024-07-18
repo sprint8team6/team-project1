@@ -1,16 +1,37 @@
-import CircularPhoto from './CircularPhoto';
 import styled from 'styled-components';
+import CircularIdolImage from '@components/CircularIdolImage';
+import PropTypes from 'prop-type';
 
-export default function MiniPhotoCard() {
+export default function MiniPhotoCard({
+  isCheckable = true,
+  isDeletable = false,
+  isChecked = false,
+  size = 'small',
+  onCheckChange = null,
+}) {
   return (
     <PhotoCard>
-      <CircularPhoto />
+      <CircularIdolImage
+        isCheckable={isCheckable}
+        isDeletable={isDeletable}
+        isChecked={isChecked}
+        size={size}
+        onCheckChange={onCheckChange}
+      />
       <IdolName>망곰이</IdolName>
       <TeamName>부앙단</TeamName>
     </PhotoCard>
   );
 }
-// 추후 사이즈가 다르게 들어갈 수 있게 해주는 props 필요
+
+MiniPhotoCard.propTypes = {
+  isCheckable: PropTypes.bool,
+  isChecked: PropTypes.bool,
+  onCheckChange: PropTypes.func,
+  size: PropTypes.string,
+  isDeletable: PropTypes.bool,
+};
+
 const PhotoCard = styled.div`
   height: 100%;
   max-width: 12.8rem;
@@ -18,9 +39,6 @@ const PhotoCard = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  @media screen and (max-width: 767px) {
-    height: 44px;
-  }
 `;
 
 const IdolName = styled.p`

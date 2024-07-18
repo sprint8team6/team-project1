@@ -82,7 +82,8 @@ getDonations.propTypes = {
  */
 export async function getCharts({ gender, pageSize = 10, cursor = 0 } = {}) {
   const query = new URLSearchParams({ gender, pageSize, cursor }).toString();
-  const url = `${BASE_URL}/charts/SPRINT?${query}`;
+  const url = `${BASE_URL}/charts/{gender}?${query}`;
+
   return fetchData(url);
 }
 
