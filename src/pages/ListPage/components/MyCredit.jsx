@@ -1,20 +1,10 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import { useModalContext } from '@contexts/useModalContext';
 import CreditImage from '@assets/svg/ic_credit.svg';
+import { useCreditContext } from '@contexts/useCreditContext';
 
 export default function MyCredit({ openModal }) {
-  // State
-  const [myCredit, setMyCredit] = useState(() => {
-    const initialCredit = localStorage.getItem('myCredit');
-    return initialCredit ? Number(initialCredit) : 0;
-  });
-
-  // 크레딧이 변경 되면 localStorage에 있는 크레딧 수정
-  useEffect(() => {
-    localStorage.setItem('myCredit', myCredit);
-  }, [myCredit]);
+  const { myCredit, setMyCredit } = useCreditContext();
 
   return (
     <MyCreditWrap>

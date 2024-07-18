@@ -54,11 +54,11 @@ export async function getDonations({
   cursor,
   priorityIdolIds,
 } = {}) {
-  const query = new URLSearchParams(
+  const query = new URLSearchParams({
     pageSize,
     cursor,
-    priorityIdolIds
-  ).toString();
+    priorityIdolIds,
+  }).toString();
   const url = `${BASE_URL}/donations?${query}`;
   return fetchData(url);
 }
