@@ -1,7 +1,8 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import styled from 'styled-components';
+import { getDonations } from '@apis/idolApi';
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
 import IdolCard from './IdolCard';
@@ -9,6 +10,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 export default function TributeSupport() {
+  const [idolDonations, setIdolDonations] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   // swiper 반응형 지정
   const SWIPER_BREAKPOINTS = {
     745: {
@@ -40,6 +44,42 @@ export default function TributeSupport() {
     disableOnInteraction: false, // 사용자가 슬라이더를 변경해도 자동재생 유지
   };
 
+  useEffect(() => {
+    const handleLoad = async () => {
+      try {
+        const { list } = await getDonations({
+          pageSize: 100,
+          cursor: 0,
+          priorityIdolIds: 1,
+        });
+        setIdolDonations(list);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false); // 로딩 완료
+      }
+    };
+
+    handleLoad();
+  }, []);
+
+  // 로딩중
+  if (loading) {
+    return (
+      <MyCreditWrap>
+        <ListPageSubTitle>
+          <h2>후원을 기다리는 조공</h2>
+        </ListPageSubTitle>
+        <IdolCardBox>
+          <IdolCard />
+          <IdolCard />
+          <IdolCard />
+          <IdolCard />
+        </IdolCardBox>
+      </MyCreditWrap>
+    );
+  }
+
   return (
     <MyCreditWrap>
       <ListPageSubTitle>
@@ -55,30 +95,13 @@ export default function TributeSupport() {
           modules={[Navigation, Autoplay]}
           navigation={SWIPER_NAVIGATION}
         >
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
-          <SwiperSlide>
-            <IdolCard />
-          </SwiperSlide>
+          {idolDonations.map((donation) => {
+            return (
+              <SwiperSlide key={donation.id}>
+                <IdolCard donation={donation} />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
         <ArrowButton className="swiper-button-next" type="button">
           <img src={RightArrow} alt="오른쪽 화살표 이미지" />
@@ -91,7 +114,6 @@ export default function TributeSupport() {
 const MyCreditWrap = styled.section`
   margin-top: 50px;
   margin-bottom: 80px;
-  padding: 0 20px;
   color: #ffffff;
 
   @media screen and (max-width: 375px) {
@@ -101,7 +123,8 @@ const MyCreditWrap = styled.section`
 
 const ListPageSubTitle = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1240px;
+  padding: 0 20px;
   margin: 0 auto;
   margin-bottom: 32px;
 
@@ -136,6 +159,7 @@ const IdolTributeList = styled.div`
   gap: 40px;
   width: 100%;
   max-width: 1340px;
+  padding: 0 20px;
   margin: 0 auto;
 
   & > .swiper {
@@ -163,6 +187,9 @@ const IdolCardBox = styled.div`
   justify-content: space-between;
   gap: 24px;
   width: 100%;
+  max-width: 1240px;
+  padding: 0 20px;
+  margin: 0 auto;
 
   @media screen and (max-width: 744px) {
     gap: 16px;
