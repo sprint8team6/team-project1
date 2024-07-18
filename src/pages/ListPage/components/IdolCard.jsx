@@ -1,19 +1,27 @@
+import { PropTypes } from 'prop-types';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
 import Button from '@components/Button';
-import IdolImage from '@assets/fandomK-img/fandomK-img6.png';
 import defaultImage from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
 
-export default function IdolCard() {
+export default function IdolCard({ donation }) {
+  // 데드라인 값 구하기
+  const CREATED = new Date(donation?.createdAt);
+  const DEADLINE = new Date(donation?.deadline);
+  const TIME_DIFF = DEADLINE - CREATED;
+  const DEADLINE_DAY = Math.ceil(TIME_DIFF / (1000 * 60 * 60 * 24));
+
   // State
   const [idolStatus, setIdolStatus] = useState({
-    imageUrl: IdolImage,
-    tributeTxt: '강남역 광고',
-    tributeInfo: '뉴진스 민지 지하철 광고',
-    tributeCredit: 6000,
-    tributeDate: 5,
+    donationProfilePicture: donation
+      ? donation.idol.profilePicture
+      : defaultImage,
+    donationSubtitle: donation ? donation.subtitle : '제목이 없습니다.',
+    donationTitle: donation ? donation.title : '부제목이 없습니다.',
+    donationReceivedDonation: donation ? donation.receivedDonations : 0,
+    donationDeadLineDay: donation ? DEADLINE_DAY : '-',
   });
 
   // Context
@@ -26,22 +34,21 @@ export default function IdolCard() {
   return (
     <IdolCardWrap>
       <IdolCardImage>
-        <img
-          src={idolStatus.imageUrl ? idolStatus.imageUrl : defaultImage}
-          alt="아이돌 이미지"
-        />
+        <Image profilePicture={idolStatus.donationProfilePicture} />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
       </IdolCardImage>
       <IdolCardText>
-        <span>{idolStatus?.tributeTxt ?? '임시 서브 타이틀'}</span>
-        <p>{idolStatus?.tributeInfo ?? '임시 메인 타이틀'}</p>
+        <span>{idolStatus?.donationSubtitle ?? '임시 서브 타이틀'}</span>
+        <p>{idolStatus?.donationTitle ?? '임시 메인 타이틀'}</p>
         <div>
           <IdolCardCredit>
             <div>
               <img src={CreditIcon} alt="크레딧 아이콘" />
-              <span>{idolStatus?.tributeCredit.toLocaleString() ?? '0'}</span>
+              <span>
+                {idolStatus?.donationReceivedDonation.toLocaleString() ?? '0'}
+              </span>
             </div>
-            <span>{idolStatus?.tributeDate ?? '??'}일 남음</span>
+            <span>{idolStatus?.donationDeadLineDay ?? '??'}일 남음</span>
           </IdolCardCredit>
           <IdolCardCreditGauge />
         </div>
@@ -49,6 +56,19 @@ export default function IdolCard() {
     </IdolCardWrap>
   );
 }
+
+IdolCard.propTypes = {
+  donation: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    deadline: PropTypes.string.isRequired,
+    idol: PropTypes.shape({
+      profilePicture: PropTypes.string.isRequired,
+    }).isRequired,
+    receivedDonations: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 const IdolCardWrap = styled.div`
   width: 100%;
@@ -63,9 +83,15 @@ const IdolCardImage = styled.div`
   position: relative;
   width: 100%;
   max-height: 290px;
+  min-height: 290px;
   overflow: hidden;
   margin-bottom: 10px;
   border-radius: 8px;
+
+  @media screen and (max-width: 375px) {
+    max-height: 200px;
+    min-height: 200px;
+  }
 
   &::after {
     position: absolute;
@@ -86,19 +112,20 @@ const IdolCardImage = styled.div`
   & > img {
     position: relative;
     width: 100%;
+    /* aspect-ratio: 1 / 1; */
   }
 
   & > button {
     position: absolute;
     left: 50%;
-    bottom: 30px;
+    bottom: 20px;
     transform: translateX(-50%);
     width: 90%;
     max-width: 235px;
     z-index: 2;
 
     @media screen and (max-width: 744px) {
-      bottom: 20px;
+      bottom: 15px;
     }
 
     @media screen and (max-width: 375px) {
@@ -106,6 +133,20 @@ const IdolCardImage = styled.div`
       bottom: 10px;
     }
   }
+`;
+
+const Image = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: ${(props) =>
+    props ? `url(${props.profilePicture})` : `url(${defaultImage})`};
+  background-position-y: -10px;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 const IdolCardText = styled.div`
@@ -125,7 +166,7 @@ const IdolCardText = styled.div`
     font-size: 1.8rem;
     font-weight: 500;
     margin-bottom: 24px;
-    color: var(--wthie);
+    color: var(--white);
 
     @media screen and (max-width: 375px) {
       font-size: 1.4rem;
