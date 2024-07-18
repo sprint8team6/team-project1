@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
+import { useCreditContext } from '@contexts/useCreditContext';
 import { BasedContainer, StyledDivider } from '@styles/CommonStyles';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
@@ -52,6 +53,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
 
   // Context
   const { openModal } = useModalContext();
+  const { myCredit, setMyCredit } = useCreditContext();
 
   const handleOptionChange = (idolRank) => {
     const nextSelectedIdol = idolRank;
@@ -86,6 +88,8 @@ export default function VoteModal({ isOpen = false, onClose }) {
               ),
             })
           }
+          myCredit={myCredit}
+          setMyCredit={setMyCredit}
         >
           투표하기
         </VoteButton>
@@ -196,13 +200,18 @@ VoteOption.propTypes = {
   }).isRequired,
 };
 
-const VoteButton = ({ onClose, openError, children }) => {
+const VoteButton = ({
+  onClose,
+  openError,
+  myCredit,
+  setMyCredit,
+  children,
+}) => {
   const submitVote = () => {
-    // eslint-disable-next-line no-constant-condition
-    if (999 < 1000) {
+    if (myCredit < 1000) {
       openError();
     } else {
-      /** @todo Credit 1000 사용하는 로직 */
+      setMyCredit(myCredit - 1000);
       /** @todo 선택한 여자 아이돌에게 Vote 되는 로직 */
       onClose();
     }
@@ -214,6 +223,8 @@ const VoteButton = ({ onClose, openError, children }) => {
 VoteButton.propTypes = {
   onClose: PropTypes.func.isRequired,
   openError: PropTypes.func.isRequired,
+  myCredit: PropTypes.number.isRequired,
+  setMyCredit: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
 
