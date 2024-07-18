@@ -3,11 +3,27 @@ import { ReactComponent as PageLeft } from '@assets/svg/btn_pagination_arrow_lef
 import { ReactComponent as PageRight } from '@assets/svg/btn_pagination_arrow_right.svg';
 import styled from 'styled-components';
 import Button from '@components/Button';
+import { getIdols } from '@utils/idolApi';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
 import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function FavoriteCandidates() {
+  const [loading, setLoading] = useState([]);
+  useEffect(() => {
+    const handleLoad = async () => {
+      try {
+        const { loadedIdols } = await getIdols({
+          pageSize: 8,
+          cursor: 0,
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  }, []);
   const [checkedIdols, setCheckedIdols] = useState([
     { id: 1, name: 'Idol 1', isChecked: false },
     { id: 2, name: 'Idol 2', isChecked: false },
@@ -45,6 +61,42 @@ export default function FavoriteCandidates() {
       return updatedIdols;
     });
   };
+
+  if (loading) {
+    return (
+      <AddFavoriteBox>
+        <AddFavoriteTitle>관심있는 아이돌을 추가해보세요.</AddFavoriteTitle>
+        <CandidatesBox>
+          <PageLeft />
+          <IdolList>
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+            <MiniPhotoCard />
+          </IdolList>
+          <PageRight />
+        </CandidatesBox>
+        <AddButtonBox>
+          <StyledButton rounded>
+            <PlusIcon />
+            <StyledButtonContext>추가하기</StyledButtonContext>
+          </StyledButton>
+        </AddButtonBox>
+      </AddFavoriteBox>
+    );
+  }
   return (
     <AddFavoriteBox>
       <AddFavoriteTitle>관심있는 아이돌을 추가해보세요.</AddFavoriteTitle>
