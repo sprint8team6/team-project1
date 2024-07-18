@@ -8,6 +8,7 @@ import VoteModal from '@components/Modal/VoteModal';
 import MyCredit from './components/MyCredit';
 import TributeSupport from './components/TributeSupport';
 import MonthChart from './components/MonthChart';
+import { CreditProvider } from '@contexts/useCreditContext';
 
 function ListPageContent() {
   // Context
@@ -49,8 +50,10 @@ function ListPageContent() {
 
 export default function ListPage() {
   return (
-    <ModalProvider>
-      <ListPageContent />
-    </ModalProvider>
+    <CreditProvider>
+      <ModalProvider>
+        <ListPageContent />
+      </ModalProvider>
+    </CreditProvider>
   );
 }
