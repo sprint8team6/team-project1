@@ -33,26 +33,17 @@ export default function FavoriteCandidates() {
   }, [checkedIdols]);
 
   const onCheckChangeEvent = (id) => {
-    setCheckedIdols((prevState) =>
-      prevState.map((idol) =>
+    setCheckedIdols((prevState) => {
+      const updatedIdols = prevState.map((idol) =>
         idol.id === id ? { ...idol, isChecked: !idol.isChecked } : idol
-      )
-    );
+      );
 
-    // 로컬스토리지 기능 삽입 테스트
-    // const favoriteIdols =
-    //   JSON.parse(localStorage.getItem('favoriteIdols')) || [];
-    // const index = favoriteIdols.findIndex((item) => item.id === idol.id);
+      // 로컬 스토리지 업데이트
+      const favoriteIdols = updatedIdols.filter((idol) => idol.isChecked);
+      localStorage.setItem('favoriteIdols', JSON.stringify(favoriteIdols));
 
-    // if (index !== -1) {
-    //   // 이미 목록에 있는 아이돌이면 삭제
-    //   favoriteIdols.splice(index, 1);
-    // } else {
-    //   // 목록에 없는 아이돌이면 추가
-    //   favoriteIdols.push(idol);
-    // }
-
-    // localStorage.setItem('favoriteIdols', JSON.stringify(favoriteIdols));
+      return updatedIdols;
+    });
   };
   return (
     <AddFavoriteBox>
@@ -62,7 +53,6 @@ export default function FavoriteCandidates() {
         <IdolList>
           {checkedIdols.map((idol) => (
             <MiniPhotoCard
-              key={idol.id}
               isChecked={idol.isChecked}
               onCheckChange={() => onCheckChangeEvent(idol.id)}
               size="big"
