@@ -85,12 +85,12 @@ export default function DonationModal({ isOpen, onClose }) {
         <StyledContainer>
           <InfoWrapper>
             <StyledPreviewImage
-              src={idolData.imageUrl || AltImage}
+              src={idolData.donationProfilePicture || AltImage}
               onError={onErrorImage}
             />
             <DescriptionWrapper>
-              <h2>{idolData?.tributeTxt || '서브 타이틀'}</h2>
-              <h1>{idolData?.tributeInfo || '메인 타이틀'}</h1>
+              <h2>{idolData?.donationSubtitle || '서브 타이틀'}</h2>
+              <h1>{idolData?.donationTitle || '메인 타이틀'}</h1>
             </DescriptionWrapper>
           </InfoWrapper>
           <InputForm onSubmit={handleSubmit}>
