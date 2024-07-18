@@ -23,9 +23,6 @@ const MyFavoriteListBox = styled.div`
   gap: 3rem;
   padding-bottom: 5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  @media screen and (max-width: 744px) {
-    height: 44px;
-  }
 `;
 
 const MyFavoriteTitle = styled.div`
