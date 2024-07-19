@@ -300,7 +300,6 @@ const VoteOption = ({ onClick, selectedIdol, idolData, hasVoted }) => {
 
 VoteOption.propTypes = {
   onClick: PropTypes.func.isRequired,
-  /** @todo 추후에 State로 Key 변경할 경우 selectedIdol PropTypes 변동 가능성 있음 */
   selectedIdol: PropTypes.number.isRequired,
   idolData: PropTypes.shape({
     profilePicture: PropTypes.string.isRequired,
