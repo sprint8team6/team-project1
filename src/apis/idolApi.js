@@ -189,6 +189,8 @@ putDonationsContribute.propTypes = {
  * @param {Object} prop - API props
  * @param {number} prop.idolId - 투표할 idol의 id
  *
+ * 아래에서 import 해서 사용중입니다.
+ * @see {@link ../components/Modal/VoteModal.jsx}
  */
 export async function postVote({ idolId }) {
   // not exist query
