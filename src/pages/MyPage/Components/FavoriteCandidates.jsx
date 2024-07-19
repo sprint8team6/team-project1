@@ -10,6 +10,7 @@ import MiniPhotoCard from './MiniPhotoCard';
 
 export default function FavoriteCandidates() {
   const [loading, setLoading] = useState([]);
+  const [idols, setIdols] = useState([]);
   useEffect(() => {
     const handleLoad = async () => {
       try {
@@ -45,8 +46,22 @@ export default function FavoriteCandidates() {
   ]);
 
   useEffect(() => {
-    localStorage.setItem('favoriteIdols', JSON.stringify(checkedIdols));
-  }, [checkedIdols]);
+    const fetchIdols = async () => {
+      try {
+        const { loadedIdols } = await getIdols({
+          pageSize: 16,
+          cursor: 0,
+        });
+        setIdols(loadedIdols.map((idol) => ({ ...idol, isChecked: false })));
+      } catch (error) {
+        console.error('Failed to fetch idols:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchIdols();
+  }, []);
 
   const onCheckChangeEvent = (id) => {
     setCheckedIdols((prevState) => {
@@ -69,22 +84,15 @@ export default function FavoriteCandidates() {
         <CandidatesBox>
           <PageLeft />
           <IdolList>
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
-            <MiniPhotoCard />
+            {idols.map((idol) => (
+              <MiniPhotoCard
+                key={idol.id}
+                isChecked={idol.isChecked}
+                onCheckChange={() => onCheckChangeEvent(idol.id)}
+                size="big"
+                isCheckable
+              />
+            ))}
           </IdolList>
           <PageRight />
         </CandidatesBox>
