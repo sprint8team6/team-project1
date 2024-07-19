@@ -49,7 +49,7 @@ const ToastAnimation = keyframes`
     transform: translateY(0);
   }
   30%, 70% {
-    transform: translateY(-110px);
+    transform: translateY(-108px);
   }
   100% {
     transform: translateY(0);

@@ -118,6 +118,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
                 }
                 selectedIdol={selectedIdol}
                 idolData={idolData}
+                hasVoted={localStorage.getItem('hasVoted')}
               />
               <StyledDivider />
             </>
@@ -185,7 +186,6 @@ const StyledVoteOptionList = styled(BasedContainer)`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 8px;
-  cursor: pointer;
   overflow-y: auto;
   flex-grow: 1;
   padding-top: 8px;
@@ -229,6 +229,7 @@ const StyledVoteOption = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  cursor: ${(props) => (props.hasVoted === 'true' ? 'default' : 'pointer')};
 
   @media screen and (max-width: 480px) {
     display: flex;
@@ -276,9 +277,9 @@ const StyledVotes = styled.span`
   line-height: normal;
 `;
 
-const VoteOption = ({ onClick, selectedIdol, idolData }) => {
+const VoteOption = ({ onClick, selectedIdol, idolData, hasVoted }) => {
   return (
-    <StyledVoteOption onClick={() => onClick(idolData?.id)}>
+    <StyledVoteOption onClick={() => onClick(idolData?.id)} hasVoted={hasVoted}>
       <StyledIdolInfo>
         <CircularIdolImage
           idolImage={idolData?.profilePicture}
@@ -309,6 +310,7 @@ VoteOption.propTypes = {
     name: PropTypes.string.isRequired,
     totalVotes: PropTypes.number.isRequired,
   }).isRequired,
+  hasVoted: PropTypes.string.isRequired,
 };
 
 const StyledDiv = styled.div`
