@@ -64,7 +64,11 @@ export default function VoteModal({ isOpen = false, onClose }) {
             <>
               <VoteOption
                 key={`idol-id-${idolData.id}`}
-                onClick={handleOptionChange}
+                onClick={
+                  localStorage.getItem('hasVoted')
+                    ? () => {}
+                    : handleOptionChange
+                }
                 selectedIdol={selectedIdol}
                 idolData={idolData}
               />
@@ -87,12 +91,21 @@ export default function VoteModal({ isOpen = false, onClose }) {
           myCredit={myCredit}
           setMyCredit={setMyCredit}
         >
-          투표하기
+          {!localStorage.getItem('hasVoted')
+            ? '투표하기'
+            : '이미 차트에 투표했어요'}
         </VoteButton>
+
         <StyledVoteNotify>
-          <span>
-            투표하는 데 <em>1000 크레딧</em>이 소모됩니다.
-          </span>
+          {!localStorage.getItem('hasVoted') ? (
+            <span>
+              투표하는 데 <em>1000 크레딧</em>이 소모됩니다.
+            </span>
+          ) : (
+            <span>
+              <em>다음 투표</em>까지 기다려주세요!
+            </span>
+          )}
         </StyledVoteNotify>
       </StyledVoteModalWindow>
     </Modal>
@@ -183,7 +196,9 @@ const VoteOption = ({ onClick, selectedIdol, idolData }) => {
           <StyledVotes>{idolData?.totalVotes?.toLocaleString()} 표</StyledVotes>
         </StyledIdolNameAndVotes>
       </StyledIdolInfo>
-      <RadioButton checked={selectedIdol === idolData?.id} />
+      {!localStorage.getItem('hasVoted') && (
+        <RadioButton checked={selectedIdol === idolData?.id} />
+      )}
     </StyledVoteOption>
   );
 };
@@ -216,6 +231,7 @@ const VoteButton = ({
       try {
         postVote({ idolId: selectedIdol });
         setMyCredit(myCredit - 1000);
+        localStorage.setItem('hasVoted', true);
       } catch (error) {
         console.error('Failed to vote idol:', error);
       } finally {
@@ -224,7 +240,11 @@ const VoteButton = ({
     }
   };
 
-  return <Button onClick={submitVote}>{children}</Button>;
+  return (
+    <Button onClick={submitVote} disabled={localStorage.getItem('hasVoted')}>
+      {children}
+    </Button>
+  );
 };
 
 VoteButton.propTypes = {
