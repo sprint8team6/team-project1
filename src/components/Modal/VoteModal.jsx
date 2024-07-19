@@ -11,7 +11,7 @@ import CircularIdolImage from '@components/CircularIdolImage';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
 // APIs
-import { getCharts } from '@apis/idolApi';
+import { getCharts, postVote } from '@apis/idolApi';
 import LoadingSpinner from '@components/LoadingSpinner';
 
 /** 투표 모달 컴포넌트
@@ -22,7 +22,7 @@ import LoadingSpinner from '@components/LoadingSpinner';
  */
 export default function VoteModal({ isOpen = false, onClose }) {
   // State
-  const [selectedIdol, setSelectedIdol] = useState('0');
+  const [selectedIdol, setSelectedIdol] = useState(); // [type=number] (idolId 저장)
   const [voteIdolData, setVoteIdolData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,8 +32,8 @@ export default function VoteModal({ isOpen = false, onClose }) {
     modals.VoteModal.data.girlTab === true ? 'female' : 'male';
   const { myCredit, setMyCredit } = useCreditContext();
 
-  const handleOptionChange = (idolRank) => {
-    const nextSelectedIdol = idolRank;
+  const handleOptionChange = (idolId) => {
+    const nextSelectedIdol = idolId;
     setSelectedIdol(nextSelectedIdol);
   };
 
@@ -83,6 +83,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
               ),
             })
           }
+          selectedIdol={selectedIdol}
           myCredit={myCredit}
           setMyCredit={setMyCredit}
         >
@@ -182,7 +183,7 @@ const VoteOption = ({ onClick, selectedIdol, idolData }) => {
           <StyledVotes>{idolData?.totalVotes?.toLocaleString()} 표</StyledVotes>
         </StyledIdolNameAndVotes>
       </StyledIdolInfo>
-      <RadioButton checked={selectedIdol === idolData.id} />
+      <RadioButton checked={selectedIdol === idolData?.id} />
     </StyledVoteOption>
   );
 };
@@ -203,6 +204,7 @@ VoteOption.propTypes = {
 const VoteButton = ({
   onClose,
   openError,
+  selectedIdol,
   myCredit,
   setMyCredit,
   children,
@@ -211,9 +213,14 @@ const VoteButton = ({
     if (myCredit < 1000) {
       openError();
     } else {
-      setMyCredit(myCredit - 1000);
-      /** @todo 선택한 여자 아이돌에게 Vote 되는 로직 */
-      onClose();
+      try {
+        postVote({ idolId: selectedIdol });
+        setMyCredit(myCredit - 1000);
+      } catch (error) {
+        console.error('Failed to vote idol:', error);
+      } finally {
+        onClose();
+      }
     }
   };
 
@@ -223,6 +230,7 @@ const VoteButton = ({
 VoteButton.propTypes = {
   onClose: PropTypes.func.isRequired,
   openError: PropTypes.func.isRequired,
+  selectedIdol: PropTypes.number.isRequired,
   myCredit: PropTypes.number.isRequired,
   setMyCredit: PropTypes.func.isRequired,
   children: PropTypes.node,

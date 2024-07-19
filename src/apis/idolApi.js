@@ -25,6 +25,30 @@ getData.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
+/** 공통 POST 요청 함수
+ *
+ * @param {Object} props - function props
+ * @param {string} props.url - 리스폰스 URL
+ * @param {Object} props.data - 전송할 데이터
+ */
+async function postData(url, data) {
+  const response = await axios.post(url, data);
+  try {
+    if (response.status !== 201) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Failed to post:', error);
+    throw error;
+  }
+}
+
+postData.propTypes = {
+  url: PropTypes.string.isRequired,
+  data: PropTypes.shape({}).isRequired,
+};
+
 /** 공통 PUT 요청 함수
  *
  * @param {Object} props - function props
@@ -34,7 +58,7 @@ getData.propTypes = {
 async function putData(url, data) {
   const response = await axios.put(url, data);
   try {
-    if (response.status !== 200) {
+    if (![200, 204].includes(response.status)) {
       throw new Error(`HTTP Error: ${response.status}`);
     }
     return response.data;
@@ -44,9 +68,9 @@ async function putData(url, data) {
   }
 }
 
-getData.propTypes = {
+putData.propTypes = {
   url: PropTypes.string.isRequired,
-  data: PropTypes.shape({}).isRequired, // Prop type "object" is forbidden : react/forbid-prop-types
+  data: PropTypes.shape({}).isRequired,
 };
 
 /** --------------------------------------------------------------------- */
@@ -158,4 +182,27 @@ export async function putDonationsContribute({ donationId, donationAmount }) {
 putDonationsContribute.propTypes = {
   donationId: PropTypes.number.isRequired,
   donationAmount: PropTypes.number.isRequired,
+};
+
+/** 이달의 차트에서 아이돌에게 투표하는 API
+ *
+ * @param {Object} prop - API props
+ * @param {number} prop.idolId - 투표할 idol의 id
+ *
+ */
+export async function postVote({ idolId }) {
+  // not exist query
+  const url = `${BASE_URL}/votes`;
+  const data = { idolId };
+  try {
+    const response = await postData(url, data);
+    return response;
+  } catch (error) {
+    console.error('Failed to vote to idol:', error);
+    throw error;
+  }
+}
+
+postVote.propTypes = {
+  idolId: PropTypes,
 };
