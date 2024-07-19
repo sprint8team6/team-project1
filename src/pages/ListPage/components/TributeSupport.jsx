@@ -26,7 +26,7 @@ export default function TributeSupport() {
       spaceBetween: 16,
     },
     0: {
-      // 0 이상 적용(moblie버전)
+      // 0 이상 적용(mobile버전)
       slidesPerView: 2.1,
       spaceBetween: 8,
     },
@@ -53,8 +53,8 @@ export default function TributeSupport() {
           priorityIdolIds: 1,
         });
         setIdolDonations(list);
-      } catch (err) {
-        console.error(err);
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false); // 로딩 완료
       }
