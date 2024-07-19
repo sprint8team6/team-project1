@@ -5,10 +5,14 @@ import { PulseLoader } from 'react-spinners';
 
 const MaskedBackground = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: inherit;
+  height: inherit;
   z-index: 9998;
 `;
 
@@ -17,8 +21,8 @@ const SpinnerOverlay = styled.div`
   top: 0;
   left: 0;
   background-color: var(--light-black);
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +35,7 @@ const SpinnerOverlay = styled.div`
 export default function LoadingSpinner({
   size = 20,
   color = 'var(--brand-coral)',
-  minLoadTime = 1000,
+  minLoadTime = 1500,
 }) {
   const [isVisible, setIsVisible] = useState(true);
 

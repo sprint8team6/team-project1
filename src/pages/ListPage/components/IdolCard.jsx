@@ -15,6 +15,7 @@ export default function IdolCard({ donation }) {
 
   // State
   const [idolStatus, setIdolStatus] = useState({
+    donationId: donation ? donation.id : '999999999999',
     donationProfilePicture: donation
       ? donation.idol.profilePicture
       : defaultImage,
@@ -59,6 +60,7 @@ export default function IdolCard({ donation }) {
 
 IdolCard.propTypes = {
   donation: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
