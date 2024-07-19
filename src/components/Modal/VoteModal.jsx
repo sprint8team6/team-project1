@@ -190,9 +190,28 @@ const StyledVoteOptionList = styled(BasedContainer)`
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
-  overflow-y: scroll;
+  overflow-y: auto;
   flex-grow: 1;
   padding-top: 8px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: linear-gradient(60deg, #f96e68, #fe578f);
+    /* background: linear-gradient(60deg, black -9.84%, white 107.18%); */
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
 
   @media screen and (max-width: 480px) {
     width: 100%;
