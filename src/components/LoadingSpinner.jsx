@@ -35,7 +35,7 @@ const SpinnerOverlay = styled.div`
 export default function LoadingSpinner({
   size = 20,
   color = 'var(--brand-coral)',
-  minLoadTime = 1000,
+  minLoadTime = 1500,
 }) {
   const [isVisible, setIsVisible] = useState(true);
 

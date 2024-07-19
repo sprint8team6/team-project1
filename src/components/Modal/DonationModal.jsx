@@ -9,6 +9,8 @@ import { BasedContainer, StyledCreditIcon } from '@styles/CommonStyles';
 import Button from '@components/Button';
 // assets
 import AltImage from '@assets/png/alt_image.png';
+// APIs
+import { putDonationsContribute } from '@apis/idolApi';
 
 /** 후원 모달 컴포넌트
  * @param {Object} props - 컴포넌트 props
@@ -39,9 +41,11 @@ export default function DonationModal({ isOpen, onClose }) {
     setInputValue(e.target.value);
   };
 
+  // 조공에 후원
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Number(inputValue) > myCredit) {
+    const submitAmount = Number(inputValue);
+    if (submitAmount > myCredit) {
       openModal('PopupModal', {
         message: (
           <span>
@@ -50,10 +54,19 @@ export default function DonationModal({ isOpen, onClose }) {
         ),
       });
     }
-    if (Number(inputValue) <= myCredit) {
-      /** @todo 후원 API 연동 */
-      setMyCredit(myCredit - Number(inputValue));
-      onClose();
+    if (submitAmount <= myCredit) {
+      /** @todo2 후원 성공에 대한 팝업 구현 */
+      try {
+        putDonationsContribute({
+          donationId: idolData.donationId,
+          donationAmount: submitAmount,
+        });
+        setMyCredit(myCredit - submitAmount);
+      } catch (error) {
+        console.error('Failed to submit donation:', error);
+      } finally {
+        onClose();
+      }
     }
   };
 

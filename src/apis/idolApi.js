@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-/** 공통 HTTP 요청 함수
+/** 공통 GET 요청 함수
+ *
  * @param {Object} props - function props
  * @param {string} props.url - 리스폰스 URL
  */
-async function fetchData(url) {
+async function getData(url) {
   const response = await axios.get(url);
   try {
     if (response.status !== 200) {
@@ -20,9 +21,35 @@ async function fetchData(url) {
   }
 }
 
-fetchData.propTypes = {
+getData.propTypes = {
   url: PropTypes.string.isRequired,
 };
+
+/** 공통 PUT 요청 함수
+ *
+ * @param {Object} props - function props
+ * @param {string} props.url - 리스폰스 URL
+ * @param {Object} props.data - 전송할 데이터
+ */
+async function putData(url, data) {
+  const response = await axios.put(url, data);
+  try {
+    if (response.status !== 200) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Failed to put:', error);
+    throw error;
+  }
+}
+
+getData.propTypes = {
+  url: PropTypes.string.isRequired,
+  data: PropTypes.shape({}).isRequired, // Prop type "object" is forbidden : react/forbid-prop-types
+};
+
+/** --------------------------------------------------------------------- */
 
 /** 아이돌 정보를 가져오는 API 함수
  *
@@ -35,7 +62,7 @@ fetchData.propTypes = {
 export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
   const query = new URLSearchParams({ pageSize, cursor, keyword }).toString();
   const url = `${BASE_URL}/idols?${query}`;
-  return fetchData(url);
+  return getData(url);
 }
 
 getIdols.propTypes = {
@@ -63,7 +90,7 @@ export async function getDonations({
     priorityIdolIds,
   }).toString();
   const url = `${BASE_URL}/donations?${query}`;
-  return fetchData(url);
+  return getData(url);
 }
 
 getDonations.propTypes = {
@@ -84,11 +111,37 @@ export async function getCharts({ gender, pageSize = 10, cursor = 0 } = {}) {
   const query = new URLSearchParams({ gender, pageSize, cursor }).toString();
   const url = `${BASE_URL}/charts/{gender}?${query}`;
 
-  return fetchData(url);
+  return getData(url);
 }
 
 getCharts.propTypes = {
   gender: PropTypes.oneOf(['female', 'male']).isRequired,
   pageSize: PropTypes.number,
   cursor: PropTypes.number,
+};
+
+/** 조공에 후원 정보를 보내는 API 함수
+ *
+ * @param {Object} props - API props
+ * @param {number} props.donationId - 후원할 id
+ * @param {number} props.donationAmount - 후원할 데이터
+ * @returns {Promise<Object>} API 응답 데이터
+ */
+export async function putDonationsContribute({ donationId, donationAmount }) {
+  // not exist query
+  const url = `${BASE_URL}/donations/${donationId}/contribute`;
+  const data = { amount: donationAmount };
+
+  try {
+    const response = await putData(url, data);
+    return response;
+  } catch (error) {
+    console.error('Failed to contribute to donation:', error);
+    throw error;
+  }
+}
+
+putDonationsContribute.propTypes = {
+  donationId: PropTypes.number.isRequired,
+  donationAmount: PropTypes.number.isRequired,
 };
