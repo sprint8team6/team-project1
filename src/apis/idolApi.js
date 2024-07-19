@@ -58,6 +58,10 @@ getData.propTypes = {
  * @param {number} props.cursor - 커서 (옵션)
  * @param {string} props.keyword - 검색 키워드 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
+ *
+ * 아래에서 import 해서 사용중입니다.
+ * @see {@link ../pages/ListPage/components/IdolCard.jsx}
+ * @see {@link ../pages/MyPage/components/FavoriteCandidates.jsx}
  */
 export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
   const query = new URLSearchParams({ pageSize, cursor, keyword }).toString();
@@ -78,6 +82,9 @@ getIdols.propTypes = {
  * @param {number} props.cursor - 커서 (옵션)
  * @param {array[number]} props.priorityIdolIds - 우선순위 아이돌 ID 리스트, 최대 5개 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
+ *
+ * 아래에서 import 해서 사용중입니다.
+ * @see {@link ../pages/ListPage/components/TributeSupport.jsx}
  */
 export async function getDonations({
   pageSize = 10,
@@ -106,6 +113,10 @@ getDonations.propTypes = {
  * @param {number} props.pageSize - 한 번에 불러 올 아이돌 수 (기본값: 10)
  * @param {number} props.cursor - 커서 (옵션)
  * @returns {Promise<Object>} API 응답 데이터
+ *
+ * 아래에서 import 해서 사용중입니다.
+ * @see {@link ../pages/ListPage/components/MonthChart.jsx}
+ * @see {@link ../components/Modal/VoteModal.jsx}
  */
 export async function getCharts({ gender, pageSize = 10, cursor = 0 } = {}) {
   const query = new URLSearchParams({ gender, pageSize, cursor }).toString();
@@ -126,6 +137,9 @@ getCharts.propTypes = {
  * @param {number} props.donationId - 후원할 id
  * @param {number} props.donationAmount - 후원할 데이터
  * @returns {Promise<Object>} API 응답 데이터
+ *
+ * 아래에서 import 해서 사용중입니다.
+ * @see {@link ../components/Modal/DonationModal.jsx}
  */
 export async function putDonationsContribute({ donationId, donationAmount }) {
   // not exist query
