@@ -238,7 +238,7 @@ const CreditIcon = styled(StyledCreditIcon)`
 
 const ErrorSpan = styled.span`
   position: absolute;
-  top: 68px;
+  top: 67px;
 
   color: var(--error-red);
   font-size: 12px;

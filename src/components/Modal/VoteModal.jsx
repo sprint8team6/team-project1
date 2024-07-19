@@ -1,18 +1,35 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
 // Components
-import { BasedContainer, StyledDivider } from '@styles/CommonStyles';
+import {
+  BasedContainer,
+  LeftTopGradientDesign,
+  StyledDivider,
+} from '@styles/CommonStyles';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
-import ModalTopBar from '@components/Modal/ModalTopbar';
+import ModalTopBar, { MobileTopBar } from '@components/Modal/ModalTopbar';
 import CircularIdolImage from '@components/CircularIdolImage';
 import RadioButton from '@components/RadioButton';
 import Button from '@components/Button';
 // APIs
 import { getCharts, postVote } from '@apis/idolApi';
 import LoadingSpinner from '@components/LoadingSpinner';
+
+const RESPONSIVE_VALUE = {
+  PC: 6,
+  MOBILE: 12,
+};
+
+function getResponsiveValue() {
+  const width = window.innerWidth;
+  if (width > 480) {
+    return RESPONSIVE_VALUE.PC; // PC
+  }
+  return RESPONSIVE_VALUE.MOBILE; // Mobile
+}
 
 /** 투표 모달 컴포넌트
  * @param {Object} props - 컴포넌트 props
@@ -25,6 +42,8 @@ export default function VoteModal({ isOpen = false, onClose }) {
   const [selectedIdol, setSelectedIdol] = useState(); // [type=number] (idolId 저장)
   const [voteIdolData, setVoteIdolData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [responsiveStatus, setResponsiveStatus] =
+    useState(getResponsiveValue());
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -37,27 +56,52 @@ export default function VoteModal({ isOpen = false, onClose }) {
     setSelectedIdol(nextSelectedIdol);
   };
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const data = await getCharts({
+        gender: selectedTab,
+        pageSize: responsiveStatus,
+      });
+      setVoteIdolData(data.idols);
+    } catch (error) {
+      console.error('Failed to fetch charts:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // 마운트될 때,
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getCharts({ gender: selectedTab, pageSize: 6 });
-        setVoteIdolData(data.idols);
-      } catch (error) {
-        console.error('Failed to fetch charts:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setResponsiveStatus(getResponsiveValue());
+    };
+
+    // 화면 크기 변경 시, responsiveStatus 재계산
+    window.addEventListener('resize', handleResize);
+    fetchData();
+
+    // Cleanup Function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [responsiveStatus]);
 
   return (
     <Modal isOpen={isOpen}>
       <StyledVoteModalWindow>
-        <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
+        {responsiveStatus === RESPONSIVE_VALUE.PC ? (
+          <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
+        ) : (
+          <>
+            <LeftTopGradientDesign />
+            <MobileTopBar onClose={onClose}>이달의 여자 아이돌</MobileTopBar>
+          </>
+        )}
         <LoadingSpinner isLoading={isLoading} />
         <StyledVoteOptionList>
           {voteIdolData.map((idolData) => (
@@ -76,37 +120,38 @@ export default function VoteModal({ isOpen = false, onClose }) {
             </>
           ))}
         </StyledVoteOptionList>
-        <VoteButton
-          onClose={onClose}
-          openError={() =>
-            openModal('PopupModal', {
-              message: (
-                <span>
-                  앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
-                </span>
-              ),
-            })
-          }
-          selectedIdol={selectedIdol}
-          myCredit={myCredit}
-          setMyCredit={setMyCredit}
-        >
-          {!localStorage.getItem('hasVoted')
-            ? '투표하기'
-            : '이미 차트에 투표했어요'}
-        </VoteButton>
-
-        <StyledVoteNotify>
-          {!localStorage.getItem('hasVoted') ? (
-            <span>
-              투표하는 데 <em>1000 크레딧</em>이 소모됩니다.
-            </span>
-          ) : (
-            <span>
-              <em>다음 투표</em>까지 기다려주세요!
-            </span>
-          )}
-        </StyledVoteNotify>
+        <StyledDiv>
+          <VoteButton
+            onClose={onClose}
+            openError={() =>
+              openModal('PopupModal', {
+                message: (
+                  <span>
+                    앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
+                  </span>
+                ),
+              })
+            }
+            selectedIdol={selectedIdol}
+            myCredit={myCredit}
+            setMyCredit={setMyCredit}
+          >
+            {!localStorage.getItem('hasVoted')
+              ? '투표하기'
+              : '이미 차트에 투표했어요'}
+          </VoteButton>
+          <StyledVoteNotify>
+            {!localStorage.getItem('hasVoted') ? (
+              <span>
+                투표하는 데 <em>1000 크레딧</em>이 소모됩니다.
+              </span>
+            ) : (
+              <span>
+                <em>다음 투표</em>까지 기다려주세요!
+              </span>
+            )}
+          </StyledVoteNotify>
+        </StyledDiv>
       </StyledVoteModalWindow>
     </Modal>
   );
@@ -123,25 +168,54 @@ const StyledVoteModalWindow = styled(ModalWindow)`
   display: flex;
   position: fixed;
   z-index: 1000;
-  width: 525px;
-  height: 693px;
-  gap: 20px;
+  width: 480px;
+  height: 710px;
+  gap: 16px;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-black);
+    padding: 8px 24px;
+  }
 `;
 
 const StyledVoteOptionList = styled(BasedContainer)`
-  width: 477px;
+  width: 100%;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
+  overflow-y: scroll;
+  flex-grow: 1;
+  padding-top: 8px;
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: var(--dark-black);
+  }
 `;
 
 const StyledVoteOption = styled.div`
   display: flex;
-  width: 477px;
+  width: 100%;
   height: 70px;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+    width: 100%;
+    background: var(--dark-black);
+    padding-right: 12px;
+  }
 `;
 
 const StyledIdolInfo = styled.div`
@@ -216,6 +290,14 @@ VoteOption.propTypes = {
   }).isRequired,
 };
 
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+`;
+
 const VoteButton = ({
   onClose,
   openError,
@@ -258,11 +340,15 @@ VoteButton.propTypes = {
 
 const StyledVoteNotify = styled.div`
   position: relative;
+  top: 10px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 10px;
+
+  @media screen and (max-width: 480px) {
+    top: 0.25rem;
+  }
 
   span {
     color: var(--white, #fff);
