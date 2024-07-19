@@ -2,28 +2,41 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState } from 'react';
 import CircularIdolImage from '@components/CircularIdolImage';
+import defaultImage from '@assets/png/alt_image.png';
 
-export default function MonthIdol({ idolImage }) {
+export default function MonthIdol({ idolsData }) {
   const [monthIdolText, setMonthIdolText] = useState({
-    idolRank: 1,
-    idolName: '에스파 윈터',
-    idolVote: 999999,
+    idolsDataName: idolsData ? idolsData.name : '-',
+    idolsDataGroup: idolsData ? idolsData.group : '-',
+    idolsDataRank: idolsData ? idolsData.rank : 0,
+    idolsDataProfilePicture: idolsData
+      ? idolsData.profilePicture
+      : defaultImage,
+    idolsDataTotalVotes: idolsData ? idolsData.totalVotes : 0,
   });
 
   return (
     <ChartIdolGrid>
-      <CircularIdolImage idolImage={idolImage} />
-      <ChartIdolRank>{monthIdolText.idolRank}</ChartIdolRank>
-      <ChartIdolName>{monthIdolText.idolName}</ChartIdolName>
+      <CircularIdolImage idolImage={monthIdolText.idolsDataProfilePicture} />
+      <ChartIdolRank>{monthIdolText.idolsDataRank}</ChartIdolRank>
+      <ChartIdolName>
+        {monthIdolText.idolsDataGroup} {monthIdolText.idolsDataName}
+      </ChartIdolName>
       <ChartIdolVote>
-        {monthIdolText.idolVote.toLocaleString()} 표
+        {monthIdolText.idolsDataTotalVotes.toLocaleString()} 표
       </ChartIdolVote>
     </ChartIdolGrid>
   );
 }
 
 MonthIdol.propTypes = {
-  idolImage: PropTypes.string.isRequired,
+  idolsData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    group: PropTypes.string.isRequired,
+    rank: PropTypes.number.isRequired,
+    profilePicture: PropTypes.string.isRequired,
+    totalVotes: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 const ChartIdolGrid = styled.div`

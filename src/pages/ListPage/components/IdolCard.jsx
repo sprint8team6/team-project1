@@ -14,6 +14,9 @@ export default function IdolCard({ donation }) {
   const DEADLINE_DAY = Math.ceil(TIME_DIFF / (1000 * 60 * 60 * 24));
 
   // State
+  const [donationValue, setDonationValue] = useState(
+    donation ? donation.receivedDonations : 0
+  );
   const [idolStatus, setIdolStatus] = useState({
     donationId: donation ? donation.id : '999999999999',
     donationProfilePicture: donation
@@ -21,8 +24,11 @@ export default function IdolCard({ donation }) {
       : defaultImage,
     donationSubtitle: donation ? donation.subtitle : '제목이 없습니다.',
     donationTitle: donation ? donation.title : '부제목이 없습니다.',
-    donationReceivedDonation: donation ? donation.receivedDonations : 0,
+    donationReceivedDonation: donation ? donationValue : 0,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
+    setDonationValue: () => {
+      setDonationValue();
+    },
   });
 
   // Context
