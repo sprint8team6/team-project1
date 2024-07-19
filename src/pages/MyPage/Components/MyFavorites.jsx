@@ -1,16 +1,31 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
+import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
+  const [favoriteIdols, setFavoriteIdols] = useState([]);
+
+  useEffect(() => {
+    const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
+    const checkedIdols = storedIdols.filter((idol) => idol.isChecked);
+    setFavoriteIdols(checkedIdols);
+  }, [favoriteIdols]);
+
   return (
     <MyFavoriteListBox>
       <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
       <MyFavoriteList>
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
+        {favoriteIdols.map((idol) => (
+          <MiniPhotoCard
+            key={idol.id}
+            id={idol.id}
+            name={idol.name}
+            team={idol.team}
+            isChecked={idol.isChecked}
+            isDeletable
+          />
+        ))}
       </MyFavoriteList>
     </MyFavoriteListBox>
   );

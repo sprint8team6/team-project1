@@ -8,6 +8,8 @@ export default function MiniPhotoCard({
   isChecked = false,
   size = 'small',
   onCheckChange = null,
+  team = null,
+  name = null,
 }) {
   return (
     <PhotoCard>
@@ -18,8 +20,8 @@ export default function MiniPhotoCard({
         size={size}
         onCheckChange={onCheckChange}
       />
-      <IdolName>망곰이</IdolName>
-      <TeamName>부앙단</TeamName>
+      <IdolName>{name}</IdolName>
+      <TeamName>{team}</TeamName>
     </PhotoCard>
   );
 }
@@ -30,6 +32,8 @@ MiniPhotoCard.propTypes = {
   onCheckChange: PropTypes.func,
   size: PropTypes.string,
   isDeletable: PropTypes.bool,
+  team: PropTypes.string,
+  name: PropTypes.string,
 };
 
 const PhotoCard = styled.div`
