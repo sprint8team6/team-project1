@@ -19,7 +19,7 @@ export default function FavoriteCandidates() {
           cursor: 0,
         });
         // eslint-disable-next-line no-console
-        console.log('Fetched idols:', response); // 응답을 콘솔에 출력
+        console.log(response); // 응답을 콘솔에 출력
         setIdols(response.idols.map((idol) => ({ ...idol, isChecked: false })));
       } catch (error) {
         console.error('아이돌 불러오기 실패: ', error);

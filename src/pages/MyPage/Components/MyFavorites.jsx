@@ -10,7 +10,7 @@ export default function MyFavorites() {
     const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
     const checkedIdols = storedIdols.filter((idol) => idol.isChecked);
     setFavoriteIdols(checkedIdols);
-  }, [favoriteIdols]);
+  }, []);
 
   return (
     <MyFavoriteListBox>
