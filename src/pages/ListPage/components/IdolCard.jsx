@@ -15,7 +15,7 @@ export default function IdolCard({ donation }) {
 
   // State
   const [donationValue, setDonationValue] = useState(
-    donation.receivedDonations
+    donation ? donation.receivedDonations : 0
   );
   const [idolStatus, setIdolStatus] = useState({
     donationProfilePicture: donation
@@ -25,7 +25,9 @@ export default function IdolCard({ donation }) {
     donationTitle: donation ? donation.title : '부제목이 없습니다.',
     donationReceivedDonation: donation ? donationValue : 0,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
-    setDonationValue: setDonationValue(),
+    setDonationValue: () => {
+      setDonationValue();
+    },
   });
 
   // Context
