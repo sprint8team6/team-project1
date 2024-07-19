@@ -203,9 +203,14 @@ const StyledVoteOptionList = styled(BasedContainer)`
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: linear-gradient(60deg, #f96e68, #fe578f);
-    /* background: linear-gradient(60deg, black -9.84%, white 107.18%); */
+    border-radius: 3px;
+    background: linear-gradient(
+      60deg,
+      rgba(249, 110, 104, 0.5),
+      #f96e68 20%,
+      #fe578f 80%,
+      rgba(254, 87, 143, 0.5)
+    );
   }
 
   &::-webkit-scrollbar-button {
