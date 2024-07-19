@@ -5,8 +5,10 @@ import {
   BasedContainer,
   StyledCreditIcon,
   StyledCreditIconWhite,
+  StyledDivider,
 } from '@styles/CommonStyles';
 import { useCreditContext } from '@contexts/useCreditContext';
+import { useToastContext } from '@contexts/useToastContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
 import RadioButton from '@components/RadioButton';
@@ -24,6 +26,7 @@ export default function ChargeModal({ isOpen, onClose }) {
 
   // Context
   const { myCredit, setMyCredit } = useCreditContext();
+  const { addToast } = useToastContext();
 
   const handleOption = (e) => {
     setOptionValue(e.target.value);
@@ -53,6 +56,7 @@ export default function ChargeModal({ isOpen, onClose }) {
           </StyledButtonWrapper>
           <ChargeButton
             onClose={onClose}
+            addToast={addToast}
             optionValue={optionValue}
             myCredit={myCredit}
             setMyCredit={setMyCredit}
@@ -149,9 +153,20 @@ CreditOptionButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-const ChargeButton = ({ onClose, optionValue, myCredit, setMyCredit }) => {
+const ChargeButton = ({
+  onClose,
+  addToast,
+  optionValue,
+  myCredit,
+  setMyCredit,
+}) => {
   const submitOption = () => {
     setMyCredit(Number(myCredit) + Number(optionValue));
+    addToast(
+      <span>
+        <em>{Number(optionValue)}</em> 만큼의 크레딧 충전을 완료했습니다.
+      </span>
+    );
     onClose();
   };
 
@@ -165,6 +180,7 @@ const ChargeButton = ({ onClose, optionValue, myCredit, setMyCredit }) => {
 
 ChargeButton.propTypes = {
   onClose: PropTypes.func.isRequired,
+  addToast: PropTypes.func.isRequired,
   optionValue: PropTypes.string.isRequired,
   myCredit: PropTypes.number.isRequired,
   setMyCredit: PropTypes.func.isRequired,

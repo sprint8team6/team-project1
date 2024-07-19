@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { useEffect, useState, useRef } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
+import { useToastContext } from '@contexts/useToastContext';
 // Components
 import {
   BasedContainer,
   LeftTopGradientDesign,
+  StyledCreditIcon,
   StyledDivider,
 } from '@styles/CommonStyles';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
@@ -50,6 +52,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
   const selectedTab =
     modals.VoteModal.data.girlTab === true ? 'female' : 'male';
   const { myCredit, setMyCredit } = useCreditContext();
+  const { addToast } = useToastContext();
 
   const handleOptionChange = (idolId) => {
     const nextSelectedIdol = idolId;
@@ -123,15 +126,8 @@ export default function VoteModal({ isOpen = false, onClose }) {
         <StyledDiv>
           <VoteButton
             onClose={onClose}
-            openError={() =>
-              openModal('PopupModal', {
-                message: (
-                  <span>
-                    앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
-                  </span>
-                ),
-              })
-            }
+            openModal={openModal}
+            addToast={addToast}
             selectedIdol={selectedIdol}
             myCredit={myCredit}
             setMyCredit={setMyCredit}
@@ -290,7 +286,7 @@ const VoteOption = ({ onClick, selectedIdol, idolData }) => {
         />
         <StyledRank>{idolData?.rank}</StyledRank>
         <StyledIdolNameAndVotes>
-          <StyledName>{idolData?.name}</StyledName>
+          <StyledName>{`${idolData?.group} ${idolData?.name}`}</StyledName>
           <StyledVotes>{idolData?.totalVotes?.toLocaleString()} 표</StyledVotes>
         </StyledIdolNameAndVotes>
       </StyledIdolInfo>
@@ -309,6 +305,7 @@ VoteOption.propTypes = {
     profilePicture: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     rank: PropTypes.number.isRequired,
+    group: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     totalVotes: PropTypes.number.isRequired,
   }).isRequired,
@@ -324,7 +321,8 @@ const StyledDiv = styled.div`
 
 const VoteButton = ({
   onClose,
-  openError,
+  openModal,
+  addToast,
   selectedIdol,
   myCredit,
   setMyCredit,
@@ -332,12 +330,23 @@ const VoteButton = ({
 }) => {
   const submitVote = () => {
     if (myCredit < 1000) {
-      openError();
+      openModal('PopupModal', {
+        message: (
+          <span>
+            앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
+          </span>
+        ),
+      });
     } else {
       try {
         postVote({ idolId: selectedIdol });
         setMyCredit(myCredit - 1000);
         localStorage.setItem('hasVoted', true);
+        addToast(
+          <span>
+            <em>투표</em>를 완료했습니다!
+          </span>
+        );
       } catch (error) {
         console.error('Failed to vote idol:', error);
       } finally {
@@ -355,7 +364,8 @@ const VoteButton = ({
 
 VoteButton.propTypes = {
   onClose: PropTypes.func.isRequired,
-  openError: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+  addToast: PropTypes.func.isRequired,
   selectedIdol: PropTypes.number.isRequired,
   myCredit: PropTypes.number.isRequired,
   setMyCredit: PropTypes.func.isRequired,
