@@ -92,7 +92,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
   }, [responsiveStatus]);
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledVoteModalWindow>
         {responsiveStatus === RESPONSIVE_VALUE.PC ? (
           <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
@@ -206,10 +206,10 @@ const StyledVoteOptionList = styled(BasedContainer)`
     border-radius: 3px;
     background: linear-gradient(
       60deg,
-      rgba(249, 110, 104, 0.5),
-      #f96e68 20%,
-      #fe578f 80%,
-      rgba(254, 87, 143, 0.5)
+      rgba(249, 110, 104, 0.8),
+      var(--brand-coral) 20%,
+      var(--brand-pink) 80%,
+      rgba(254, 87, 143, 0.8)
     );
   }
 
@@ -238,7 +238,7 @@ const StyledVoteOption = styled.div`
     display: flex;
     width: 100%;
     background: var(--dark-black);
-    padding-right: 12px;
+    padding-right: 16px;
   }
 `;
 

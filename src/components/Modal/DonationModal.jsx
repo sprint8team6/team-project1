@@ -92,7 +92,7 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledDonationModalWindow>
         <ModalTopBar onClose={onClose}>후원하기</ModalTopBar>
         <StyledContainer>

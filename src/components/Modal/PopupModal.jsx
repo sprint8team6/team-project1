@@ -19,7 +19,7 @@ export default function PopupModal({ isOpen = false, onClose }) {
   const { modals } = useModalContext();
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledPopupWindow>
         <ModalTopBar onClose={onClose} />
         <StyledContainer>

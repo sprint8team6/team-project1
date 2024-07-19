@@ -30,7 +30,7 @@ export default function ChargeModal({ isOpen, onClose }) {
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledChargeModalWindow>
         <ModalTopBar onClose={onClose}>크레딧 충전하기</ModalTopBar>
         <StyledContainer>

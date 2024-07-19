@@ -4,16 +4,28 @@ import styled, { keyframes } from 'styled-components';
 /** 공용 모달 컴포넌트
  * @param {Object} props - 컴포넌트 props
  * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 공용 모달 컴포넌트
  */
-export default function Modal({ isOpen, children }) {
+export default function Modal({ isOpen, onClose, children }) {
   if (!isOpen) return null;
 
-  return <ModalBackground>{children}</ModalBackground>;
+  const handleBackgroundClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  return (
+    <ModalBackground onClick={handleBackgroundClick}>
+      {children}
+    </ModalBackground>
+  );
 }
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
