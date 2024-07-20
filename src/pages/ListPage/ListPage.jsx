@@ -1,10 +1,12 @@
 import { ModalProvider, useModalContext } from '@contexts/useModalContext';
 import { CreditProvider } from '@contexts/useCreditContext';
+import { ToastProvider, useToastContext } from '@contexts/useToastContext';
 // Modals
 import ChargeModal from '@components/Modal/ChargeModal';
 import PopupModal from '@components/Modal/PopupModal';
 import DonationModal from '@components/Modal/DonationModal';
 import VoteModal from '@components/Modal/VoteModal';
+import Toast from '@components/Modal/Toast';
 // Components
 import Header from '@components/Header';
 import MyCredit from './components/MyCredit';
@@ -14,6 +16,7 @@ import MonthChart from './components/MonthChart';
 function ListPageContent() {
   // Context
   const { modals, openModal, closeModal } = useModalContext();
+  const { toasts, addToast, closeToast } = useToastContext();
 
   return (
     <>
@@ -41,6 +44,14 @@ function ListPageContent() {
           onClose={() => closeModal('PopupModal')}
         />
       )}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          isOpen
+          onClose={() => closeToast(toast.id)}
+          message={toast.message}
+        />
+      ))}
       <Header />
       <MyCredit openModal={openModal} />
       <TributeSupport />
@@ -53,7 +64,9 @@ export default function ListPage() {
   return (
     <CreditProvider>
       <ModalProvider>
-        <ListPageContent />
+        <ToastProvider>
+          <ListPageContent />
+        </ToastProvider>
       </ModalProvider>
     </CreditProvider>
   );
