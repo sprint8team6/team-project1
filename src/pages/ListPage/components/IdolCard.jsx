@@ -58,8 +58,12 @@ export default function IdolCard({ donation }) {
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
       </IdolCardImage>
       <IdolCardText>
-        <span>{idolStatus?.donationSubtitle ?? '임시 서브 타이틀'}</span>
-        <p>{idolStatus?.donationTitle ?? '임시 메인 타이틀'}</p>
+        <span title={idolStatus.donationSubtitle}>
+          {idolStatus?.donationSubtitle ?? '임시 서브 타이틀'}
+        </span>
+        <p title={idolStatus.donationTitle}>
+          {idolStatus?.donationTitle ?? '임시 메인 타이틀'}
+        </p>
         <div>
           <IdolCardCredit>
             <div>
@@ -172,6 +176,13 @@ const Image = styled.div`
 `;
 
 const IdolCardText = styled.div`
+  & > span,
+  & > p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   & > span {
     display: inline-block;
     font-size: 1.6rem;
