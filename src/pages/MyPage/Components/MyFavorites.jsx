@@ -22,6 +22,12 @@ export default function MyFavorites() {
       );
       localStorage.setItem('favoriteIdols', JSON.stringify(updatedFavorites));
       setFavoriteIdols(updatedFavorites);
+
+      const storedIdols = JSON.parse(localStorage.getItem('idols')) || [];
+      const updatedIdols = storedIdols.map((idol) =>
+        idol.id === idolId ? { ...idol, isChecked: false } : idol
+      );
+      localStorage.setItem('idols', JSON.stringify(updatedIdols));
     },
     [favoriteIdols]
   );

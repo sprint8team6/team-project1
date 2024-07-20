@@ -39,7 +39,17 @@ export default function FavoriteCandidates() {
 
   const handleAddFavorites = () => {
     const favoriteIdols = idols.filter((idol) => idol.isChecked);
-    localStorage.setItem('favoriteIdols', JSON.stringify(favoriteIdols));
+    const storedFavorites =
+      JSON.parse(localStorage.getItem('favoriteIdols')) || [];
+    const uniqueFavorites = Array.from(
+      new Set([...storedFavorites, ...favoriteIdols].map(JSON.stringify))
+    ).map(JSON.parse);
+
+    localStorage.setItem('favoriteIdols', JSON.stringify(uniqueFavorites));
+
+    setIdols((prevIdols) =>
+      prevIdols.map((idol) => ({ ...idol, isChecked: false }))
+    );
   };
 
   const onCheckChangeEvent = (id) => {
