@@ -13,7 +13,7 @@ export default function MyFavorites() {
 
   useEffect(() => {
     loadFavoriteIdols();
-  }, [favoriteIdols]);
+  }, []);
 
   const handleDelete = useCallback(
     (idolId) => {
