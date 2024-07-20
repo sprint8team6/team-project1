@@ -16,21 +16,19 @@ export default function IdolCard({ donation }) {
 
   // State
   const [donationValue, setDonationValue] = useState(
-    donation ? donation.receivedDonations : 0
+    donation?.receivedDonations ?? 0
   );
   const [idolStatus, setIdolStatus] = useState({
-    donationId: donation ? donation.id : '999999999999',
-    donationProfilePicture: donation
-      ? donation.idol.profilePicture
-      : defaultImage,
-    donationSubtitle: donation ? donation.subtitle : '제목이 없습니다.',
-    donationTitle: donation ? donation.title : '부제목이 없습니다.',
-    donationReceivedDonation: donation ? donationValue : 0,
+    donationId: donation?.id ?? '999999999999',
+    donationProfilePicture: donation?.idol.profilePicture ?? defaultImage,
+    donationSubtitle: donation?.subtitle ?? '제목이 없습니다.',
+    donationTitle: donation?.title ?? '부제목이 없습니다.',
+    donationReceivedDonation: donationValue,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
     setDonationValue: () => {
       setDonationValue();
     },
-    donationTarget: donation ? donation.targetDonation : null,
+    donationTarget: donation?.targetDonation ?? null,
   });
   const [donationPercentage, setDonationPercentage] = useState(0);
 

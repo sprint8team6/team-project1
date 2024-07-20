@@ -7,6 +7,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 // api
 import { getDonations } from '@apis/idolApi';
+// spinner
+import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
@@ -14,7 +16,7 @@ import IdolCard from './IdolCard';
 
 export default function TributeSupport() {
   const [idolDonations, setIdolDonations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
 
   // swiper 반응형 지정
   const SWIPER_BREAKPOINTS = {
@@ -66,23 +68,6 @@ export default function TributeSupport() {
     handleLoad();
   }, []);
 
-  // 로딩중
-  if (loading) {
-    return (
-      <MyCreditWrap>
-        <ListPageSubTitle>
-          <h2>후원을 기다리는 조공</h2>
-        </ListPageSubTitle>
-        <IdolCardBox>
-          <IdolCard />
-          <IdolCard />
-          <IdolCard />
-          <IdolCard />
-        </IdolCardBox>
-      </MyCreditWrap>
-    );
-  }
-
   return (
     <MyCreditWrap>
       <ListPageSubTitle>
@@ -98,13 +83,24 @@ export default function TributeSupport() {
           modules={[Navigation, Autoplay]}
           navigation={SWIPER_NAVIGATION}
         >
-          {idolDonations.map((donation) => {
-            return (
-              <SwiperSlide key={donation.id}>
-                <IdolCard donation={donation} />
-              </SwiperSlide>
-            );
-          })}
+          {idolDonations.length > 0 ? (
+            idolDonations.map((donation) => {
+              return (
+                <SwiperSlide key={donation.id}>
+                  <IdolCard donation={donation} />
+                </SwiperSlide>
+              );
+            })
+          ) : (
+            <LoadingSpinner
+              isLoading={isLoading}
+              color="var(--brand-coral)"
+              size={20}
+              width="100%"
+              height="100%"
+              minLoadTime={1000}
+            />
+          )}
         </Swiper>
         <ArrowButton className="swiper-button-next" type="button">
           <img src={RightArrow} alt="오른쪽 화살표 이미지" />
