@@ -11,8 +11,8 @@ const MaskedBackground = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: inherit;
-  height: inherit;
+  width: ${(props) => (props.width === '100%' ? props.width : 'inherit')};
+  height: ${(props) => (props.height === '100%' ? props.height : 'inherit')};
   z-index: 9998;
 `;
 
@@ -21,8 +21,8 @@ const SpinnerOverlay = styled.div`
   top: 0;
   left: 0;
   background-color: var(--light-black);
-  width: inherit;
-  height: inherit;
+  width: ${(props) => (props.width === '100%' ? props.width : 'inherit')};
+  height: ${(props) => (props.height === '100%' ? props.height : 'inherit')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,6 +36,8 @@ export default function LoadingSpinner({
   size = 20,
   color = 'var(--brand-coral)',
   minLoadTime = 1500,
+  width,
+  height,
 }) {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -48,8 +50,8 @@ export default function LoadingSpinner({
   }, [minLoadTime]);
 
   return isVisible ? (
-    <MaskedBackground>
-      <SpinnerOverlay>
+    <MaskedBackground width={width} height={height}>
+      <SpinnerOverlay width={width} height={height}>
         <PulseLoader size={size} color={color} />
       </SpinnerOverlay>
     </MaskedBackground>
@@ -60,4 +62,6 @@ LoadingSpinner.propTypes = {
   size: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   minLoadTime: PropTypes.number.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };

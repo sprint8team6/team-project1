@@ -61,6 +61,8 @@ export default function MonthChart({ openModal }) {
         isLoading={isLoading}
         color="var(--brand-coral)"
         size={20}
+        width="100%"
+        height="100%"
         minLoadTime={1000}
       />
       <div>
