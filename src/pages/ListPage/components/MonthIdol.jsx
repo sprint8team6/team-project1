@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { PropTypes } from 'prop-types';
 import { useState } from 'react';
+import styled from 'styled-components';
+// component
 import CircularIdolImage from '@components/CircularIdolImage';
 import defaultImage from '@assets/png/alt_image.png';
 

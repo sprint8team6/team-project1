@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+// api
 import { getCharts } from '@apis/idolApi';
+// spinner
 import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import Button from '@components/Button';
