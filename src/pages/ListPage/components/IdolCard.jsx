@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
 import Button from '@components/Button';
@@ -29,7 +29,9 @@ export default function IdolCard({ donation }) {
     setDonationValue: () => {
       setDonationValue();
     },
+    donationTarget: donation ? donation.targetDonation : null,
   });
+  const [donationPercentage, setDonationPercentage] = useState(0);
 
   // Context
   const { openModal } = useModalContext();
@@ -37,6 +39,17 @@ export default function IdolCard({ donation }) {
   const handleTributeButtonClick = () => {
     openModal('DonationModal', idolStatus);
   };
+
+  // 목표 도네이션까지 달성된 도네이션 퍼센테이지 값 구하기
+  useEffect(() => {
+    const calculatePercentage = () => {
+      const result =
+        (idolStatus.donationReceivedDonation / idolStatus.donationTarget) * 100;
+      return setDonationPercentage(result);
+    };
+
+    calculatePercentage();
+  }, [donation]);
 
   return (
     <IdolCardWrap>
@@ -57,7 +70,7 @@ export default function IdolCard({ donation }) {
             </div>
             <span>{idolStatus?.donationDeadLineDay ?? '??'}일 남음</span>
           </IdolCardCredit>
-          <IdolCardCreditGauge />
+          <IdolCardCreditGauge donationPercentage={donationPercentage} />
         </div>
       </IdolCardText>
     </IdolCardWrap>
@@ -75,6 +88,7 @@ IdolCard.propTypes = {
       profilePicture: PropTypes.string.isRequired,
     }).isRequired,
     receivedDonations: PropTypes.number.isRequired,
+    targetDonation: PropTypes.number.isRequired,
   }).isRequired,
 };
 
@@ -214,9 +228,11 @@ const IdolCardCreditGauge = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 25%;
+    width: ${(props) =>
+      props.donationPercentage ? props.donationPercentage : 0}%;
     height: 100%;
     content: '';
     background-color: var(--brand-coral);
+    transition: all 0.3s;
   }
 `;
