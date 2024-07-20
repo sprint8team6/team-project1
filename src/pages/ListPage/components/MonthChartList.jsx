@@ -3,24 +3,19 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 // api
 import { getCharts } from '@apis/idolApi';
-import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import MonthIdol from './MonthIdol';
 
 export default function MonthChartList({ idolGender, chartPageSize }) {
   const [chartIdolsData, setChartIdolsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleLoad = async (option) => {
       try {
         const { idols } = await getCharts(option);
         setChartIdolsData(idols);
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -29,12 +24,6 @@ export default function MonthChartList({ idolGender, chartPageSize }) {
 
   return (
     <MonthIdolList>
-      <LoadingSpinner
-        isLoading={isLoading}
-        color="var(--brand-coral)"
-        size={20}
-        minLoadTime={1000}
-      />
       {chartIdolsData.map((idolsData) => {
         return <MonthIdol key={idolsData.id} idolsData={idolsData} />;
       })}
