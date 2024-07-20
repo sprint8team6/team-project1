@@ -40,7 +40,7 @@ export default function TributeSupport() {
 
   // swiper 자동 재생
   const SWIPER_AUTOPLAY = {
-    delay: 4000, // 4초마다 자동 재생
+    delay: 6000, // 6초마다 자동 재생
     disableOnInteraction: false, // 사용자가 슬라이더를 변경해도 자동재생 유지
   };
 
