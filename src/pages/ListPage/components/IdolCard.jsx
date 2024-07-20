@@ -2,6 +2,7 @@ import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
+// component
 import Button from '@components/Button';
 import defaultImage from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
@@ -138,7 +139,6 @@ const IdolCardImage = styled.div`
   & > img {
     position: relative;
     width: 100%;
-    /* aspect-ratio: 1 / 1; */
   }
 
   & > button {

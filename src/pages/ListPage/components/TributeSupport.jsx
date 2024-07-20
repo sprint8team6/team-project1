@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+// swiper 라이브러리
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
-import styled from 'styled-components';
+import 'swiper/css';
+import 'swiper/css/navigation';
+// api
 import { getDonations } from '@apis/idolApi';
+// component
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
 import IdolCard from './IdolCard';
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 export default function TributeSupport() {
   const [idolDonations, setIdolDonations] = useState([]);
