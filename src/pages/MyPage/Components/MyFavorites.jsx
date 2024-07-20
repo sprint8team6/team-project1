@@ -1,16 +1,30 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
   const [favoriteIdols, setFavoriteIdols] = useState([]);
 
-  useEffect(() => {
+  const loadFavoriteIdols = useCallback(() => {
     const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
-    const checkedIdols = storedIdols.filter((idol) => idol.isChecked);
-    setFavoriteIdols(checkedIdols);
+    setFavoriteIdols(storedIdols);
   }, []);
+
+  useEffect(() => {
+    loadFavoriteIdols();
+  }, [favoriteIdols]);
+
+  const handleDelete = useCallback(
+    (idolId) => {
+      const updatedFavorites = favoriteIdols.filter(
+        (idol) => idol.id !== idolId
+      );
+      localStorage.setItem('favoriteIdols', JSON.stringify(updatedFavorites));
+      setFavoriteIdols(updatedFavorites);
+    },
+    [favoriteIdols]
+  );
 
   return (
     <MyFavoriteListBox>
@@ -21,10 +35,13 @@ export default function MyFavorites() {
             key={idol.id}
             id={idol.id}
             name={idol.name}
-            team={idol.team}
-            $isChecked={idol.isChecked}
+            team={idol.group}
+            size="medium"
+            $isChecked={false}
             $isDeletable
             $isCheckable={false}
+            idolImage={idol.profilePicture}
+            onDelete={() => handleDelete(idol.id)}
           />
         ))}
       </MyFavoriteList>

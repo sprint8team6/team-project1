@@ -11,6 +11,7 @@ export default function MiniPhotoCard({
   team = null,
   name = null,
   idolImage = null,
+  onDelete = null,
 }) {
   return (
     <PhotoCard>
@@ -21,6 +22,7 @@ export default function MiniPhotoCard({
         isChecked={$isChecked}
         size={size}
         idolImage={idolImage}
+        onDelete={onDelete}
       />
       <IdolName>{name}</IdolName>
       <TeamName>{team}</TeamName>
@@ -37,6 +39,7 @@ MiniPhotoCard.propTypes = {
   team: PropTypes.string,
   name: PropTypes.string,
   idolImage: PropTypes.string,
+  onDelete: PropTypes.func,
 };
 
 const PhotoCard = styled.div`

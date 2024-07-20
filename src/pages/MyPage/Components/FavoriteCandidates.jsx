@@ -37,15 +37,16 @@ export default function FavoriteCandidates() {
     fetchIdols();
   }, []);
 
+  const handleAddFavorites = () => {
+    const favoriteIdols = idols.filter((idol) => idol.isChecked);
+    localStorage.setItem('favoriteIdols', JSON.stringify(favoriteIdols));
+  };
+
   const onCheckChangeEvent = (id) => {
     setIdols((prevIdols) => {
       const updatedIdols = prevIdols.map((idol) =>
         idol.id === id ? { ...idol, isChecked: !idol.isChecked } : idol
       );
-
-      // 로컬 스토리지 업데이트
-      const favoriteIdols = updatedIdols.filter((idol) => idol.isChecked);
-      localStorage.setItem('favoriteIdols', JSON.stringify(favoriteIdols));
 
       return updatedIdols;
     });
@@ -81,7 +82,7 @@ export default function FavoriteCandidates() {
         <PageRight />
       </CandidatesBox>
       <AddButtonBox>
-        <StyledButton rounded>
+        <StyledButton rounded onClick={handleAddFavorites}>
           <PlusIcon />
           <StyledButtonContext>추가하기</StyledButtonContext>
         </StyledButton>
