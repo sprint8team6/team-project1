@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
+import { useToastContext } from '@contexts/useToastContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
-import { BasedContainer, StyledCreditIcon } from '@styles/CommonStyles';
+import {
+  BasedContainer,
+  StyledCreditIcon,
+  StyledDivider,
+} from '@styles/CommonStyles';
 import Button from '@components/Button';
 // assets
 import AltImage from '@assets/png/alt_image.png';
@@ -27,6 +32,7 @@ export default function DonationModal({ isOpen, onClose }) {
   const { modals, openModal } = useModalContext();
   const idolData = modals.DonationModal?.data;
   const { myCredit, setMyCredit } = useCreditContext();
+  const { addToast } = useToastContext();
 
   // inputValue의 값이 크레딧보다 높으면 Error
   useEffect(() => {
@@ -55,13 +61,17 @@ export default function DonationModal({ isOpen, onClose }) {
       });
     }
     if (submitAmount <= myCredit) {
-      /** @todo2 후원 성공에 대한 팝업 구현 */
       try {
         putDonationsContribute({
           donationId: idolData.donationId,
           donationAmount: submitAmount,
         });
         setMyCredit(myCredit - submitAmount);
+        addToast(
+          <span>
+            <em>후원</em>을 완료했습니다!
+          </span>
+        );
       } catch (error) {
         console.error('Failed to submit donation:', error);
       } finally {
@@ -92,7 +102,7 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledDonationModalWindow>
         <ModalTopBar onClose={onClose}>후원하기</ModalTopBar>
         <StyledContainer>
@@ -238,7 +248,7 @@ const CreditIcon = styled(StyledCreditIcon)`
 
 const ErrorSpan = styled.span`
   position: absolute;
-  top: 68px;
+  top: 67px;
 
   color: var(--error-red);
   font-size: 12px;
