@@ -1,34 +1,40 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function MonthChartTab({ tabOn, setTabOn }) {
-  const GENDER_GIRL = 'girl';
-  const GENDER_BOY = 'boy';
+export default function MonthChartTab({
+  genderTab,
+  setGenderTab,
+  setChartPageSize,
+}) {
+  const FEMALE = 'female';
+  const MALE = 'male';
 
   const handleClickTab = (gender) => {
-    if (gender === GENDER_GIRL) {
-      setTabOn({ girlTab: true, boyTab: false });
-    } else if (gender === GENDER_BOY) {
-      setTabOn({ girlTab: false, boyTab: true });
+    if (gender === FEMALE) {
+      setGenderTab(FEMALE);
+      setChartPageSize(10);
+    } else if (gender === MALE) {
+      setGenderTab(MALE);
+      setChartPageSize(10);
     }
   };
 
   return (
     <ChartTab>
       <ChartTabButton
-        className={tabOn.girlTab ? 'on' : ''}
+        className={genderTab === 'female' ? 'on' : ''}
         type="button"
         onClick={() => {
-          handleClickTab(GENDER_GIRL);
+          handleClickTab(FEMALE);
         }}
       >
         이달의 여자 아이돌
       </ChartTabButton>
       <ChartTabButton
-        className={tabOn.boyTab ? 'on' : ''}
+        className={genderTab === 'male' ? 'on' : ''}
         type="button"
         onClick={() => {
-          handleClickTab(GENDER_BOY);
+          handleClickTab(MALE);
         }}
       >
         이달의 남자 아이돌
@@ -38,11 +44,9 @@ export default function MonthChartTab({ tabOn, setTabOn }) {
 }
 
 MonthChartTab.propTypes = {
-  tabOn: PropTypes.shape({
-    girlTab: PropTypes.bool.isRequired,
-    boyTab: PropTypes.bool.isRequired,
-  }).isRequired,
-  setTabOn: PropTypes.func.isRequired,
+  genderTab: PropTypes.string.isRequired,
+  setGenderTab: PropTypes.func.isRequired,
+  setChartPageSize: PropTypes.func.isRequired,
 };
 
 const ChartTab = styled.div`

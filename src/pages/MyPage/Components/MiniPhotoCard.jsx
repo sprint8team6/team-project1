@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import CircularIdolImage from '@components/CircularIdolImage';
-import PropTypes from 'prop-type';
+import PropTypes from 'prop-types';
 
 export default function MiniPhotoCard({
   $isCheckable = false,

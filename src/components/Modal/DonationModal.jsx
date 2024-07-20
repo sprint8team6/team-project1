@@ -1,39 +1,57 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
+import { useToastContext } from '@contexts/useToastContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
-import { BasedContainer, StyledCreditIcon } from '@styles/CommonStyles';
+import {
+  BasedContainer,
+  StyledCreditIcon,
+  StyledDivider,
+} from '@styles/CommonStyles';
 import Button from '@components/Button';
 // assets
 import AltImage from '@assets/png/alt_image.png';
+// APIs
+import { putDonationsContribute } from '@apis/idolApi';
 
 /** 후원 모달 컴포넌트
- * @todo submit 미완성, 현재 크레딧 반영
- * @param {boolean} isError - 에러 상태 여부
- * @param {boolean} isOpen - 모달이 열려 있는지 여부
- * @param {function} onClose - 모달을 닫기 위한 함수
+ * @param {Object} props - 컴포넌트 props
+ * @param {boolean} props.isOpen - 모달이 열려 있는지 여부
+ * @param {function} props.onClose - 모달을 닫기 위한 함수
  * @return {JSX.Element} 후원 모달 컴포넌트
  */
 export default function DonationModal({ isOpen, onClose }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
-  const [isError, setIsError] = useState(false); // 크레딧이 부족할 때
+  const [isError, setIsError] = useState(true); // 크레딧이 부족할 때
 
   // Context
-  const { modals, openModal, closeModal } = useModalContext();
+  const { modals, openModal } = useModalContext();
   const idolData = modals.DonationModal?.data;
   const { myCredit, setMyCredit } = useCreditContext();
+  const { addToast } = useToastContext();
+
+  // inputValue의 값이 크레딧보다 높으면 Error
+  useEffect(() => {
+    if (Number(inputValue) > myCredit) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [inputValue]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  // 조공에 후원
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Number(inputValue) > myCredit) {
+    const submitAmount = Number(inputValue);
+    if (submitAmount > myCredit) {
       openModal('PopupModal', {
         message: (
           <span>
@@ -42,10 +60,23 @@ export default function DonationModal({ isOpen, onClose }) {
         ),
       });
     }
-    if (Number(inputValue) <= myCredit) {
-      /** @todo 후원 API 연동 */
-      setMyCredit(myCredit - Number(inputValue));
-      onClose();
+    if (submitAmount <= myCredit) {
+      try {
+        putDonationsContribute({
+          donationId: idolData.donationId,
+          donationAmount: submitAmount,
+        });
+        setMyCredit(myCredit - submitAmount);
+        addToast(
+          <span>
+            <em>후원</em>을 완료했습니다!
+          </span>
+        );
+      } catch (error) {
+        console.error('Failed to submit donation:', error);
+      } finally {
+        onClose();
+      }
     }
   };
 
@@ -71,18 +102,18 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <StyledDonationModalWindow>
         <ModalTopBar onClose={onClose}>후원하기</ModalTopBar>
         <StyledContainer>
           <InfoWrapper>
             <StyledPreviewImage
-              src={idolData.imageUrl || AltImage}
+              src={idolData.donationProfilePicture || AltImage}
               onError={onErrorImage}
             />
             <DescriptionWrapper>
-              <h2>{idolData?.tributeTxt || '서브 타이틀'}</h2>
-              <h1>{idolData?.tributeInfo || '메인 타이틀'}</h1>
+              <h2>{idolData?.donationSubtitle || '서브 타이틀'}</h2>
+              <h1>{idolData?.donationTitle || '메인 타이틀'}</h1>
             </DescriptionWrapper>
           </InfoWrapper>
           <InputForm onSubmit={handleSubmit}>
@@ -90,7 +121,7 @@ export default function DonationModal({ isOpen, onClose }) {
               value={inputValue}
               onChange={handleChange}
               onKeyDown={KeyPressed}
-              $isError={isError}
+              isError={isError}
               placeholder="크레딧 입력"
               type="number"
               step="1"
@@ -120,7 +151,7 @@ const StyledDonationModalWindow = styled(ModalWindow)`
   z-index: 1000;
 
   width: 327px;
-  height: 509px;
+  height: 517px;
   gap: 24px;
 `;
 
@@ -175,7 +206,7 @@ const InputForm = styled.form`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 36px;
 `;
 
 const StyledCreditInput = styled.input`
@@ -188,7 +219,7 @@ const StyledCreditInput = styled.input`
   padding-right: 48px; /* 아이콘 공간 확보 */
   border-radius: 8px;
   border: 1px solid
-    var(${({ isError }) => (isError === true ? '--error-red' : '--white')});
+    ${({ isError }) => (isError === true ? 'var(--error-red)' : 'var(--white)')};
 
   font-size: 20px;
   font-style: normal;
@@ -217,7 +248,7 @@ const CreditIcon = styled(StyledCreditIcon)`
 
 const ErrorSpan = styled.span`
   position: absolute;
-  top: 64px;
+  top: 67px;
 
   color: var(--error-red);
   font-size: 12px;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '@assets/svg/logo.svg';
 import backgroundImage from '@assets/LandingPage/image 14.png';
 import topDesign from '@assets/svg/Image_top.svg';
@@ -12,6 +12,13 @@ import landingImage3 from '@assets/LandingPage/Home-3.png';
 import Button from '@components/Button';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
+  const handleStartClick = () => {
+    localStorage.clear();
+    navigate('/list');
+  };
+
   return (
     <div>
       <Main>
@@ -27,7 +34,7 @@ export default function LandingPage() {
         </LogoWrap>
         <BackgroundImage src={backgroundImage} alt="배경 이미지" />
         <ButtonWrap>
-          <Button>지금 시작하기</Button>
+          <Button onClick={handleStartClick}>지금 시작하기</Button>
         </ButtonWrap>
       </Main>
       <BottomContainer>
