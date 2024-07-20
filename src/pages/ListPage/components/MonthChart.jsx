@@ -13,20 +13,50 @@ export default function MonthChart({ openModal }) {
   const FEMALE = 'female';
   const MALE = 'male';
   const PAGE_SIZE = 10;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [genderTab, setGenderTab] = useState(FEMALE);
-  const [chartPageSize, setChartPageSize] = useState(PAGE_SIZE);
+  const [chartPageSize, setChartPageSize] = useState(
+    windowWidth >= 744 ? PAGE_SIZE : 5
+  );
   const [nextCursorValue, setNextCursorValue] = useState();
   const [moreButtonDisabled, setMoreButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // 더보기 버튼 클릭
   const handleClickMoreButton = () => {
-    setChartPageSize(chartPageSize + 10);
+    if (windowWidth <= 744) {
+      setChartPageSize(chartPageSize + 5);
+    } else {
+      setChartPageSize(chartPageSize + 10);
+    }
   };
 
+  // 접기 버튼 클릭
   const handleClickShortButton = () => {
-    setChartPageSize(10);
+    if (windowWidth <= 744) {
+      setChartPageSize(5);
+    } else {
+      setChartPageSize(10);
+    }
   };
 
+  // 브라우저 사이즈 변경되면 현재 사이즈 반환
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [windowWidth]);
+
+  // 반응형으로 차트 노출 개수 정하기
+  useEffect(() => {
+    if (windowWidth <= 744) {
+      setChartPageSize(5);
+    } else if (windowWidth > 744) {
+      setChartPageSize(10);
+    }
+  }, [windowWidth]);
+
+  // nextCursor값 가져오기
   useEffect(() => {
     const handleLoad = async () => {
       try {
@@ -47,6 +77,7 @@ export default function MonthChart({ openModal }) {
     handleLoad();
   }, [chartPageSize]);
 
+  // nextCursor값이 null로 더는 불러올 아이돌 데이터가 없으면 더보기 버튼 숨기고 접기 버튼 노출
   useEffect(() => {
     if (nextCursorValue === null) {
       setMoreButtonDisabled(true);
@@ -78,6 +109,7 @@ export default function MonthChart({ openModal }) {
         genderTab={genderTab}
         setGenderTab={setGenderTab}
         setChartPageSize={setChartPageSize}
+        windowWidth={windowWidth}
       />
       <MonthChartList
         idolGender={genderTab === 'female' ? FEMALE : MALE}
