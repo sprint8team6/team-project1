@@ -3,22 +3,24 @@ import CircularIdolImage from '@components/CircularIdolImage';
 import PropTypes from 'prop-type';
 
 export default function MiniPhotoCard({
-  isCheckable = true,
-  isDeletable = false,
-  isChecked = false,
+  $isCheckable = false,
+  $isDeletable = false,
+  $isChecked = false,
   size = 'small',
   onCheckChange = null,
   team = null,
   name = null,
+  idolImage = null,
 }) {
   return (
     <PhotoCard>
       <CircularIdolImage
-        isCheckable={isCheckable}
-        isDeletable={isDeletable}
-        isChecked={isChecked}
-        size={size}
+        isCheckable={$isCheckable}
+        isDeletable={$isDeletable}
         onCheckChange={onCheckChange}
+        isChecked={$isChecked}
+        size={size}
+        idolImage={idolImage}
       />
       <IdolName>{name}</IdolName>
       <TeamName>{team}</TeamName>
@@ -27,13 +29,14 @@ export default function MiniPhotoCard({
 }
 
 MiniPhotoCard.propTypes = {
-  isCheckable: PropTypes.bool,
-  isChecked: PropTypes.bool,
+  $isCheckable: PropTypes.bool,
+  $isChecked: PropTypes.bool,
+  $isDeletable: PropTypes.bool,
   onCheckChange: PropTypes.func,
   size: PropTypes.string,
-  isDeletable: PropTypes.bool,
   team: PropTypes.string,
   name: PropTypes.string,
+  idolImage: PropTypes.string,
 };
 
 const PhotoCard = styled.div`
@@ -42,7 +45,9 @@ const PhotoCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
+  text-align: center;
 `;
 
 const IdolName = styled.p`

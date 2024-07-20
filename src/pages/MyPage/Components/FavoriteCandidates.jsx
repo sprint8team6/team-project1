@@ -19,8 +19,14 @@ export default function FavoriteCandidates() {
           cursor: 0,
         });
         // eslint-disable-next-line no-console
-        console.log(response); // 응답을 콘솔에 출력
-        setIdols(response.idols.map((idol) => ({ ...idol, isChecked: false })));
+        console.log('API 응답:', response); // 전체 응답 구조 확인
+        if (response && response.list) {
+          setIdols(
+            response.list.map((idol) => ({ ...idol, isChecked: false }))
+          );
+        } else {
+          console.error('잘못된 응답 구조:', response);
+        }
       } catch (error) {
         console.error('아이돌 불러오기 실패: ', error);
       } finally {
@@ -54,17 +60,23 @@ export default function FavoriteCandidates() {
       <CandidatesBox>
         <PageLeft />
         <IdolList>
-          {idols.map((idol) => (
-            <MiniPhotoCard
-              id={idol.id}
-              name={idol.name}
-              team={idol.team}
-              isChecked={idol.isChecked}
-              onCheckChange={() => onCheckChangeEvent(idol.id)}
-              size="big"
-              isCheckable
-            />
-          ))}
+          {idols && idols.length > 0 ? (
+            idols.map((idol) => (
+              <MiniPhotoCard
+                key={idol.id}
+                name={idol.name}
+                team={idol.group}
+                $isChecked={idol.isChecked}
+                onCheckChange={() => onCheckChangeEvent(idol.id)}
+                size="large"
+                $isCheckable
+                idolImage={idol.profilePicture}
+                $isDeletable={false}
+              />
+            ))
+          ) : (
+            <p>아이돌 데이터를 불러오는 중입니다...</p>
+          )}
         </IdolList>
         <PageRight />
       </CandidatesBox>

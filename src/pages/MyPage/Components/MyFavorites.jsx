@@ -22,8 +22,9 @@ export default function MyFavorites() {
             id={idol.id}
             name={idol.name}
             team={idol.team}
-            isChecked={idol.isChecked}
-            isDeletable
+            $isChecked={idol.isChecked}
+            $isDeletable
+            $isCheckable={false}
           />
         ))}
       </MyFavoriteList>
