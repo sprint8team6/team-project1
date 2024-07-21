@@ -1,5 +1,5 @@
 import { PropTypes } from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
 import Button from '@components/Button';
@@ -26,13 +26,20 @@ export default function IdolCard({ donation }) {
     donationTitle: donation ? donation.title : '부제목이 없습니다.',
     donationReceivedDonation: donation ? donationValue : 0,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
-    setDonationValue: () => {
-      setDonationValue();
+    setDonationValue: (value) => {
+      setDonationValue(value);
     },
   });
 
   // Context
   const { openModal } = useModalContext();
+
+  useEffect(() => {
+    setIdolStatus((prevStatus) => ({
+      ...prevStatus,
+      donationReceivedDonation: donationValue,
+    }));
+  }, [donationValue]);
 
   const handleTributeButtonClick = () => {
     openModal('DonationModal', idolStatus);

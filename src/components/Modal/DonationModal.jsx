@@ -72,6 +72,9 @@ export default function DonationModal({ isOpen, onClose }) {
             <em>후원</em>을 완료했습니다!
           </span>
         );
+        idolData?.setDonationValue(
+          idolData.donationReceivedDonation + submitAmount
+        );
       } catch (error) {
         console.error('Failed to submit donation:', error);
       } finally {
@@ -100,6 +103,10 @@ export default function DonationModal({ isOpen, onClose }) {
   const onErrorImage = (e) => {
     e.target.src = AltImage;
   };
+
+  useEffect(() => {
+    console.log('받은 후 idolData 값:', idolData);
+  }, [idolData]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

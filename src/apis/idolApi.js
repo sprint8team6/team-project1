@@ -87,7 +87,11 @@ putData.propTypes = {
  * @see {@link ../pages/ListPage/components/IdolCard.jsx}
  * @see {@link ../pages/MyPage/components/FavoriteCandidates.jsx}
  */
-export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
+export async function getIdols({
+  pageSize = 10,
+  cursor = 0,
+  keyword = '',
+} = {}) {
   const query = new URLSearchParams({ pageSize, cursor, keyword }).toString();
   const url = `${BASE_URL}/idols?${query}`;
   return getData(url);

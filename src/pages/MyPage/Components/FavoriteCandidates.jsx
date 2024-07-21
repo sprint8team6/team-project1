@@ -3,6 +3,7 @@ import { ReactComponent as PageLeft } from '@assets/svg/btn_pagination_arrow_lef
 import { ReactComponent as PageRight } from '@assets/svg/btn_pagination_arrow_right.svg';
 import styled from 'styled-components';
 import Button from '@components/Button';
+import { getIdols } from '@apis/idolApi';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
 import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';

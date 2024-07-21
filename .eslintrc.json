@@ -21,6 +21,7 @@
     "no-unused-vars": "off", // 사용하지 않는 변수 작성에 대한 설정
     "react/jsx-props-no-spreading": "off", // {...props} 프롭스에 대해 spreading 설정
     "react/function-component-definition": "off", // React 컴포넌트를 함수 선언 강제
-    "react/require-default-props": "off" // props 기본값 설정이 복잡해짐
+    "react/require-default-props": "off", // props 기본값 설정이 복잡해짐
+    "no-console": "warn" // 테스트에 어려움이 있음
   }
 }
