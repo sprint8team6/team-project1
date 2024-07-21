@@ -112,8 +112,8 @@ getIdols.propTypes = {
  */
 export async function getDonations({
   pageSize = 10,
-  cursor,
-  priorityIdolIds,
+  cursor = 0,
+  priorityIdolIds = 0,
 } = {}) {
   const query = new URLSearchParams({
     pageSize,
