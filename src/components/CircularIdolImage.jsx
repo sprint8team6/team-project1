@@ -35,11 +35,11 @@ export default function CircularIdolImage({
   return (
     <StyledCircularIdolImage
       size={size}
-      isCheckable={isCheckable}
+      data-is-checkable={isCheckable}
       onClick={handleImageClick}
     >
       <StyledImageWrapper>
-        <StyledImage idolImage={idolImage} />
+        <StyledImage data-idol-image={idolImage} />
         {isChecked && (
           <>
             <StyledOverlay />
@@ -99,7 +99,8 @@ const StyledCircularIdolImage = styled.div`
   padding: 5px;
   border-radius: 50%;
   border: 1px solid var(--brand-coral);
-  cursor: ${({ isCheckable }) => (isCheckable ? 'pointer' : 'default')};
+  cursor: ${({ 'data-is-checkable': isCheckable }) =>
+    isCheckable ? 'pointer' : 'default'};
   ${({ size }) => IMAGE_SIZES[size]};
 `;
 
@@ -129,7 +130,7 @@ const StyledImage = styled.div`
   border-radius: 50%;
   z-index: 0;
 
-  background-image: ${({ idolImage }) =>
+  background-image: ${({ 'data-idol-image': idolImage }) =>
     idolImage ? `url(${idolImage})` : `url(${AltImage})`};
   background-repeat: no-repeat;
   background-size: 100%;

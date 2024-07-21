@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+// api
 import { getCharts } from '@apis/idolApi';
+// spinner
 import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import Button from '@components/Button';
@@ -75,7 +77,7 @@ export default function MonthChart({ openModal }) {
     };
 
     handleLoad();
-  }, [chartPageSize]);
+  }, [nextCursorValue]);
 
   // nextCursor값이 null로 더는 불러올 아이돌 데이터가 없으면 더보기 버튼 숨기고 접기 버튼 노출
   useEffect(() => {
@@ -85,6 +87,19 @@ export default function MonthChart({ openModal }) {
       setMoreButtonDisabled(false);
     }
   }, [nextCursorValue, chartPageSize]);
+
+  if (isLoading) {
+    return (
+      <LoadingSpinner
+        isLoading={isLoading}
+        color="var(--brand-coral)"
+        size={20}
+        width="100%"
+        height="100%"
+        minLoadTime={1000}
+      />
+    );
+  }
 
   return (
     <MyCreditWrap>
