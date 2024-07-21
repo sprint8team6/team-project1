@@ -53,7 +53,7 @@ export default function IdolCard({ donation }) {
   return (
     <IdolCardWrap>
       <IdolCardImage>
-        <Image profilePicture={idolStatus.donationProfilePicture} />
+        <Image data-profile-picture={idolStatus.donationProfilePicture} />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
       </IdolCardImage>
       <IdolCardText>
@@ -71,9 +71,9 @@ export default function IdolCard({ donation }) {
                 {idolStatus?.donationReceivedDonation.toLocaleString() ?? '0'}
               </span>
             </div>
-            <span>{idolStatus?.donationDeadLineDay ?? '??'}일 남음</span>
+            <span>{idolStatus?.donationDeadLineDay ?? '-'}일 남음</span>
           </IdolCardCredit>
-          <IdolCardCreditGauge donationPercentage={donationPercentage} />
+          <IdolCardCreditGauge data-donation-percentage={donationPercentage} />
         </div>
       </IdolCardText>
     </IdolCardWrap>
@@ -165,8 +165,8 @@ const Image = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: ${(props) =>
-    props ? `url(${props.profilePicture})` : `url(${defaultImage})`};
+  background-image: ${({ 'data-profile-picture': profilePicture }) =>
+    profilePicture ? `url(${profilePicture})` : `url(${defaultImage})`};
   background-position-y: -10px;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -237,11 +237,11 @@ const IdolCardCreditGauge = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: ${(props) =>
-      props.donationPercentage ? props.donationPercentage : 0}%;
+    width: ${({ 'data-donation-percentage': donationPercentage }) =>
+      donationPercentage ? `${donationPercentage}%` : 0};
     height: 100%;
     content: '';
     background-color: var(--brand-coral);
-    transition: all 0.3s;
+    transition: all 2s ease-out;
   }
 `;

@@ -53,9 +53,9 @@ export default function TributeSupport() {
     const handleLoad = async () => {
       try {
         const { list } = await getDonations({
-          pageSize: 100,
+          pageSize: 12,
           cursor: 0,
-          priorityIdolIds: 1,
+          // priorityIdolIds: 1,
         });
         setIdolDonations(list);
       } catch (error) {
@@ -67,6 +67,19 @@ export default function TributeSupport() {
 
     handleLoad();
   }, []);
+
+  if (isLoading) {
+    return (
+      <LoadingSpinner
+        isLoading={isLoading}
+        color="var(--brand-coral)"
+        size={20}
+        width="100%"
+        height="100%"
+        minLoadTime={1000}
+      />
+    );
+  }
 
   return (
     <MyCreditWrap>
