@@ -1,37 +1,9 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
-import { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import MiniPhotoCard from './MiniPhotoCard';
 
-export default function MyFavorites() {
-  const [favoriteIdols, setFavoriteIdols] = useState([]);
-
-  const loadFavoriteIdols = useCallback(() => {
-    const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
-    setFavoriteIdols(storedIdols);
-  }, []);
-
-  useEffect(() => {
-    loadFavoriteIdols();
-  }, []);
-
-  const handleDelete = useCallback(
-    (idolId) => {
-      const updatedFavorites = favoriteIdols.filter(
-        (idol) => idol.id !== idolId
-      );
-      localStorage.setItem('favoriteIdols', JSON.stringify(updatedFavorites));
-      setFavoriteIdols(updatedFavorites);
-
-      const storedIdols = JSON.parse(localStorage.getItem('idols')) || [];
-      const updatedIdols = storedIdols.map((idol) =>
-        idol.id === idolId ? { ...idol, isChecked: false } : idol
-      );
-      localStorage.setItem('idols', JSON.stringify(updatedIdols));
-    },
-    [favoriteIdols]
-  );
-
+export default function MyFavorites({ favoriteIdols, onDelete }) {
   return (
     <MyFavoriteListBox>
       <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
@@ -47,13 +19,25 @@ export default function MyFavorites() {
             $isDeletable
             $isCheckable={false}
             idolImage={idol.profilePicture}
-            onDelete={() => handleDelete(idol.id)}
+            onDelete={() => onDelete(idol.id)}
           />
         ))}
       </MyFavoriteList>
     </MyFavoriteListBox>
   );
 }
+
+MyFavorites.propTypes = {
+  favoriteIdols: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      group: PropTypes.string.isRequired,
+      profilePicture: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 const MyFavoriteListBox = styled.div`
   max-width: 120rem;
