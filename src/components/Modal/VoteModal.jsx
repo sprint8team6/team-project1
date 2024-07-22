@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
 import { useToastContext } from '@contexts/useToastContext';
@@ -41,7 +41,7 @@ function getResponsiveValue() {
  */
 export default function VoteModal({ isOpen = false, onClose }) {
   // State
-  const [selectedIdol, setSelectedIdol] = useState(); // [type=number] (idolId 저장)
+  const [selectedIdol, setSelectedIdol] = useState(0); // [type=number] (idolId 저장)
   const [voteIdolData, setVoteIdolData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [responsiveStatus, setResponsiveStatus] =
@@ -228,7 +228,7 @@ const StyledVoteOption = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  cursor: ${(props) => (props.hasVoted === 'true' ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.disabled === 'true' ? 'default' : 'pointer')};
 
   @media screen and (max-width: 480px) {
     display: flex;
@@ -276,9 +276,12 @@ const StyledVotes = styled.span`
   line-height: normal;
 `;
 
-const VoteOption = ({ onClick, selectedIdol, idolData, hasVoted }) => {
+const VoteOption = ({ onClick, selectedIdol, idolData, disabled }) => {
   return (
-    <StyledVoteOption onClick={() => onClick(idolData?.id)} hasVoted={hasVoted}>
+    <StyledVoteOption
+      onClick={() => onClick(idolData?.id)}
+      disabled={Boolean(disabled)}
+    >
       <StyledIdolInfo>
         <CircularIdolImage
           idolImage={idolData?.profilePicture}
@@ -308,7 +311,7 @@ VoteOption.propTypes = {
     name: PropTypes.string.isRequired,
     totalVotes: PropTypes.number.isRequired,
   }).isRequired,
-  hasVoted: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 const StyledDiv = styled.div`
@@ -356,7 +359,10 @@ const VoteButton = ({
   };
 
   return (
-    <Button onClick={submitVote} disabled={localStorage.getItem('hasVoted')}>
+    <Button
+      onClick={submitVote}
+      disabled={localStorage.getItem('hasVoted') === 'true'}
+    >
       {children}
     </Button>
   );
