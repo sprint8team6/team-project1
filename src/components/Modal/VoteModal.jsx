@@ -49,8 +49,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
 
   // Context
   const { modals, openModal } = useModalContext();
-  const selectedTab =
-    modals.VoteModal.data.girlTab === true ? 'female' : 'male';
+  const selectedTab = modals.VoteModal.data;
   const { myCredit, setMyCredit } = useCreditContext();
   const { addToast } = useToastContext();
 
