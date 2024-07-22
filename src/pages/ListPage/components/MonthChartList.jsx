@@ -18,6 +18,7 @@ export default function MonthChartList({ idolGender, chartPageSize }) {
         const { idols } = await getCharts(option);
         setChartIdolsData(idols);
         setLoading(false);
+        console.log(idols);
       } catch (error) {
         console.error(error);
       } finally {
