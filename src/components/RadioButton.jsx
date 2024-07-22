@@ -28,13 +28,14 @@ RadioButton.propTypes = {
 const BaseRadioButton = styled.button`
   width: 16px;
   height: 16px;
-  flex-shrink: 0;
   cursor: pointer;
 `;
 
 const StyledRadioButton = styled(BaseRadioButton)`
   background-image: ${({ checked }) =>
     checked ? `url(${CheckedTrue})` : `url(${CheckedFalse})`};
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 /** 라디오 버튼 모양 컴포넌트
