@@ -1,16 +1,55 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
+import { useCallback, useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
+  const [favoriteIdols, setFavoriteIdols] = useState([]);
+
+  const loadFavoriteIdols = useCallback(() => {
+    const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
+    setFavoriteIdols(storedIdols);
+  }, []);
+
+  useEffect(() => {
+    loadFavoriteIdols();
+  }, []);
+
+  const handleDelete = useCallback(
+    (idolId) => {
+      const updatedFavorites = favoriteIdols.filter(
+        (idol) => idol.id !== idolId
+      );
+      localStorage.setItem('favoriteIdols', JSON.stringify(updatedFavorites));
+      setFavoriteIdols(updatedFavorites);
+
+      const storedIdols = JSON.parse(localStorage.getItem('idols')) || [];
+      const updatedIdols = storedIdols.map((idol) =>
+        idol.id === idolId ? { ...idol, isChecked: false } : idol
+      );
+      localStorage.setItem('idols', JSON.stringify(updatedIdols));
+    },
+    [favoriteIdols]
+  );
+
   return (
     <MyFavoriteListBox>
       <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
       <MyFavoriteList>
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
-        <MiniPhotoCard isDeletable />
+        {favoriteIdols.map((idol) => (
+          <MiniPhotoCard
+            key={idol.id}
+            id={idol.id}
+            name={idol.name}
+            team={idol.group}
+            size="medium"
+            $isChecked={false}
+            $isDeletable
+            $isCheckable={false}
+            idolImage={idol.profilePicture}
+            onDelete={() => handleDelete(idol.id)}
+          />
+        ))}
       </MyFavoriteList>
     </MyFavoriteListBox>
   );

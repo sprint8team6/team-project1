@@ -1,21 +1,31 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 
 export default function MonthChartTab({
   genderTab,
   setGenderTab,
   setChartPageSize,
+  windowWidth,
 }) {
   const FEMALE = 'female';
   const MALE = 'male';
 
+  const resizeWindow = () => {
+    if (windowWidth <= 744) {
+      setChartPageSize(5);
+    } else {
+      setChartPageSize(10);
+    }
+  };
+
   const handleClickTab = (gender) => {
     if (gender === FEMALE) {
       setGenderTab(FEMALE);
-      setChartPageSize(10);
+      resizeWindow();
     } else if (gender === MALE) {
       setGenderTab(MALE);
       setChartPageSize(10);
+      resizeWindow();
     }
   };
 
@@ -47,6 +57,7 @@ MonthChartTab.propTypes = {
   genderTab: PropTypes.string.isRequired,
   setGenderTab: PropTypes.func.isRequired,
   setChartPageSize: PropTypes.func.isRequired,
+  windowWidth: PropTypes.number.isRequired,
 };
 
 const ChartTab = styled.div`
