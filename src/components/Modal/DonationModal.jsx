@@ -104,10 +104,6 @@ export default function DonationModal({ isOpen, onClose }) {
     e.target.src = AltImage;
   };
 
-  useEffect(() => {
-    console.log('받은 후 idolData 값:', idolData);
-  }, [idolData]);
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledDonationModalWindow>
