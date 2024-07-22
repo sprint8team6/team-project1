@@ -88,8 +88,15 @@ putData.propTypes = {
  * @see {@link ../pages/MyPage/components/FavoriteCandidates.jsx}
  */
 export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
-  const query = new URLSearchParams({ pageSize, cursor, keyword }).toString();
-  const url = `${BASE_URL}/idols?${query}`;
+  const params = new URLSearchParams();
+
+  if (pageSize) params.append('pageSize', pageSize);
+  if (cursor !== undefined) params.append('cursor', cursor);
+  if (keyword) params.append('keyword', keyword);
+
+  const query = params.toString();
+  const url = `${BASE_URL}/idols${query ? `?${query}` : ''}`;
+
   return getData(url);
 }
 

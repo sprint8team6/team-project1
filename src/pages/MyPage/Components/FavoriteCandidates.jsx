@@ -3,68 +3,21 @@ import { ReactComponent as PageLeft } from '@assets/svg/btn_pagination_arrow_lef
 import { ReactComponent as PageRight } from '@assets/svg/btn_pagination_arrow_right.svg';
 import styled from 'styled-components';
 import Button from '@components/Button';
-import { getIdols } from '@utils/idolApi';
+import PropTypes from 'prop-types';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
-import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
-export default function FavoriteCandidates() {
-  const [loading, setLoading] = useState([]);
-  const [idols, setIdols] = useState([]);
-  useEffect(() => {
-    const fetchIdols = async () => {
-      try {
-        const response = await getIdols({
-          pageSize: 16,
-          cursor: 0,
-        });
-        // eslint-disable-next-line no-console
-        console.log('API 응답:', response); // 전체 응답 구조 확인
-        if (response && response.list) {
-          setIdols(
-            response.list.map((idol) => ({ ...idol, isChecked: false }))
-          );
-        } else {
-          console.error('잘못된 응답 구조:', response);
-        }
-      } catch (error) {
-        console.error('아이돌 불러오기 실패: ', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchIdols();
-  }, []);
-
+export default function FavoriteCandidates({
+  idols,
+  onAddFavorites,
+  onCheckChangeEvent,
+}) {
   const handleAddFavorites = () => {
     const favoriteIdols = idols.filter((idol) => idol.isChecked);
-    const storedFavorites =
-      JSON.parse(localStorage.getItem('favoriteIdols')) || [];
-    const uniqueFavorites = Array.from(
-      new Set([...storedFavorites, ...favoriteIdols].map(JSON.stringify))
-    ).map(JSON.parse);
 
-    localStorage.setItem('favoriteIdols', JSON.stringify(uniqueFavorites));
-
-    setIdols((prevIdols) =>
-      prevIdols.map((idol) => ({ ...idol, isChecked: false }))
-    );
+    onAddFavorites(favoriteIdols);
   };
 
-  const onCheckChangeEvent = (id) => {
-    setIdols((prevIdols) => {
-      const updatedIdols = prevIdols.map((idol) =>
-        idol.id === id ? { ...idol, isChecked: !idol.isChecked } : idol
-      );
-
-      return updatedIdols;
-    });
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <AddFavoriteBox>
       <AddFavoriteTitle>관심있는 아이돌을 추가해보세요.</AddFavoriteTitle>
@@ -101,6 +54,19 @@ export default function FavoriteCandidates() {
   );
 }
 
+FavoriteCandidates.propTypes = {
+  idols: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      group: PropTypes.string.isRequired,
+      profilePicture: PropTypes.string.isRequired,
+      isChecked: PropTypes.bool.isRequired,
+    })
+  ).isRequired,
+  onAddFavorites: PropTypes.func.isRequired,
+  onCheckChangeEvent: PropTypes.func.isRequired,
+};
 const AddFavoriteBox = styled.div`
   gap: 3rem;
   margin: 0 auto;
