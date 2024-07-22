@@ -3,30 +3,60 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 // api
 import { getCharts } from '@apis/idolApi';
+// spinner
+import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import MonthIdol from './MonthIdol';
 
 export default function MonthChartList({ idolGender, chartPageSize }) {
   const [chartIdolsData, setChartIdolsData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleLoad = async (option) => {
       try {
         const { idols } = await getCharts(option);
         setChartIdolsData(idols);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     handleLoad({ gender: idolGender, pageSize: chartPageSize, cursor: 0 });
   }, [idolGender, chartPageSize]);
 
+  if (isLoading) {
+    return (
+      <LoadingSpinner
+        isLoading={isLoading}
+        color="var(--brand-coral)"
+        size={20}
+        width="100%"
+        height="100%"
+        minLoadTime={1000}
+      />
+    );
+  }
+
   return (
     <MonthIdolList>
-      {chartIdolsData.map((idolsData) => {
-        return <MonthIdol key={idolsData.id} idolsData={idolsData} />;
-      })}
+      {chartIdolsData.length > 0 ? (
+        chartIdolsData.map((idolsData) => {
+          return <MonthIdol key={idolsData.id} idolsData={idolsData} />;
+        })
+      ) : (
+        <LoadingSpinner
+          isLoading={isLoading}
+          color="var(--brand-coral)"
+          size={20}
+          width="100%"
+          height="100%"
+          minLoadTime={1000}
+        />
+      )}
     </MonthIdolList>
   );
 }

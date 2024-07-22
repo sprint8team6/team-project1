@@ -87,7 +87,11 @@ putData.propTypes = {
  * @see {@link ../pages/ListPage/components/IdolCard.jsx}
  * @see {@link ../pages/MyPage/components/FavoriteCandidates.jsx}
  */
-export async function getIdols({ pageSize = 10, cursor, keyword } = {}) {
+export async function getIdols({
+  pageSize = 10,
+  cursor = 0,
+  keyword = '',
+} = {}) {
   const params = new URLSearchParams();
 
   if (pageSize) params.append('pageSize', pageSize);
@@ -119,8 +123,8 @@ getIdols.propTypes = {
  */
 export async function getDonations({
   pageSize = 10,
-  cursor,
-  priorityIdolIds,
+  cursor = 0,
+  priorityIdolIds = 0,
 } = {}) {
   const query = new URLSearchParams({
     pageSize,
@@ -172,7 +176,10 @@ getCharts.propTypes = {
  * 아래에서 import 해서 사용중입니다.
  * @see {@link ../components/Modal/DonationModal.jsx}
  */
-export async function putDonationsContribute({ donationId, donationAmount }) {
+export async function putDonationsContribute({
+  donationId = 0,
+  donationAmount,
+}) {
   // not exist query
   const url = `${BASE_URL}/donations/${donationId}/contribute`;
   const data = { amount: donationAmount };

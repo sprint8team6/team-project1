@@ -4,17 +4,14 @@ import profileImage from '@assets/svg/profile.svg';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  // 로고 클릭시 페이지 새로고침
-  const handleReload = () => {
-    window.location.reload();
-  };
-
   return (
     <HeaderWrap>
       <HeaderBox>
         <HeaderProfile />
 
-        <HeaderLogo onClick={handleReload} src={logoImage} alt="로고 이미지" />
+        <Link to="/list">
+          <HeaderLogo src={logoImage} alt="로고 이미지" />
+        </Link>
 
         <HeaderProfile>
           <Link to="/mypage">

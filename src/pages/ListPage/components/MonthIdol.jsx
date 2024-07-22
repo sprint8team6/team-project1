@@ -1,18 +1,17 @@
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { PropTypes } from 'prop-types';
 import { useState } from 'react';
+import styled from 'styled-components';
+// component
 import CircularIdolImage from '@components/CircularIdolImage';
 import defaultImage from '@assets/png/alt_image.png';
 
 export default function MonthIdol({ idolsData }) {
   const [monthIdolText, setMonthIdolText] = useState({
-    idolsDataName: idolsData ? idolsData.name : '-',
-    idolsDataGroup: idolsData ? idolsData.group : '-',
-    idolsDataRank: idolsData ? idolsData.rank : 0,
-    idolsDataProfilePicture: idolsData
-      ? idolsData.profilePicture
-      : defaultImage,
-    idolsDataTotalVotes: idolsData ? idolsData.totalVotes : 0,
+    idolsDataName: idolsData?.name ?? '-',
+    idolsDataGroup: idolsData?.group ?? '-',
+    idolsDataRank: idolsData?.rank ?? 0,
+    idolsDataProfilePicture: idolsData?.profilePicture ?? defaultImage,
+    idolsDataTotalVotes: idolsData?.totalVotes ?? 0,
   });
 
   return (

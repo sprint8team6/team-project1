@@ -27,6 +27,7 @@ export default function DonationModal({ isOpen, onClose }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
   const [isError, setIsError] = useState(true); // 크레딧이 부족할 때
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -36,7 +37,16 @@ export default function DonationModal({ isOpen, onClose }) {
 
   // inputValue의 값이 크레딧보다 높으면 Error
   useEffect(() => {
-    if (Number(inputValue) > myCredit) {
+    const inputNumber = Number(inputValue);
+
+    if (inputNumber < 0) {
+      setInputValue(0);
+    }
+    if (inputNumber % 100 !== 0) {
+      setErrorMessage('100 단위의 크레딧만 후원 가능해요!');
+      setIsError(true);
+    } else if (inputNumber > myCredit) {
+      setErrorMessage('갖고 있는 크레딧보다 더 많이 후원할 수 없어요!');
       setIsError(true);
     } else {
       setIsError(false);
@@ -72,6 +82,9 @@ export default function DonationModal({ isOpen, onClose }) {
             <em>후원</em>을 완료했습니다!
           </span>
         );
+        idolData?.setDonationValue(
+          idolData.donationReceivedDonation + submitAmount
+        );
       } catch (error) {
         console.error('Failed to submit donation:', error);
       } finally {
@@ -81,17 +94,6 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   const KeyPressed = (e) => {
-    if (e.key === 'ArrowUp' && inputValue !== '0') {
-      e.preventDefault();
-      const nextInputValue = Number(inputValue) + 100;
-      setInputValue(nextInputValue);
-    }
-    if (e.key === 'ArrowDown' && inputValue !== '0') {
-      e.preventDefault();
-      let nextInputValue = Number(inputValue) - 100;
-      if (nextInputValue <= 0) nextInputValue = 0;
-      setInputValue(nextInputValue);
-    }
     if (e.key === 'Enter') {
       handleSubmit(e);
     }
@@ -121,12 +123,12 @@ export default function DonationModal({ isOpen, onClose }) {
               value={inputValue}
               onChange={handleChange}
               onKeyDown={KeyPressed}
-              isError={isError}
+              $isError={isError}
               placeholder="크레딧 입력"
               type="number"
-              step="1"
+              step="100"
             />
-            {isError && <ErrorMessage />}
+            {isError && <ErrorSpan>{errorMessage}</ErrorSpan>}
             <CreditIcon />
             <Button disabled={!inputValue} onClick={handleSubmit}>
               후원하기
@@ -219,7 +221,7 @@ const StyledCreditInput = styled.input`
   padding-right: 48px; /* 아이콘 공간 확보 */
   border-radius: 8px;
   border: 1px solid
-    ${({ isError }) => (isError === true ? 'var(--error-red)' : 'var(--white)')};
+    ${({ $isError }) => ($isError ? 'var(--error-red)' : 'var(--white)')};
 
   font-size: 20px;
   font-style: normal;
@@ -256,7 +258,3 @@ const ErrorSpan = styled.span`
   font-weight: 500;
   line-height: normal;
 `;
-
-const ErrorMessage = () => {
-  return <ErrorSpan>갖고 있는 크레딧보다 더 많이 후원할 수 없어요!</ErrorSpan>;
-};

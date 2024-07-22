@@ -1,7 +1,8 @@
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import CreditImage from '@assets/svg/ic_credit.svg';
+import { PropTypes } from 'prop-types';
 import { useCreditContext } from '@contexts/useCreditContext';
+import styled from 'styled-components';
+// component
+import CreditImage from '@assets/svg/ic_credit.svg';
 
 export default function MyCredit({ openModal }) {
   const { myCredit, setMyCredit } = useCreditContext();

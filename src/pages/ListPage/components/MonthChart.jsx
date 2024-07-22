@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+// api
 import { getCharts } from '@apis/idolApi';
+// spinner
 import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import Button from '@components/Button';
@@ -84,7 +86,20 @@ export default function MonthChart({ openModal }) {
     } else {
       setMoreButtonDisabled(false);
     }
-  }, [nextCursorValue, chartPageSize]);
+  }, [nextCursorValue]);
+
+  if (isLoading) {
+    return (
+      <LoadingSpinner
+        isLoading={isLoading}
+        color="var(--brand-coral)"
+        size={20}
+        width="100%"
+        height="100%"
+        minLoadTime={1000}
+      />
+    );
+  }
 
   return (
     <MyCreditWrap>

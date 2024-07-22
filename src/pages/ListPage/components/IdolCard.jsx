@@ -2,6 +2,7 @@ import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import styled from 'styled-components';
+// component
 import Button from '@components/Button';
 import defaultImage from '@assets/png/alt_image.png';
 import CreditIcon from '@assets/svg/ic_credit.svg';
@@ -15,26 +16,31 @@ export default function IdolCard({ donation }) {
 
   // State
   const [donationValue, setDonationValue] = useState(
-    donation ? donation.receivedDonations : 0
+    donation?.receivedDonations ?? 0
   );
   const [idolStatus, setIdolStatus] = useState({
-    donationId: donation ? donation.id : '999999999999',
-    donationProfilePicture: donation
-      ? donation.idol.profilePicture
-      : defaultImage,
-    donationSubtitle: donation ? donation.subtitle : '제목이 없습니다.',
-    donationTitle: donation ? donation.title : '부제목이 없습니다.',
-    donationReceivedDonation: donation ? donationValue : 0,
+    donationId: donation?.id ?? 0,
+    donationProfilePicture: donation?.idol.profilePicture ?? defaultImage,
+    donationSubtitle: donation?.subtitle ?? '제목이 없습니다.',
+    donationTitle: donation?.title ?? '부제목이 없습니다.',
+    donationReceivedDonation: donationValue,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
-    setDonationValue: () => {
-      setDonationValue();
+    setDonationValue: (value) => {
+      setDonationValue(value);
     },
-    donationTarget: donation ? donation.targetDonation : null,
+    donationTarget: donation?.targetDonation ?? null,
   });
   const [donationPercentage, setDonationPercentage] = useState(0);
 
   // Context
   const { openModal } = useModalContext();
+
+  useEffect(() => {
+    setIdolStatus((prevStatus) => ({
+      ...prevStatus,
+      donationReceivedDonation: donationValue,
+    }));
+  }, [donationValue]);
 
   const handleTributeButtonClick = () => {
     openModal('DonationModal', idolStatus);
@@ -49,12 +55,12 @@ export default function IdolCard({ donation }) {
     };
 
     calculatePercentage();
-  }, [donation]);
+  }, [donation, idolStatus]);
 
   return (
     <IdolCardWrap>
       <IdolCardImage>
-        <Image profilePicture={idolStatus.donationProfilePicture} />
+        <Image data-profile-picture={idolStatus.donationProfilePicture} />
         <Button onClick={handleTributeButtonClick}>후원하기</Button>
       </IdolCardImage>
       <IdolCardText>
@@ -72,9 +78,9 @@ export default function IdolCard({ donation }) {
                 {idolStatus?.donationReceivedDonation.toLocaleString() ?? '0'}
               </span>
             </div>
-            <span>{idolStatus?.donationDeadLineDay ?? '??'}일 남음</span>
+            <span>{idolStatus?.donationDeadLineDay ?? '-'}일 남음</span>
           </IdolCardCredit>
-          <IdolCardCreditGauge donationPercentage={donationPercentage} />
+          <IdolCardCreditGauge data-donation-percentage={donationPercentage} />
         </div>
       </IdolCardText>
     </IdolCardWrap>
@@ -138,7 +144,6 @@ const IdolCardImage = styled.div`
   & > img {
     position: relative;
     width: 100%;
-    /* aspect-ratio: 1 / 1; */
   }
 
   & > button {
@@ -167,8 +172,8 @@ const Image = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: ${(props) =>
-    props ? `url(${props.profilePicture})` : `url(${defaultImage})`};
+  background-image: ${({ 'data-profile-picture': profilePicture }) =>
+    profilePicture ? `url(${profilePicture})` : `url(${defaultImage})`};
   background-position-y: -10px;
   background-position-x: center;
   background-repeat: no-repeat;
@@ -239,11 +244,12 @@ const IdolCardCreditGauge = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: ${(props) =>
-      props.donationPercentage ? props.donationPercentage : 0}%;
+    width: ${({ 'data-donation-percentage': donationPercentage }) =>
+      donationPercentage ? `${donationPercentage}%` : 0};
+    max-width: 100%;
     height: 100%;
     content: '';
     background-color: var(--brand-coral);
-    transition: all 0.3s;
+    transition: all 2s ease-out;
   }
 `;
