@@ -27,7 +27,7 @@ export default function DonationModal({ isOpen, onClose }) {
   // State
   const [inputValue, setInputValue] = useState(''); // [type:number]
   const [isError, setIsError] = useState(true); // 크레딧이 부족할 때
-  const [ErrorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -37,7 +37,6 @@ export default function DonationModal({ isOpen, onClose }) {
 
   // inputValue의 값이 크레딧보다 높으면 Error
   useEffect(() => {
-    const inputString = String(inputValue);
     const inputNumber = Number(inputValue);
 
     if (inputNumber < 0) {
@@ -124,12 +123,12 @@ export default function DonationModal({ isOpen, onClose }) {
               value={inputValue}
               onChange={handleChange}
               onKeyDown={KeyPressed}
-              isError={isError}
+              $isError={isError}
               placeholder="크레딧 입력"
               type="number"
               step="100"
             />
-            {isError && <ErrorSpan>{ErrorMessage}</ErrorSpan>}
+            {isError && <ErrorSpan>{errorMessage}</ErrorSpan>}
             <CreditIcon />
             <Button disabled={!inputValue} onClick={handleSubmit}>
               후원하기
@@ -222,7 +221,7 @@ const StyledCreditInput = styled.input`
   padding-right: 48px; /* 아이콘 공간 확보 */
   border-radius: 8px;
   border: 1px solid
-    ${({ isError }) => (isError === true ? 'var(--error-red)' : 'var(--white)')};
+    ${({ $isError }) => ($isError ? 'var(--error-red)' : 'var(--white)')};
 
   font-size: 20px;
   font-style: normal;

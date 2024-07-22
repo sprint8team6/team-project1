@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
 import { useToastContext } from '@contexts/useToastContext';
@@ -41,11 +41,12 @@ function getResponsiveValue() {
  */
 export default function VoteModal({ isOpen = false, onClose }) {
   // State
-  const [selectedIdol, setSelectedIdol] = useState(); // [type=number] (idolId 저장)
+  const [selectedIdol, setSelectedIdol] = useState(0); // [type=number] (idolId 저장)
   const [voteIdolData, setVoteIdolData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [responsiveStatus, setResponsiveStatus] =
     useState(getResponsiveValue());
+  const [isError, setIsError] = useState(false);
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -60,14 +61,16 @@ export default function VoteModal({ isOpen = false, onClose }) {
 
   const fetchData = async () => {
     setIsLoading(true);
+    setIsError(false);
     try {
       const data = await getCharts({
         gender: selectedTab,
         pageSize: responsiveStatus,
       });
       setVoteIdolData(data.idols);
-    } catch (error) {
-      console.error('Failed to fetch charts:', error);
+    } catch (err) {
+      console.error('Failed to fetch charts:', err);
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
@@ -105,24 +108,30 @@ export default function VoteModal({ isOpen = false, onClose }) {
           </>
         )}
         <LoadingSpinner isLoading={isLoading} />
-        <StyledVoteOptionList>
-          {voteIdolData.map((idolData) => (
-            <>
-              <VoteOption
-                key={`idol-id-${idolData.id}`}
-                onClick={
-                  localStorage.getItem('hasVoted')
-                    ? () => {}
-                    : handleOptionChange
-                }
-                selectedIdol={selectedIdol}
-                idolData={idolData}
-                hasVoted={localStorage.getItem('hasVoted')}
-              />
-              <StyledDivider />
-            </>
-          ))}
-        </StyledVoteOptionList>
+        {isError ? (
+          <ErrorMessage>
+            서버 에러가 발생했습니다. 나중에 다시 시도해 주세요.
+          </ErrorMessage>
+        ) : (
+          <StyledVoteOptionList>
+            {voteIdolData.map((idolData) => (
+              <React.Fragment key={`idol-id-${idolData.id}`}>
+                <VoteOption
+                  key={`idol-id-${idolData.id}`}
+                  onClick={
+                    localStorage.getItem('hasVoted')
+                      ? () => {}
+                      : handleOptionChange
+                  }
+                  selectedIdol={selectedIdol}
+                  idolData={idolData}
+                  disabled={Boolean(localStorage.getItem('hasVoted'))}
+                />
+                <StyledDivider key={`divider-${idolData.id}`} />
+              </React.Fragment>
+            ))}
+          </StyledVoteOptionList>
+        )}
         <StyledDiv>
           <VoteButton
             onClose={onClose}
@@ -180,6 +189,14 @@ const StyledVoteModalWindow = styled(ModalWindow)`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: var(--brand-coral);
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const StyledVoteOptionList = styled(BasedContainer)`
   width: 100%;
   justify-content: flex-start;
@@ -228,7 +245,7 @@ const StyledVoteOption = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  cursor: ${(props) => (props.hasVoted === 'true' ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.disabled === 'true' ? 'default' : 'pointer')};
 
   @media screen and (max-width: 480px) {
     display: flex;
@@ -276,9 +293,12 @@ const StyledVotes = styled.span`
   line-height: normal;
 `;
 
-const VoteOption = ({ onClick, selectedIdol, idolData, hasVoted }) => {
+const VoteOption = ({ onClick, selectedIdol, idolData, disabled }) => {
   return (
-    <StyledVoteOption onClick={() => onClick(idolData?.id)} hasVoted={hasVoted}>
+    <StyledVoteOption
+      onClick={() => onClick(idolData?.id)}
+      disabled={Boolean(disabled)}
+    >
       <StyledIdolInfo>
         <CircularIdolImage
           idolImage={idolData?.profilePicture}
@@ -308,7 +328,7 @@ VoteOption.propTypes = {
     name: PropTypes.string.isRequired,
     totalVotes: PropTypes.number.isRequired,
   }).isRequired,
-  hasVoted: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
 };
 
 const StyledDiv = styled.div`
@@ -356,7 +376,10 @@ const VoteButton = ({
   };
 
   return (
-    <Button onClick={submitVote} disabled={localStorage.getItem('hasVoted')}>
+    <Button
+      onClick={submitVote}
+      disabled={localStorage.getItem('hasVoted') === 'true'}
+    >
       {children}
     </Button>
   );

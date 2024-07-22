@@ -24,25 +24,25 @@ function ListPageContent() {
     <>
       {modals.ChargeModal.isOpen && (
         <ChargeModal
-          isOpen={modals.ChargeModal}
+          isOpen={modals.ChargeModal.isOpen}
           onClose={() => closeModal('ChargeModal')}
         />
       )}
       {modals.DonationModal.isOpen && (
         <DonationModal
-          isOpen={modals.DonationModal}
+          isOpen={modals.DonationModal.isOpen}
           onClose={() => closeModal('DonationModal')}
         />
       )}
       {modals.VoteModal.isOpen && (
         <VoteModal
-          isOpen={modals.VoteModal}
+          isOpen={modals.VoteModal.isOpen}
           onClose={() => closeModal('VoteModal')}
         />
       )}
       {modals.PopupModal.isOpen && (
         <PopupModal
-          isOpen={modals.PopupModal}
+          isOpen={modals.PopupModal.isOpen}
           onClose={() => closeModal('PopupModal')}
         />
       )}

@@ -11,7 +11,7 @@ import { useCreditContext } from '@contexts/useCreditContext';
 import { useToastContext } from '@contexts/useToastContext';
 import Modal, { ModalWindow } from '@components/Modal/Modal';
 import ModalTopBar from '@components/Modal/ModalTopbar';
-import RadioButton from '@components/RadioButton';
+import { JustRadioShape } from '@components/RadioButton';
 import Button from '@components/Button';
 
 /** 크레딧 충전 모달
@@ -22,14 +22,14 @@ import Button from '@components/Button';
  */
 export default function ChargeModal({ isOpen, onClose }) {
   // State
-  const [optionValue, setOptionValue] = useState('100');
+  const [optionValue, setOptionValue] = useState(100);
 
   // Context
   const { myCredit, setMyCredit } = useCreditContext();
   const { addToast } = useToastContext();
 
   const handleOption = (e) => {
-    setOptionValue(e.target.value);
+    setOptionValue(Number(e.target.dataset.value));
   };
 
   return (
@@ -39,17 +39,17 @@ export default function ChargeModal({ isOpen, onClose }) {
         <StyledContainer>
           <StyledButtonWrapper>
             <CreditOptionButton
-              value="100"
+              value={100}
               optionValue={optionValue}
               onClick={handleOption}
             />
             <CreditOptionButton
-              value="500"
+              value={500}
               optionValue={optionValue}
               onClick={handleOption}
             />
             <CreditOptionButton
-              value="1000"
+              value={1000}
               optionValue={optionValue}
               onClick={handleOption}
             />
@@ -128,7 +128,7 @@ const StyledCreditOptionButton = styled.button`
   }
 `;
 
-const ModalRadioButton = styled(RadioButton)`
+const ModalRadioButton = styled(JustRadioShape)`
   position: absolute;
   right: 20px;
 `;
@@ -136,12 +136,12 @@ const ModalRadioButton = styled(RadioButton)`
 const CreditOptionButton = ({ value, optionValue, onClick }) => {
   return (
     <StyledCreditOptionButton
-      value={value}
+      data-value={value}
       onClick={onClick}
       selected={optionValue === value}
     >
       <StyledCreditIcon />
-      {value}
+      {value.toString()}
       <ModalRadioButton checked={optionValue === value} />
     </StyledCreditOptionButton>
   );
@@ -161,10 +161,10 @@ const ChargeButton = ({
   setMyCredit,
 }) => {
   const submitOption = () => {
-    setMyCredit(Number(myCredit) + Number(optionValue));
+    setMyCredit(Number(myCredit) + optionValue);
     addToast(
       <span>
-        <em>{Number(optionValue)}</em> 만큼의 크레딧 충전을 완료했습니다.
+        <em>{optionValue.toString()}</em> 만큼의 크레딧 충전을 완료했습니다.
       </span>
     );
     onClose();
@@ -181,7 +181,7 @@ const ChargeButton = ({
 ChargeButton.propTypes = {
   onClose: PropTypes.func.isRequired,
   addToast: PropTypes.func.isRequired,
-  optionValue: PropTypes.string.isRequired,
+  optionValue: PropTypes.number.isRequired,
   myCredit: PropTypes.number.isRequired,
   setMyCredit: PropTypes.func.isRequired,
 };

@@ -59,9 +59,9 @@ export default function LoadingSpinner({
 }
 
 LoadingSpinner.propTypes = {
-  size: PropTypes.number.isRequired,
-  color: PropTypes.string.isRequired,
-  minLoadTime: PropTypes.number.isRequired,
+  size: PropTypes.number,
+  color: PropTypes.string,
+  minLoadTime: PropTypes.number,
   width: PropTypes.string,
   height: PropTypes.string,
 };
