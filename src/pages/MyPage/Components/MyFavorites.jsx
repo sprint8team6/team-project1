@@ -1,16 +1,49 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites() {
   const [favoriteIdols, setFavoriteIdols] = useState([]);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [screenWidth]);
+
+  const loadFavoriteIdols = useCallback(() => {
     const storedIdols = JSON.parse(localStorage.getItem('favoriteIdols')) || [];
-    const checkedIdols = storedIdols.filter((idol) => idol.isChecked);
-    setFavoriteIdols(checkedIdols);
+    setFavoriteIdols(storedIdols);
   }, []);
+
+  useEffect(() => {
+    loadFavoriteIdols();
+  }, []);
+
+  const handleDelete = useCallback(
+    (idolId) => {
+      const updatedFavorites = favoriteIdols.filter(
+        (idol) => idol.id !== idolId
+      );
+      localStorage.setItem('favoriteIdols', JSON.stringify(updatedFavorites));
+      setFavoriteIdols(updatedFavorites);
+
+      const storedIdols = JSON.parse(localStorage.getItem('idols')) || [];
+      const updatedIdols = storedIdols.map((idol) =>
+        idol.id === idolId ? { ...idol, isChecked: false } : idol
+      );
+      localStorage.setItem('idols', JSON.stringify(updatedIdols));
+    },
+    [favoriteIdols]
+  );
 
   return (
     <MyFavoriteListBox>
@@ -21,10 +54,13 @@ export default function MyFavorites() {
             key={idol.id}
             id={idol.id}
             name={idol.name}
-            team={idol.team}
-            $isChecked={idol.isChecked}
+            team={idol.group}
+            size={screenWidth > 375 ? 'medium' : 'small'}
+            $isChecked={false}
             $isDeletable
             $isCheckable={false}
+            idolImage={idol.profilePicture}
+            onDelete={() => handleDelete(idol.id)}
           />
         ))}
       </MyFavoriteList>
@@ -46,14 +82,15 @@ const MyFavoriteTitle = styled.div`
   font-size: 2.4rem;
   font-weight: 700;
   width: 100%;
-  padding-left: 3.75rem;
+  padding-left: 1.4rem;
   @media screen and (max-width: ${TABLET_LIMIT}px) {
     font-size: 2rem;
+    padding-left: 4.6rem;
   }
 
   @media screen and (max-width: ${MOBILE_LIMIT}px) {
     font-size: 1.6rem;
-    padding-left: 2.4rem;
+    padding-left: 3rem;
   }
 `;
 

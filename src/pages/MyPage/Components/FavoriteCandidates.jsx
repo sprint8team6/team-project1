@@ -3,7 +3,7 @@ import { ReactComponent as PageLeft } from '@assets/svg/btn_pagination_arrow_lef
 import { ReactComponent as PageRight } from '@assets/svg/btn_pagination_arrow_right.svg';
 import styled from 'styled-components';
 import Button from '@components/Button';
-import { getIdols } from '@utils/idolApi';
+import { getIdols } from '@apis/idolApi';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
 import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
@@ -11,15 +11,53 @@ import MiniPhotoCard from './MiniPhotoCard';
 export default function FavoriteCandidates() {
   const [loading, setLoading] = useState([]);
   const [idols, setIdols] = useState([]);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [candidatePageSize, setCandidatePageSize] = useState(16);
+  const [cursor, setCursor] = useState(null);
+
+  // 브라우저 사이즈 변경되면 현재 사이즈 반환
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [screenWidth]);
+
+  // 반응형으로 데이터 노출 개수 정하기
+  useEffect(() => {
+    if (screenWidth <= MOBILE_LIMIT) {
+      setCandidatePageSize(6);
+    } else if (screenWidth <= TABLET_LIMIT) {
+      setCandidatePageSize(8);
+    } else {
+      setCandidatePageSize(16);
+    }
+  }, [screenWidth]);
+
+  // nextCursor값 가져오기
+  useEffect(() => {
+    const handleLoad = async () => {
+      try {
+        const { nextCursor } = await getIdols({
+          pageSize: candidatePageSize,
+          cursor: 0,
+        });
+        setCursor(nextCursor);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    handleLoad();
+  }, [candidatePageSize]);
+
   useEffect(() => {
     const fetchIdols = async () => {
       try {
         const response = await getIdols({
-          pageSize: 16,
-          cursor: 0,
+          pageSize: candidatePageSize,
         });
-        // eslint-disable-next-line no-console
-        console.log('API 응답:', response); // 전체 응답 구조 확인
         if (response && response.list) {
           setIdols(
             response.list.map((idol) => ({ ...idol, isChecked: false }))
@@ -35,7 +73,7 @@ export default function FavoriteCandidates() {
     };
 
     fetchIdols();
-  }, []);
+  }, [candidatePageSize]);
 
   const onCheckChangeEvent = (id) => {
     setIdols((prevIdols) => {
@@ -51,6 +89,47 @@ export default function FavoriteCandidates() {
     });
   };
 
+  const handleClickRight = async () => {
+    if (!cursor) return; // cursor가 null일 경우 함수 실행 중단
+    try {
+      setLoading(true);
+      const response = await getIdols({
+        pageSize: candidatePageSize,
+        cursor,
+      });
+      if (response && response.list) {
+        setIdols(response.list.map((idol) => ({ ...idol, isChecked: false })));
+        setCursor(response.nextCursor);
+      } else {
+        console.error('잘못된 응답 구조:', response);
+      }
+    } catch (error) {
+      console.error('아이돌 불러오기 실패: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClickLeft = async () => {
+    try {
+      setLoading(true);
+      const response = await getIdols({
+        pageSize: candidatePageSize,
+        cursor: cursor - candidatePageSize,
+      });
+      if (response && response.list) {
+        setIdols(response.list.map((idol) => ({ ...idol, isChecked: false })));
+        setCursor(response.nextCursor);
+      } else {
+        console.error('잘못된 응답 구조:', response);
+      }
+    } catch (error) {
+      console.error('아이돌 불러오기 실패: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -58,7 +137,7 @@ export default function FavoriteCandidates() {
     <AddFavoriteBox>
       <AddFavoriteTitle>관심있는 아이돌을 추가해보세요.</AddFavoriteTitle>
       <CandidatesBox>
-        <PageLeft />
+        <PageLeft onClick={handleClickLeft} />
         <IdolList>
           {idols && idols.length > 0 ? (
             idols.map((idol) => (
@@ -68,7 +147,7 @@ export default function FavoriteCandidates() {
                 team={idol.group}
                 $isChecked={idol.isChecked}
                 onCheckChange={() => onCheckChangeEvent(idol.id)}
-                size="large"
+                size={screenWidth > 375 ? 'large' : 'medium'}
                 $isCheckable
                 idolImage={idol.profilePicture}
                 $isDeletable={false}
@@ -78,7 +157,7 @@ export default function FavoriteCandidates() {
             <p>아이돌 데이터를 불러오는 중입니다...</p>
           )}
         </IdolList>
-        <PageRight />
+        <PageRight onClick={handleClickRight} />
       </CandidatesBox>
       <AddButtonBox>
         <StyledButton rounded>
@@ -104,15 +183,16 @@ const AddFavoriteTitle = styled.div`
   font-size: 2.4rem;
   font-weight: 700;
   width: 100%;
-  padding-left: 3.75rem;
+  padding-left: 1.4rem;
 
   @media screen and (max-width: ${TABLET_LIMIT}px) {
     font-size: 2rem;
+    padding-left: 4.6rem;
   }
 
   @media screen and (max-width: ${MOBILE_LIMIT}px) {
     font-size: 1.6rem;
-    padding-left: 2.4rem;
+    padding-left: 3rem;
   }
 `;
 
@@ -120,11 +200,12 @@ const CandidatesBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 132rem;
   gap: 1rem;
   padding: 0 2.4rem;
   & > svg {
     height: 100%;
-    @media screen and (max-width: ${MOBILE_LIMIT}px) {
+    @media (max-width: ${MOBILE_LIMIT}px) {
       display: none;
     }
   }
@@ -139,16 +220,17 @@ const IdolList = styled.div`
 
   @media screen and (max-width: ${TABLET_LIMIT}px) {
     grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
     & > *:nth-child(n + 9) {
       display: none;
     } //해당 부분은 반응형 테스트를 위해 렌더링 수를 줄여주는 부분으로 추후 api를 통해 받아오면 수정 예정
+  }
 
-    @media screen and (max-width: ${MOBILE_LIMIT}px) {
-      grid-template-columns: repeat(3, 1fr);
-      & > *:nth-child(n + 7) {
-        display: none;
-      } //해당 부분은 반응형 테스트를 위해 렌더링 수를 줄여주는 부분으로 추후 api를 통해 받아오면 수정 예정
-    }
+  @media screen and (max-width: ${MOBILE_LIMIT}px) {
+    grid-template-columns: repeat(3, 1fr);
+    & > *:nth-child(n + 7) {
+      display: none;
+    } //해당 부분은 반응형 테스트를 위해 렌더링 수를 줄여주는 부분으로 추후 api를 통해 받아오면 수정 예정
   }
 `;
 

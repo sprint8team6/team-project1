@@ -41,13 +41,17 @@ MiniPhotoCard.propTypes = {
 
 const PhotoCard = styled.div`
   height: 100%;
-  max-width: 12.8rem;
+  width: 12.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   text-align: center;
+
+  @media (max-width: 374px) {
+    width: 98px;
+  }
 `;
 
 const IdolName = styled.p`

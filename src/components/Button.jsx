@@ -9,7 +9,11 @@ import styled from 'styled-components';
  * @returns {JSX.Element}
  */
 export default function Button({ children, rounded = false, ...props }) {
-  return <StyledButton {...props}>{children}</StyledButton>;
+  return (
+    <StyledButton rounded={rounded} {...props}>
+      {children}
+    </StyledButton>
+  );
 }
 
 const StyledButton = styled.button`
@@ -20,7 +24,7 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: ${(isRounded) => (isRounded ? '3px' : '24px')};
+  border-radius: ${(props) => (props.rounded ? '24px' : '3px')};
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);
