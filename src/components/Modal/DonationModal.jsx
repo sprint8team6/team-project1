@@ -36,10 +36,22 @@ export default function DonationModal({ isOpen, onClose }) {
 
   // inputValue의 값이 크레딧보다 높으면 Error
   useEffect(() => {
+    const inputString = String(inputValue);
+
     if (Number(inputValue) > myCredit) {
       setIsError(true);
     } else {
       setIsError(false);
+    }
+    if (Number(inputValue) < 0) {
+      setInputValue(0);
+    }
+    if (
+      inputString.includes('e') ||
+      inputString.includes('-') ||
+      inputString.includes('+')
+    ) {
+      setInputValue(0);
     }
   }, [inputValue]);
 
@@ -84,17 +96,6 @@ export default function DonationModal({ isOpen, onClose }) {
   };
 
   const KeyPressed = (e) => {
-    if (e.key === 'ArrowUp' && inputValue !== '0') {
-      e.preventDefault();
-      const nextInputValue = Number(inputValue) + 100;
-      setInputValue(nextInputValue);
-    }
-    if (e.key === 'ArrowDown' && inputValue !== '0') {
-      e.preventDefault();
-      let nextInputValue = Number(inputValue) - 100;
-      if (nextInputValue <= 0) nextInputValue = 0;
-      setInputValue(nextInputValue);
-    }
     if (e.key === 'Enter') {
       handleSubmit(e);
     }
@@ -127,7 +128,7 @@ export default function DonationModal({ isOpen, onClose }) {
               isError={isError}
               placeholder="크레딧 입력"
               type="number"
-              step="1"
+              step="100"
             />
             {isError && <ErrorMessage />}
             <CreditIcon />
