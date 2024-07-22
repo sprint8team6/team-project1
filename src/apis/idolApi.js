@@ -176,7 +176,10 @@ getCharts.propTypes = {
  * 아래에서 import 해서 사용중입니다.
  * @see {@link ../components/Modal/DonationModal.jsx}
  */
-export async function putDonationsContribute({ donationId, donationAmount }) {
+export async function putDonationsContribute({
+  donationId = 0,
+  donationAmount,
+}) {
   // not exist query
   const url = `${BASE_URL}/donations/${donationId}/contribute`;
   const data = { amount: donationAmount };
