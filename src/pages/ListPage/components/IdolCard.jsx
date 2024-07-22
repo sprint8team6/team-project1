@@ -19,6 +19,7 @@ export default function IdolCard({ donation }) {
     donation?.receivedDonations ?? 0
   );
   const [idolStatus, setIdolStatus] = useState({
+    donationId: donation?.id ?? 0,
     donationProfilePicture: donation?.idol.profilePicture ?? defaultImage,
     donationSubtitle: donation?.subtitle ?? '제목이 없습니다.',
     donationTitle: donation?.title ?? '부제목이 없습니다.',
@@ -54,7 +55,7 @@ export default function IdolCard({ donation }) {
     };
 
     calculatePercentage();
-  }, [donation]);
+  }, [donation, idolStatus]);
 
   return (
     <IdolCardWrap>
@@ -88,6 +89,7 @@ export default function IdolCard({ donation }) {
 
 IdolCard.propTypes = {
   donation: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
