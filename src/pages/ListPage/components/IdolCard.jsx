@@ -24,8 +24,8 @@ export default function IdolCard({ donation }) {
     donationTitle: donation?.title ?? '부제목이 없습니다.',
     donationReceivedDonation: donationValue,
     donationDeadLineDay: donation ? DEADLINE_DAY : '-',
-    setDonationValue: () => {
-      setDonationValue();
+    setDonationValue: (value) => {
+      setDonationValue(value);
     },
     donationTarget: donation?.targetDonation ?? null,
   });
@@ -33,6 +33,13 @@ export default function IdolCard({ donation }) {
 
   // Context
   const { openModal } = useModalContext();
+
+  useEffect(() => {
+    setIdolStatus((prevStatus) => ({
+      ...prevStatus,
+      donationReceivedDonation: donationValue,
+    }));
+  }, [donationValue]);
 
   const handleTributeButtonClick = () => {
     openModal('DonationModal', idolStatus);
