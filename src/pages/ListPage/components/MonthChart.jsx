@@ -77,7 +77,7 @@ export default function MonthChart({ openModal }) {
     };
 
     handleLoad();
-  }, [nextCursorValue]);
+  }, [chartPageSize]);
 
   // nextCursor값이 null로 더는 불러올 아이돌 데이터가 없으면 더보기 버튼 숨기고 접기 버튼 노출
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function MonthChart({ openModal }) {
     } else {
       setMoreButtonDisabled(false);
     }
-  }, [nextCursorValue, chartPageSize]);
+  }, [nextCursorValue]);
 
   if (isLoading) {
     return (
