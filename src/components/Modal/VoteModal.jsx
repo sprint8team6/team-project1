@@ -46,6 +46,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [responsiveStatus, setResponsiveStatus] =
     useState(getResponsiveValue());
+  const [isError, setIsError] = useState(false);
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -60,14 +61,16 @@ export default function VoteModal({ isOpen = false, onClose }) {
 
   const fetchData = async () => {
     setIsLoading(true);
+    setIsError(false);
     try {
       const data = await getCharts({
         gender: selectedTab,
         pageSize: responsiveStatus,
       });
       setVoteIdolData(data.idols);
-    } catch (error) {
-      console.error('Failed to fetch charts:', error);
+    } catch (err) {
+      console.error('Failed to fetch charts:', err);
+      setIsError(true);
     } finally {
       setIsLoading(false);
     }
@@ -105,24 +108,30 @@ export default function VoteModal({ isOpen = false, onClose }) {
           </>
         )}
         <LoadingSpinner isLoading={isLoading} />
-        <StyledVoteOptionList>
-          {voteIdolData.map((idolData) => (
-            <>
-              <VoteOption
-                key={`idol-id-${idolData.id}`}
-                onClick={
-                  localStorage.getItem('hasVoted')
-                    ? () => {}
-                    : handleOptionChange
-                }
-                selectedIdol={selectedIdol}
-                idolData={idolData}
-                hasVoted={localStorage.getItem('hasVoted')}
-              />
-              <StyledDivider />
-            </>
-          ))}
-        </StyledVoteOptionList>
+        {isError ? (
+          <ErrorMessage>
+            서버 에러가 발생했습니다. 나중에 다시 시도해 주세요.
+          </ErrorMessage>
+        ) : (
+          <StyledVoteOptionList>
+            {voteIdolData.map((idolData) => (
+              <React.Fragment key={`idol-id-${idolData.id}`}>
+                <VoteOption
+                  key={`idol-id-${idolData.id}`}
+                  onClick={
+                    localStorage.getItem('hasVoted')
+                      ? () => {}
+                      : handleOptionChange
+                  }
+                  selectedIdol={selectedIdol}
+                  idolData={idolData}
+                  disabled={Boolean(localStorage.getItem('hasVoted'))}
+                />
+                <StyledDivider key={`divider-${idolData.id}`} />
+              </React.Fragment>
+            ))}
+          </StyledVoteOptionList>
+        )}
         <StyledDiv>
           <VoteButton
             onClose={onClose}
@@ -178,6 +187,14 @@ const StyledVoteModalWindow = styled(ModalWindow)`
     background: var(--dark-black);
     padding: 8px 24px;
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: var(--brand-coral);
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
 `;
 
 const StyledVoteOptionList = styled(BasedContainer)`
