@@ -13,7 +13,8 @@ export default function FavoriteCandidates() {
   const [idols, setIdols] = useState([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [candidatePageSize, setCandidatePageSize] = useState(16);
-  const [cursor, setCursor] = useState(null);
+  const [cursor, setCursor] = useState(0);
+  const [previousCursor, setPreviousCursor] = useState(0);
 
   // 브라우저 사이즈 변경되면 현재 사이즈 반환
   useEffect(() => {
@@ -99,6 +100,8 @@ export default function FavoriteCandidates() {
       });
       if (response && response.list) {
         setIdols(response.list.map((idol) => ({ ...idol, isChecked: false })));
+        setPreviousCursor(cursor);
+        console.error(previousCursor);
         setCursor(response.nextCursor);
       } else {
         console.error('잘못된 응답 구조:', response);
@@ -115,7 +118,7 @@ export default function FavoriteCandidates() {
       setLoading(true);
       const response = await getIdols({
         pageSize: candidatePageSize,
-        cursor: cursor - candidatePageSize,
+        cursor: previousCursor,
       });
       if (response && response.list) {
         setIdols(response.list.map((idol) => ({ ...idol, isChecked: false })));
