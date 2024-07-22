@@ -22,6 +22,7 @@ export default function MonthChart({ openModal }) {
   );
   const [nextCursorValue, setNextCursorValue] = useState();
   const [moreButtonDisabled, setMoreButtonDisabled] = useState(false);
+  const [allButtonDisabled, setAllButtonDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   // 더보기 버튼 클릭
@@ -88,6 +89,15 @@ export default function MonthChart({ openModal }) {
     }
   }, [nextCursorValue]);
 
+  // 페이지 처음 로드할 때 불러온 차트내용이 전부이면 더보기 버튼 안보이게 하기
+  useEffect(() => {
+    if (nextCursorValue === null) {
+      setAllButtonDisabled(false);
+    } else {
+      setAllButtonDisabled(true);
+    }
+  }, []);
+
   if (isLoading) {
     return (
       <LoadingSpinner
@@ -130,26 +140,30 @@ export default function MonthChart({ openModal }) {
         idolGender={genderTab === 'female' ? FEMALE : MALE}
         chartPageSize={chartPageSize}
       />
-      <ChartMoreButton>
-        <button
-          type="button"
-          onClick={() => {
-            handleClickMoreButton();
-          }}
-          className={moreButtonDisabled ? 'none' : ''}
-        >
-          더보기
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            handleClickShortButton();
-          }}
-          className={moreButtonDisabled ? '' : 'none'}
-        >
-          접기
-        </button>
-      </ChartMoreButton>
+      {allButtonDisabled ? (
+        <ChartMoreButton>
+          <button
+            type="button"
+            onClick={() => {
+              handleClickMoreButton();
+            }}
+            className={moreButtonDisabled ? 'none' : ''}
+          >
+            더보기
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              handleClickShortButton();
+            }}
+            className={moreButtonDisabled ? '' : 'none'}
+          >
+            접기
+          </button>
+        </ChartMoreButton>
+      ) : (
+        ''
+      )}
     </MyCreditWrap>
   );
 }
