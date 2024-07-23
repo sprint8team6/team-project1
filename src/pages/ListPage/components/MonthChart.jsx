@@ -20,10 +20,12 @@ export default function MonthChart({ openModal }) {
   const [chartPageSize, setChartPageSize] = useState(
     windowWidth >= 744 ? PAGE_SIZE : 5
   );
-  const [nextCursorValue, setNextCursorValue] = useState();
+  const [chartIdolData, setChartIdolData] = useState([]);
+  const [nextCursorValue, setNextCursorValue] = useState(0);
   const [moreButtonDisabled, setMoreButtonDisabled] = useState(false);
-  const [allButtonDisabled, setAllButtonDisabled] = useState(true);
+  const [allButtonDisabled, setAllButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [dataReload, setDataReload] = useState(true);
 
   // 더보기 버튼 클릭
   const handleClickMoreButton = () => {
@@ -63,22 +65,30 @@ export default function MonthChart({ openModal }) {
   useEffect(() => {
     const handleLoad = async () => {
       try {
-        const { nextCursor } = await getCharts({
+        const { idols, nextCursor } = await getCharts({
           gender: genderTab,
           pageSize: chartPageSize,
           cursor: 0,
         });
+
+        setChartIdolData(idols);
         setNextCursorValue(nextCursor);
         setIsLoading(false);
+        setAllButtonDisabled(true);
       } catch (error) {
         console.error(error);
+        setAllButtonDisabled(false);
       } finally {
         setIsLoading(false);
       }
     };
 
     handleLoad();
-  }, [chartPageSize]);
+  }, [genderTab, chartPageSize, dataReload]);
+
+  const handleClickDataReload = () => {
+    setDataReload(!dataReload);
+  };
 
   // nextCursor값이 null로 더는 불러올 아이돌 데이터가 없으면 더보기 버튼 숨기고 접기 버튼 노출
   useEffect(() => {
@@ -113,14 +123,6 @@ export default function MonthChart({ openModal }) {
 
   return (
     <MyCreditWrap>
-      <LoadingSpinner
-        isLoading={isLoading}
-        color="var(--brand-coral)"
-        size={20}
-        width="100%"
-        height="100%"
-        minLoadTime={1000}
-      />
       <div>
         <ListPageSubTitle>
           <h2>이달의 차트</h2>
@@ -137,8 +139,8 @@ export default function MonthChart({ openModal }) {
         windowWidth={windowWidth}
       />
       <MonthChartList
-        idolGender={genderTab === 'female' ? FEMALE : MALE}
-        chartPageSize={chartPageSize}
+        chartIdolData={chartIdolData}
+        handleClickDataReload={() => handleClickDataReload()}
       />
       {allButtonDisabled ? (
         <ChartMoreButton>

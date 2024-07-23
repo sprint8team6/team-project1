@@ -1,69 +1,44 @@
 import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// api
-import { getCharts } from '@apis/idolApi';
-// spinner
-import LoadingSpinner from '@components/LoadingSpinner';
 // component
+import Button from '@components/Button';
 import MonthIdol from './MonthIdol';
 
-export default function MonthChartList({ idolGender, chartPageSize }) {
-  const [chartIdolsData, setChartIdolsData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const handleLoad = async (option) => {
-      try {
-        const { idols } = await getCharts(option);
-        setChartIdolsData(idols);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    handleLoad({ gender: idolGender, pageSize: chartPageSize, cursor: 0 });
-  }, [idolGender, chartPageSize]);
-
-  if (isLoading) {
-    return (
-      <LoadingSpinner
-        isLoading={isLoading}
-        color="var(--brand-coral)"
-        size={20}
-        width="100%"
-        height="100%"
-        minLoadTime={1000}
-      />
-    );
-  }
-
+export default function MonthChartList({
+  chartIdolData,
+  handleClickDataReload,
+}) {
   return (
-    <MonthIdolList>
-      {chartIdolsData.length > 0 ? (
-        chartIdolsData.map((idolsData) => {
+    <MonthIdolList className={chartIdolData.length > 0 ? '' : 'error'}>
+      {chartIdolData.length > 0 ? (
+        chartIdolData.map((idolsData) => {
           return <MonthIdol key={idolsData.id} idolsData={idolsData} />;
         })
       ) : (
-        <LoadingSpinner
-          isLoading={isLoading}
-          color="var(--brand-coral)"
-          size={20}
-          width="100%"
-          height="100%"
-          minLoadTime={1000}
-        />
+        <ErrorMessage>
+          데이터를 불러오는데 실패했습니다.
+          <br />
+          <Button type="button" onClick={handleClickDataReload}>
+            데이터 다시 불러오기
+          </Button>
+        </ErrorMessage>
       )}
     </MonthIdolList>
   );
 }
 
 MonthChartList.propTypes = {
-  idolGender: PropTypes.string.isRequired,
-  chartPageSize: PropTypes.number.isRequired,
+  chartIdolData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      group: PropTypes.string,
+      profilePicture: PropTypes.string,
+      totalVotes: PropTypes.number,
+      rank: PropTypes.number,
+    })
+  ).isRequired,
+  handleClickDataReload: PropTypes.func.isRequired,
 };
 
 const MonthIdolList = styled.div`
@@ -72,11 +47,35 @@ const MonthIdolList = styled.div`
   grid-column-gap: 24px;
   margin-bottom: 50px;
 
+  &.error {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   @media screen and (max-width: 744px) {
     grid-template-columns: repeat(1, 1fr);
   }
 
   @media screen and (max-width: 375px) {
     margin-bottom: 33px;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--brand-coral);
+
+  button {
+    max-width: 200px;
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 744px) {
+    font-size: 22px;
   }
 `;

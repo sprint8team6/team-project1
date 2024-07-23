@@ -12,11 +12,13 @@ import LoadingSpinner from '@components/LoadingSpinner';
 // component
 import LeftArrow from '@assets/svg/btn_pagination_arrow_left.svg';
 import RightArrow from '@assets/svg/btn_pagination_arrow_right.svg';
+import Button from '@components/Button';
 import IdolCard from './IdolCard';
 
 export default function TributeSupport() {
   const [idolDonations, setIdolDonations] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [dataReload, setDataReload] = useState(true);
 
   // swiper 반응형 지정
   const SWIPER_BREAKPOINTS = {
@@ -66,7 +68,11 @@ export default function TributeSupport() {
     };
 
     handleLoad();
-  }, []);
+  }, [dataReload]);
+
+  const handleClickDataReload = () => {
+    setDataReload(!dataReload);
+  };
 
   if (isLoading) {
     return (
@@ -105,14 +111,18 @@ export default function TributeSupport() {
               );
             })
           ) : (
-            <LoadingSpinner
-              isLoading={isLoading}
-              color="var(--brand-coral)"
-              size={20}
-              width="100%"
-              height="100%"
-              minLoadTime={1000}
-            />
+            <ErrorMessage>
+              데이터를 불러오는데 실패했습니다.
+              <br />
+              <Button
+                type="button"
+                onClick={() => {
+                  handleClickDataReload();
+                }}
+              >
+                데이터 다시 불러오기
+              </Button>
+            </ErrorMessage>
           )}
         </Swiper>
         <ArrowButton className="swiper-button-next" type="button">
@@ -210,5 +220,25 @@ const IdolCardBox = styled.div`
 
   @media screen and (max-width: 375px) {
     gap: 8px;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--brand-coral);
+
+  button {
+    max-width: 200px;
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 744px) {
+    font-size: 22px;
   }
 `;

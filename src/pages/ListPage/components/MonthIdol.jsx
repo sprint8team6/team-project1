@@ -9,7 +9,7 @@ export default function MonthIdol({ idolsData }) {
   const [monthIdolText, setMonthIdolText] = useState({
     idolsDataName: idolsData?.name ?? '-',
     idolsDataGroup: idolsData?.group ?? '-',
-    idolsDataRank: idolsData?.rank ?? 0,
+    idolsDataRank: idolsData?.totalVotes === 0 ? '-' : idolsData?.rank,
     idolsDataProfilePicture: idolsData?.profilePicture ?? defaultImage,
     idolsDataTotalVotes: idolsData?.totalVotes ?? 0,
   });
@@ -40,7 +40,7 @@ MonthIdol.propTypes = {
 
 const ChartIdolGrid = styled.div`
   display: grid;
-  grid-template-columns: 70px 0.5fr 5.5fr 4fr;
+  grid-template-columns: 70px 0.7fr 7.5fr 1.8fr;
   align-items: center;
   gap: 5px;
   width: 100%;
