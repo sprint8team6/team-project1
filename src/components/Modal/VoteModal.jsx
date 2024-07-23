@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useModalContext } from '@contexts/useModalContext';
 import { useCreditContext } from '@contexts/useCreditContext';
 import { useToastContext } from '@contexts/useToastContext';
@@ -20,17 +22,9 @@ import Button from '@components/Button';
 import { getCharts, postVote } from '@apis/idolApi';
 import LoadingSpinner from '@components/LoadingSpinner';
 
-const RESPONSIVE_VALUE = {
-  PC: 6,
-  MOBILE: 12,
-};
-
 function getResponsiveValue() {
   const width = window.innerWidth;
-  if (width > 480) {
-    return RESPONSIVE_VALUE.PC; // PC
-  }
-  return RESPONSIVE_VALUE.MOBILE; // Mobile
+  return width > 480 ? 'PC' : 'MOBILE';
 }
 
 /** 투표 모달 컴포넌트
@@ -44,9 +38,10 @@ export default function VoteModal({ isOpen = false, onClose }) {
   const [selectedIdol, setSelectedIdol] = useState(0); // [type=number] (idolId 저장)
   const [voteIdolData, setVoteIdolData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [responsiveStatus, setResponsiveStatus] =
-    useState(getResponsiveValue());
+  const [responsiveStatus, setResponsiveStatus] = useState(10);
   const [isError, setIsError] = useState(false);
+  const [nowCursor, setNowCursor] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Context
   const { modals, openModal } = useModalContext();
@@ -54,42 +49,141 @@ export default function VoteModal({ isOpen = false, onClose }) {
   const { myCredit, setMyCredit } = useCreditContext();
   const { addToast } = useToastContext();
 
+  // Ref
+  const listRef = useRef(null);
+
   const handleOptionChange = (idolId) => {
     const nextSelectedIdol = idolId;
     setSelectedIdol(nextSelectedIdol);
   };
 
   const fetchData = async () => {
+    if (isLoading === true || nowCursor === null) {
+      return;
+    }
     setIsLoading(true);
     setIsError(false);
     try {
       const data = await getCharts({
         gender: selectedTab,
-        pageSize: responsiveStatus,
+        pageSize: 10,
+        cursor: nowCursor,
       });
-      setVoteIdolData(data.idols);
-    } catch (err) {
-      console.error('Failed to fetch charts:', err);
+      setNowCursor(data.nextCursor);
+      setVoteIdolData((prevData) => {
+        let currentRank =
+          prevData.length > 0 ? prevData[prevData.length - 1].rank : 0;
+        let previousVotes =
+          prevData.length > 0 ? prevData[prevData.length - 1].totalVotes : null;
+        let offset = 0; // 공동 순위 발생 시 건너뛸 순위를 추적하기 위한 변수
+
+        const updatedIdols = data.idols.map((idolsData, index) => {
+          // 이전 아이돌과 총 투표 수가 동일한 경우
+          if (
+            previousVotes !== null &&
+            idolsData.totalVotes === previousVotes
+          ) {
+            offset += 1; // 공동 순위 발생 시 offset 증가
+            return {
+              ...idolsData,
+              rank: currentRank, // 동일한 순위 부여
+            };
+          }
+
+          // 새로운 순위를 할당할 때 currentRank를 1 증가시키고 offset을 더함
+          currentRank += 1 + offset;
+          previousVotes = idolsData.totalVotes;
+          offset = 0; // 새로운 순위가 할당된 후 offset을 0으로 리셋
+          return {
+            ...idolsData,
+            rank: currentRank,
+          };
+        });
+
+        return [...prevData, ...updatedIdols];
+      });
+    } catch (error) {
+      console.error('Failed to fetch charts:', error);
       setIsError(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // 마운트될 때,
+  const submitVote = () => {
+    if (myCredit < 1000) {
+      openModal('PopupModal', {
+        message: (
+          <span>
+            앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
+          </span>
+        ),
+      });
+    } else {
+      try {
+        postVote({ idolId: selectedIdol });
+        setMyCredit(myCredit - 1000);
+        localStorage.setItem('hasVoted', true);
+        addToast(
+          <span>
+            <em>투표</em>를 완료했습니다!
+          </span>
+        );
+      } catch (error) {
+        console.error('Failed to vote idol:', error);
+      } finally {
+        onClose();
+      }
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    setIsMounted(true);
+    setResponsiveStatus(getResponsiveValue());
   }, []);
 
+  useEffect(() => {
+    if (isMounted) {
+      fetchData();
+    }
+  }, [selectedTab, isMounted]);
+
+  useEffect(() => {
+    const listElement = listRef.current;
+
+    if (listElement) {
+      const handleScroll = () => {
+        if (isLoading || nowCursor === null) {
+          return;
+        }
+        // 스크롤을 끝까지 내릴 경우
+        if (
+          listElement.scrollHeight - listElement.scrollTop ===
+          listElement.clientHeight
+        ) {
+          fetchData();
+          console.log('scrolled fetch:', voteIdolData);
+        }
+      };
+
+      listElement.addEventListener('scroll', handleScroll);
+
+      // Cleanup Function
+      return () => {
+        listElement.removeEventListener('scroll', handleScroll);
+      };
+    }
+
+    // 반환 값 추가하여 ESLint 경고 해결
+    return undefined;
+  }, [isLoading, nowCursor, voteIdolData]);
+
+  // 화면 크기 변경 시, responsiveStatus 재계산
   useEffect(() => {
     const handleResize = () => {
       setResponsiveStatus(getResponsiveValue());
     };
-
-    // 화면 크기 변경 시, responsiveStatus 재계산
     window.addEventListener('resize', handleResize);
-    fetchData();
-
     // Cleanup Function
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -99,7 +193,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledVoteModalWindow>
-        {responsiveStatus === RESPONSIVE_VALUE.PC ? (
+        {responsiveStatus === 'PC' ? (
           <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
         ) : (
           <>
@@ -113,7 +207,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
             서버 에러가 발생했습니다. 나중에 다시 시도해 주세요.
           </ErrorMessage>
         ) : (
-          <StyledVoteOptionList>
+          <StyledVoteOptionList ref={listRef}>
             {voteIdolData.map((idolData) => (
               <React.Fragment key={`idol-id-${idolData.id}`}>
                 <VoteOption
@@ -133,14 +227,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
           </StyledVoteOptionList>
         )}
         <StyledDiv>
-          <VoteButton
-            onClose={onClose}
-            openModal={openModal}
-            addToast={addToast}
-            selectedIdol={selectedIdol}
-            myCredit={myCredit}
-            setMyCredit={setMyCredit}
-          >
+          <VoteButton onClose={onClose} submitVote={submitVote}>
             {!localStorage.getItem('hasVoted')
               ? '투표하기'
               : '이미 차트에 투표했어요'}
@@ -245,13 +332,13 @@ const StyledVoteOption = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  padding-right: 16px;
   cursor: ${(props) => (props.disabled === 'true' ? 'default' : 'pointer')};
 
   @media screen and (max-width: 480px) {
     display: flex;
     width: 100%;
     background: var(--dark-black);
-    padding-right: 16px;
   }
 `;
 
@@ -269,6 +356,9 @@ const StyledIdolNameAndVotes = styled.div`
 `;
 
 const StyledRank = styled.span`
+  display: inline-block;
+  width: 16px;
+  text-align: center;
   color: var(--brand-coral, #f96d69);
   font-size: 14px;
   font-style: normal;
@@ -304,7 +394,9 @@ const VoteOption = ({ onClick, selectedIdol, idolData, disabled }) => {
           idolImage={idolData?.profilePicture}
           isChecked={selectedIdol === idolData?.id}
         />
-        <StyledRank>{idolData?.rank}</StyledRank>
+        <StyledRank>
+          {idolData.totalVotes === 0 ? '-' : idolData?.rank}
+        </StyledRank>
         <StyledIdolNameAndVotes>
           <StyledName>{`${idolData?.group} ${idolData?.name}`}</StyledName>
           <StyledVotes>{idolData?.totalVotes?.toLocaleString()} 표</StyledVotes>
@@ -339,42 +431,7 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-const VoteButton = ({
-  onClose,
-  openModal,
-  addToast,
-  selectedIdol,
-  myCredit,
-  setMyCredit,
-  children,
-}) => {
-  const submitVote = () => {
-    if (myCredit < 1000) {
-      openModal('PopupModal', {
-        message: (
-          <span>
-            앗! 투표하기 위한 <em>크레딧</em>이 부족해요!
-          </span>
-        ),
-      });
-    } else {
-      try {
-        postVote({ idolId: selectedIdol });
-        setMyCredit(myCredit - 1000);
-        localStorage.setItem('hasVoted', true);
-        addToast(
-          <span>
-            <em>투표</em>를 완료했습니다!
-          </span>
-        );
-      } catch (error) {
-        console.error('Failed to vote idol:', error);
-      } finally {
-        onClose();
-      }
-    }
-  };
-
+const VoteButton = ({ submitVote, children }) => {
   return (
     <Button
       onClick={submitVote}
@@ -386,12 +443,7 @@ const VoteButton = ({
 };
 
 VoteButton.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired,
-  addToast: PropTypes.func.isRequired,
-  selectedIdol: PropTypes.number.isRequired,
-  myCredit: PropTypes.number.isRequired,
-  setMyCredit: PropTypes.func.isRequired,
+  submitVote: PropTypes.func.isRequired,
   children: PropTypes.node,
 };
 

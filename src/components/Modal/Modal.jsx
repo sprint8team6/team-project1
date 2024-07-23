@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 /** 공용 모달 컴포넌트
@@ -15,6 +16,17 @@ export default function Modal({ isOpen, onClose, children }) {
       onClose();
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   return (
     <ModalBackground onClick={handleBackgroundClick}>

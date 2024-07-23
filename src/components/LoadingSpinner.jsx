@@ -26,7 +26,7 @@ const SpinnerOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 12px;
+  border-radius: inherit;
   z-index: 9999;
 `;
 
