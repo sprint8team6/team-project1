@@ -10,6 +10,8 @@ const MaskedBackground = styled.div`
   align-items: center;
   top: 50%;
   left: 50%;
+
+  border-radius: inherit;
   transform: translate(-50%, -50%);
   width: ${(props) => (props.width === '100%' ? props.width : 'inherit')};
   height: ${(props) => (props.height === '100%' ? props.height : 'inherit')};
