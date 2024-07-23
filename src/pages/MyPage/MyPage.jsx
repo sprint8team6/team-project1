@@ -17,7 +17,7 @@ export default function MyPage() {
 
   const fetchIdols = useCallback(async () => {
     try {
-      const response = await getIdols({ pageSize: 16, cursor: 0 });
+      const response = await getIdols({ pageSize: 100, cursor: 0 });
       if (response && response.list) {
         const storedIdols =
           JSON.parse(localStorage.getItem('favoriteIdols')) || [];
