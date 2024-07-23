@@ -1,9 +1,24 @@
 import styled from 'styled-components';
 import { TABLET_LIMIT, MOBILE_LIMIT } from '@constants/globalConstant';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import MiniPhotoCard from './MiniPhotoCard';
 
 export default function MyFavorites({ favoriteIdols, onDelete }) {
+  const [screenWidth, setScreenWidth] = useState(
+    document.documentElement.clientWidth
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(document.documentElement.clientWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [screenWidth]);
   return (
     <MyFavoriteListBox>
       <MyFavoriteTitle>내가 관심있는 아이돌</MyFavoriteTitle>
@@ -14,7 +29,7 @@ export default function MyFavorites({ favoriteIdols, onDelete }) {
             id={idol.id}
             name={idol.name}
             team={idol.group}
-            size="medium"
+            size={screenWidth > MOBILE_LIMIT ? 'medium' : 'small'}
             $isChecked={false}
             $isDeletable
             $isCheckable={false}
@@ -40,7 +55,7 @@ MyFavorites.propTypes = {
 };
 
 const MyFavoriteListBox = styled.div`
-  max-width: 120rem;
+  max-width: 130rem;
   margin: 5rem auto;
   display: flex;
   flex-direction: column;

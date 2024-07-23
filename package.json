@@ -15,8 +15,7 @@
     "react-spinners": "^0.14.1",
     "styled-components": "^6.1.11",
     "swiper": "^11.1.5",
-    "web-vitals": "^2.1.4",
-    "proxy": "https://fandom-k-api.vercel.app"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
