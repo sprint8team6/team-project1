@@ -234,6 +234,7 @@ const StyledButtonContext = styled.span`
 
 const StyledButton = styled(Button)`
   width: 25.5rem;
+  border-radius: 24px;
 `;
 
 const AddButtonBox = styled.div`

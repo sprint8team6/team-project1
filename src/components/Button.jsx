@@ -8,7 +8,7 @@ import styled from 'styled-components';
  * @param {React.ReactNode} props.children - 버튼 value
  * @returns {JSX.Element}
  */
-export default function Button({ rounded = false, children, ...props }) {
+export default function Button({ children, ...props }) {
   return <StyledButton {...props}>{children}</StyledButton>;
 }
 
@@ -20,7 +20,7 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: ${(rounded) => (rounded ? '3px' : '24px')};
+  border-radius: ${(rounded) => (rounded === true ? '24px' : '3px')};
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);
