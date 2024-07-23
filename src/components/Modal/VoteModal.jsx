@@ -150,6 +150,7 @@ export default function VoteModal({ isOpen = false, onClose }) {
 
   useEffect(() => {
     const listElement = listRef.current;
+    const SCROLL_THRESHOLD = 10; // 오차 허용 범위
 
     if (listElement) {
       const handleScroll = () => {
@@ -158,11 +159,13 @@ export default function VoteModal({ isOpen = false, onClose }) {
         }
         // 스크롤을 끝까지 내릴 경우
         if (
-          listElement.scrollHeight - listElement.scrollTop ===
-          listElement.clientHeight
+          Math.abs(
+            listElement.scrollHeight -
+              listElement.scrollTop -
+              listElement.clientHeight
+          ) <= SCROLL_THRESHOLD
         ) {
           fetchData();
-          console.log('scrolled fetch:', voteIdolData);
         }
       };
 
@@ -332,7 +335,7 @@ const StyledVoteOption = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  padding-right: 16px;
+  padding-right: 20px;
   cursor: ${(props) => (props.disabled === 'true' ? 'default' : 'pointer')};
 
   @media screen and (max-width: 480px) {
@@ -385,10 +388,7 @@ const StyledVotes = styled.span`
 
 const VoteOption = ({ onClick, selectedIdol, idolData, disabled }) => {
   return (
-    <StyledVoteOption
-      onClick={() => onClick(idolData?.id)}
-      disabled={Boolean(disabled)}
-    >
+    <StyledVoteOption onClick={() => onClick(idolData?.id)} disabled={disabled}>
       <StyledIdolInfo>
         <CircularIdolImage
           idolImage={idolData?.profilePicture}
