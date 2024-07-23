@@ -20,7 +20,7 @@ const StyledButton = styled.button`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  border-radius: ${(isRounded) => (isRounded ? '3px' : '24px')};
+  border-radius: ${(rounded) => (rounded ? '3px' : '24px')};
   background: linear-gradient(90deg, #f86f65 0%, #fe5493 100%);
 
   color: var(--white);

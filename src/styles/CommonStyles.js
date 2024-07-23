@@ -51,6 +51,7 @@ export const LeftTopGradientDesign = styled.div`
   top: 0;
   left: 0;
   z-index: 1;
+  pointer-events: none;
 
   background-image: url(${LeftTopGradient});
   background-repeat: no-repeat;
