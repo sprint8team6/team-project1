@@ -80,7 +80,7 @@ const ChartIdolVote = styled.div`
   text-align: right;
   color: rgba(255, 255, 255, 0.6);
 
-  @media screen and (max-width: 744px) {
+  @media screen and (max-width: 756px) {
     font-size: 1.4rem;
   }
 `;
