@@ -20,11 +20,14 @@ export default function Modal({ isOpen, onClose, children }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      document.body.style.marginRight = '17px';
     } else {
       document.body.style.overflow = 'auto';
+      document.body.style.marginRight = '0px';
     }
     return () => {
       document.body.style.overflow = 'auto';
+      document.body.style.marginRight = '0px';
     };
   }, [isOpen]);
 
