@@ -100,9 +100,59 @@ https://669f9b246baeea1a3ebf6f9d--fandom-k8-6.netlify.app/
 ```
 <br>
 
+### 컨벤션
+
+#### .eslintrc.json
+```javascript
+{
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021, // 최신 ECMAScript 2021 구문 지원
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // JSX 지원
+    }
+  },
+  "rules": {
+    // 필요에 따라 추가 규칙을 설정할 수 있습니다.
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-unresolved": "off", // 존재하지 않는 모듈 검사 (Webpack(alias path)를 사용중이므로 예외처리)
+    "react/react-in-jsx-scope": "off", // React 17+ 에서는 알아서 import react from 'react' 를 해줍니다
+    "no-unused-vars": "off", // 사용하지 않는 변수 작성에 대한 설정
+    "react/jsx-props-no-spreading": "off", // {...props} 프롭스에 대해 spreading 설정
+    "react/function-component-definition": "off", // React 컴포넌트를 함수 선언 강제
+    "react/require-default-props": "off", // props 기본값 설정이 복잡해짐
+    "no-console": ["error", { "allow": ["warn", "error"] }] // api등 사용에 있어서 warn과 error가 필요하고, 디버깅 목적으로도 필요
+  }
+}
+```
+
+#### .prettierrc.js
+```javascript
+module.exports = {
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true, // 문자열에 작은따옴표 사용
+  trailingComma: 'es5', // ES5에서 유효한 곳에는 쉼표 추가
+  printWidth: 80,
+  quoteProps: 'as-needed',
+  arrowParens: 'always',
+  htmlWhitespaceSensitivity: 'css',
+  endOfLine: 'lf',
+  bracketSameLine: false,
+};
+```
+<br>
+
 ## 프로젝트 수행 절차 및 방법
-### 프로젝트 사전 기획과 프로젝트 수행 완료 과정을 도식화
 <img src="https://github.com/user-attachments/assets/632a6db2-8225-4597-bcd4-25019d2649cb">
+<br>
 
 ## 팀 자체 평가
 ### 팀원별 종합 의견
