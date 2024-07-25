@@ -197,11 +197,15 @@ export default function VoteModal({ isOpen = false, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledVoteModalWindow>
         {responsiveStatus === 'PC' ? (
-          <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
+          <ModalTopBar onClose={onClose}>
+            이달의 {selectedTab === 'female' ? '여자' : '남자'} 아이돌
+          </ModalTopBar>
         ) : (
           <>
             <LeftTopGradientDesign />
-            <MobileTopBar onClose={onClose}>이달의 여자 아이돌</MobileTopBar>
+            <MobileTopBar onClose={onClose}>
+              이달의 {selectedTab === 'female' ? '여자' : '남자'} 아이돌
+            </MobileTopBar>
           </>
         )}
         <LoadingSpinner isLoading={isLoading} />
