@@ -23,7 +23,6 @@ export default function MonthChart({ openModal }) {
   const [chartIdolData, setChartIdolData] = useState([]);
   const [nextCursorValue, setNextCursorValue] = useState(0);
   const [moreButtonDisabled, setMoreButtonDisabled] = useState(false);
-  const [allButtonDisabled, setAllButtonDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dataReload, setDataReload] = useState(true);
 
@@ -74,10 +73,8 @@ export default function MonthChart({ openModal }) {
         setChartIdolData(idols);
         setNextCursorValue(nextCursor);
         setIsLoading(false);
-        setAllButtonDisabled(true);
       } catch (error) {
         console.error(error);
-        setAllButtonDisabled(false);
       } finally {
         setIsLoading(false);
       }
@@ -98,15 +95,6 @@ export default function MonthChart({ openModal }) {
       setMoreButtonDisabled(false);
     }
   }, [nextCursorValue]);
-
-  // 페이지 처음 로드할 때 불러온 차트내용이 전부이면 더보기 버튼 안보이게 하기
-  useEffect(() => {
-    if (nextCursorValue === null) {
-      setAllButtonDisabled(false);
-    } else {
-      setAllButtonDisabled(true);
-    }
-  }, []);
 
   if (isLoading) {
     return (
@@ -142,30 +130,26 @@ export default function MonthChart({ openModal }) {
         chartIdolData={chartIdolData}
         handleClickDataReload={() => handleClickDataReload()}
       />
-      {allButtonDisabled ? (
-        <ChartMoreButton>
-          <button
-            type="button"
-            onClick={() => {
-              handleClickMoreButton();
-            }}
-            className={moreButtonDisabled ? 'none' : ''}
-          >
-            더보기
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              handleClickShortButton();
-            }}
-            className={moreButtonDisabled ? '' : 'none'}
-          >
-            접기
-          </button>
-        </ChartMoreButton>
-      ) : (
-        ''
-      )}
+      <ChartMoreButton>
+        <button
+          type="button"
+          onClick={() => {
+            handleClickMoreButton();
+          }}
+          className={moreButtonDisabled ? 'none' : ''}
+        >
+          더보기
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            handleClickShortButton();
+          }}
+          className={moreButtonDisabled ? '' : 'none'}
+        >
+          접기
+        </button>
+      </ChartMoreButton>
     </MyCreditWrap>
   );
 }
