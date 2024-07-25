@@ -197,11 +197,15 @@ export default function VoteModal({ isOpen = false, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <StyledVoteModalWindow>
         {responsiveStatus === 'PC' ? (
-          <ModalTopBar onClose={onClose}>이달의 여자 아이돌</ModalTopBar>
+          <ModalTopBar onClose={onClose}>
+            이달의 {selectedTab === 'female' ? '여자' : '남자'} 아이돌
+          </ModalTopBar>
         ) : (
           <>
             <LeftTopGradientDesign />
-            <MobileTopBar onClose={onClose}>이달의 여자 아이돌</MobileTopBar>
+            <MobileTopBar onClose={onClose}>
+              이달의 {selectedTab === 'female' ? '여자' : '남자'} 아이돌
+            </MobileTopBar>
           </>
         )}
         <LoadingSpinner isLoading={isLoading} />
@@ -386,6 +390,14 @@ const StyledVotes = styled.span`
   line-height: normal;
 `;
 
+/** 투표 대상 컴포넌트
+ * @param {Object} props - 컴포넌트 props
+ * @param {function} props.onClick - 해당 컴포넌트가 클릭되었을 때 사용할 함수
+ * @param {number} props.selectedIdol - 선택된 아이돌 ID
+ * @param {Object} props.idolData - 아이돌 데이터
+ * @param {boolean} props.disabled - 투표가 되었는지에 대한 값
+ * @return {JSX.Element} 투표 대상 컴포넌트
+ */
 const VoteOption = ({ onClick, selectedIdol, idolData, disabled }) => {
   return (
     <StyledVoteOption onClick={() => onClick(idolData?.id)} disabled={disabled}>
