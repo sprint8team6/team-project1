@@ -8,7 +8,7 @@ import {
   StyledDivider,
 } from '@styles/CommonStyles';
 
-/** 팝업 모달 컴포넌트
+/** Toast 컴포넌트
  * @param {Object} props - 컴포넌트 props
  * @param {boolean} props.isOpen - Toast가 열려 있는지 여부
  * @param {function} props.onClose - Toast를 닫기 위한 함수

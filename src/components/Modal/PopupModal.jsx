@@ -24,7 +24,7 @@ export default function PopupModal({ isOpen = false, onClose }) {
         <ModalTopBar onClose={onClose} />
         <StyledContainer>
           <StyledCreditDiv />
-          <PopupLabel Description={modals?.PopupModal.data.message} />
+          <span>{modals?.PopupModal.data.message}</span>
           <Button onClick={onClose}>확인</Button>
         </StyledContainer>
       </StyledPopupWindow>
@@ -68,11 +68,3 @@ const StyledCreditDiv = styled.div`
   width: 118px;
   height: 118px;
 `;
-
-const PopupLabel = ({ Description }) => {
-  return <span>{Description}</span>;
-};
-
-PopupLabel.propTypes = {
-  Description: PropTypes.node,
-};
